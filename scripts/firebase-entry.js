@@ -4,6 +4,7 @@ export {
   getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  EmailAuthProvider, linkWithCredential, signInAnonymously,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateProfile,

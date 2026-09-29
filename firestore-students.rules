@@ -5,6 +5,15 @@
       function isOwner() {
         return request.auth != null && request.auth.uid == uid;
       }
+      function isAnonymousOwner() {
+        return isOwner() && request.auth.token.firebase.sign_in_provider == 'anonymous';
+      }
+      function validGuest() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['uid', 'name', 'app', 'isAnonymous', 'project', 'progress', 'notes', 'createdAt', 'updatedAt', 'lastActiveAt'])
+          && d.uid == uid && d.app == 'codeclass' && d.isAnonymous == true
+          && d.name is string && d.name.size() <= 60;
+      }
       function validStudent() {
         let d = request.resource.data;
         return d.uid == uid
@@ -15,8 +24,10 @@
       }
 
       allow read: if isOwner();
-      allow create: if isOwner() && validStudent();
-      allow update: if isOwner() && validStudent()
-        && request.resource.data.createdAt == resource.data.createdAt;
+      allow create: if isOwner() && (validStudent() || (isAnonymousOwner() && validGuest()));
+      allow update: if isOwner() && (
+        (isAnonymousOwner() && resource.data.isAnonymous == true && validGuest())
+        || (validStudent() && request.resource.data.createdAt == resource.data.createdAt)
+      );
       allow delete: if false;
     }

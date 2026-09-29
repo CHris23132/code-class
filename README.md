@@ -24,7 +24,7 @@ Deploy the contents of `dist/` to a static host. All page navigation uses URL ha
 - Start here guide covering setup, prompts vs. commands, lesson completion, and the final milestone
 - Dashboard with four modules and 12 detailed lessons
 - Lesson checklists with completion gating and saved progress
-- Searchable lessons and 20 copyable AI prompt / terminal command cards, including focused follow-ups and separate iOS/Android commands
+- Searchable lessons and copyable AI prompts / terminal commands that work without signing in, including focused follow-ups and separate iOS/Android commands
 - Project details and a personal profile
 - Autosaved project and lesson notes, with Markdown export
 - Original five-page PDF download and official documentation links
@@ -33,7 +33,7 @@ Deploy the contents of `dist/` to a static host. All page navigation uses URL ha
 
 ## Data and scope
 
-Students browse freely, but their first action (opening a lesson, copying a prompt, writing notes, editing the project or profile) asks them to sign up with Firebase Authentication (email and password). Sign-up collects name, email, and role (Student, Founder, Educator, Developer, Designer, Other).
+Visitors can open and complete lessons 1–2, save their checklists and lesson notes, and copy any prompt or command without an account. Firebase Anonymous Authentication creates a guest UID when enabled; guest progress is saved to that UID's `students/{uid}` document and also cached in localStorage. If anonymous auth or its Firestore rule is not enabled yet, the two free lessons still work and progress remains on that device. After lesson 2, a clear prompt invites the learner to create a free account before lesson 3. Sign-up links email/password credentials to the anonymous Firebase user, preserving its UID and progress. Sign-up collects name, email, and role (Student, Founder, Educator, Developer, Designer, Other).
 
 Each student has one document in the Firestore `students` collection, keyed by their Firebase Auth UID:
 
@@ -48,7 +48,7 @@ students/{uid}
   notes:    { project, [lessonId]: string }
 ```
 
-Changes save to Firestore about a second after each edit and are cached in localStorage under `codeclass-v1`. Signing in on another device loads the saved document. Signing out clears the local copy. Security rules for the collection are in `firestore-students.rules`. Paste that block into your existing Firestore rules; don't replace them.
+Guest changes save to Firestore about a second after each edit when anonymous access is enabled, and are cached in localStorage under `codeclass-v1`. Linking email/password upgrades the same Firebase UID, so the existing progress document becomes the account's document. Signing in on another device loads it. Signing out clears the local copy. Security rules for the `students` collection, including owner-only anonymous guest access, are in `firestore-students.rules`. Paste the block into your existing Firestore rules; don't replace them. In Firebase Console, enable Authentication → Sign-in method → Anonymous as well as Email/Password.
 
 The Firebase web config lives in `firebase.js`. The SDK is installed from npm and bundled into `vendor/firebase.js` by `npm run build:firebase` (which `npm run dev` and `npm run build` also run), so the site stays deployable to GitHub Pages without a bundler at runtime. Commit `vendor/firebase.js`. For GitHub Pages, add your `<user>.github.io` domain under Firebase Console → Authentication → Settings → Authorized domains.
 
