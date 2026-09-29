@@ -1,0 +1,22 @@
+// Paste this block inside your existing `match /databases/{database}/documents { ... }`
+// in Firebase Console → Firestore → Rules. Keep your existing `users` rules as they are.
+
+    match /students/{uid} {
+      function isOwner() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+      function validStudent() {
+        let d = request.resource.data;
+        return d.uid == uid
+          && d.email == request.auth.token.email
+          && d.name is string && d.name.size() > 0 && d.name.size() <= 60
+          && d.role in ['Student', 'Founder', 'Educator', 'Developer', 'Designer', 'Other']
+          && d.app == 'codeclass';
+      }
+
+      allow read: if isOwner();
+      allow create: if isOwner() && validStudent();
+      allow update: if isOwner() && validStudent()
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+    }

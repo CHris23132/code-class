@@ -1,0 +1,20 @@
+{
+  "name": "code-class",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build-firebase.js && node server.js",
+    "start": "node server.js",
+    "build": "node scripts/build.js",
+    "build:firebase": "node scripts/build-firebase.js",
+    "check": "node --check app.js && node --check course.js && node --check firebase.js && node --check server.js"
+  },
+  "devDependencies": {
+    "@phosphor-icons/core": "^2.1.1",
+    "esbuild": "^0.28.2"
+  },
+  "dependencies": {
+    "firebase": "^12.19.0"
+  }
+}
