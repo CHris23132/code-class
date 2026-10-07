@@ -1,8 +1,11 @@
 import { mkdir, copyFile, cp } from 'node:fs/promises';
 import './build-icons.js';
 import './build-firebase.js';
+import './build-products.js';
+import { products } from './products.js';
 await mkdir('dist', { recursive: true });
-for (const file of ['index.html', 'styles.css', 'app.js', 'course.js', 'firebase.js', 'future-founder.html', 'product.css', 'product.js']) await copyFile(file, `dist/${file}`);
+const pages = ['courses.html', ...products.map(p => `${p.slug}.html`)];
+for (const file of ['index.html', 'styles.css', 'app.js', 'course.js', 'firebase.js', 'product.css', 'product.js', 'catalog.js', ...pages]) await copyFile(file, `dist/${file}`);
 await cp('assets', 'dist/assets', { recursive: true });
 await cp('vendor', 'dist/vendor', { recursive: true });
 console.log('Built static website in dist/');

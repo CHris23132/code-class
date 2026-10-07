@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node scripts/build-firebase.js && node server.js",
+    "dev": "node scripts/build-firebase.js && node scripts/build-products.js && node server.js",
     "start": "node server.js",
     "build": "node scripts/build.js",
     "build:firebase": "node scripts/build-firebase.js",
-    "check": "node --check app.js && node --check course.js && node --check firebase.js && node --check product.js && node --check server.js"
+    "build:products": "node scripts/build-products.js",
+    "check": "node --check app.js && node --check course.js && node --check firebase.js && node --check product.js && node --check catalog.js && node --check server.js"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",

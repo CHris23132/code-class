@@ -60,11 +60,14 @@ Google Fonts provides DM Sans and Manrope, with sans-serif fallbacks. The hero a
 
 ## Product page
 
-`future-founder.html` is the standalone sales page for the Future Founder course (`/future-founder.html` locally or on GitHub Pages). It uses its own lightweight `product.css` and `product.js` and doesn't load the course app or Firebase, so it stays fast on phones.
+Each course has a standalone sales page, plus a gallery that filters courses by goal:
 
-- Every Enroll button points to the URL in `<meta name="checkout-url" content="">` in the page head. Until that is set, the buttons scroll to the offer section.
-- Box images live in `assets/products/` as compressed WebP files (`future-founder.webp`, `business-accelerator.webp`, `ios-app-builder.webp`, `ai-app-wizard.webp`). The original PNGs are kept alongside them.
-- To add another course, copy `future-founder.html`, swap the box image, headline, outcome, offer stack, and FAQ answers, and add the new file to `server.js` and `scripts/build.js`.
+- `courses.html`: the course gallery. Choosing a goal under "What do you want to build?" highlights the best-match course with a glow and fades unrelated ones. On phones, the best match also moves to the top. The goal-to-course mapping is the third value in each `goals` entry in `scripts/products.js`. Link straight to a goal with `courses.html?goal=app`, `mobile`, `business`, `ai`, or `income`.
+- `future-founder.html`, `ios-app-builder.html`, `ai-app-wizard.html`, `business-accelerator.html`: one landing page per course.
+
+These pages are generated. Edit course content (price, checkout URL, headline, phases, offer stack, guarantee, FAQ, gallery goals) in `scripts/products.js`, then run `npm run build:products`. `npm run dev` and `npm run build` regenerate them automatically. Commit the generated `.html` files so GitHub Pages can serve them.
+
+The pages use their own lightweight `product.css`, `product.js`, and `catalog.js`, and don't load the course app or Firebase, so they stay fast on phones. Every Enroll button on a page goes to that course's `checkoutUrl`. Until it's set, the buttons scroll to the offer section. Box images are compressed WebP files in `assets/products/`, with the original PNGs kept alongside them.
 
 ## Edit content
 
