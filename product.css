@@ -336,3 +336,4 @@ details p{padding:0 2px 20px;color:var(--text)}
 .header-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--slate);padding:8px 4px}
 .header-link:hover{color:var(--link)}
 .header-link .icon{width:16px;height:16px}
+.demo-note{text-align:center;font-size:13px;color:var(--muted);margin:4px auto 0;max-width:560px;font-style:italic}

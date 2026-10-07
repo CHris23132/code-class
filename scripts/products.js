@@ -44,28 +44,27 @@ export const products = [
     screens: [
       ['Feed', `<div class="app-bar"><b class="app-logo">hello<span>world.</span></b><span class="app-icons">♡ ✉</span></div>
               <div class="stories"><i class="av a1"></i><i class="av a2"></i><i class="av a3"></i><i class="av a4"></i><i class="av a5"></i></div>
-              <div class="post-head"><i class="av a2 sm"></i><span>maya.builds</span></div>
+              <div class="post-head"><i class="av a2 sm"></i><span>sample.user</span></div>
               <div class="post-img img-sunset"></div>
               <div class="post-actions">♡ <span>💬</span> <span>↗</span></div>
-              <p class="post-meta"><b>128 likes</b></p>
-              <p class="post-meta"><b>maya.builds</b> shipped my first app today 🚀</p>`],
+              <p class="post-meta"><b>24 likes</b></p>
+              <p class="post-meta"><b>sample.user</b> Sunset walk by the lake 🌅</p>`],
       ['Post creation', `<div class="app-bar"><span>Cancel</span><b>New post</b><span class="lime-text">Share</span></div>
               <div class="upload"><svg class="icon"><use href="#i-plus"/></svg><span>Add a photo</span></div>
               <div class="field-line">Write a caption…</div>
               <div class="field-line short">Add location</div>
               <div class="share-btn">Share post</div>`],
-      ['Direct messages', `<div class="app-bar"><span>‹</span><b>jordan.k</b><span></span></div>
+      ['Direct messages', `<div class="app-bar"><span>‹</span><b>sample.friend</b><span></span></div>
               <div class="chat">
-                <p class="bubble them">did you really build this yourself??</p>
-                <p class="bubble me">yep 😅 this weekend</p>
-                <p class="bubble them">with login and everything?</p>
-                <p class="bubble me">real database, real accounts</p>
-                <p class="bubble them">ok I need one for my business</p>
+                <p class="bubble them">are we still on for saturday?</p>
+                <p class="bubble me">yes! 10am works</p>
+                <p class="bubble them">great, see you at the park</p>
+                <p class="bubble me">I’ll bring the frisbee</p>
               </div>
               <div class="chat-input">Message…</div>`],
-      ['Profile', `<div class="app-bar"><b>@you</b><span>☰</span></div>
-              <div class="profile-top"><i class="av a3 lg"></i><div class="stats"><span><b>24</b>posts</span><span><b>1.2k</b>followers</span><span><b>310</b>following</span></div></div>
-              <p class="profile-name"><b>You</b><br>Future founder · building in public</p>
+      ['Profile', `<div class="app-bar"><b>@yourname</b><span>☰</span></div>
+              <div class="profile-top"><i class="av a3 lg"></i><div class="stats"><span><b>6</b>posts</span><span><b>0</b>followers</span><span><b>0</b>following</span></div></div>
+              <p class="profile-name"><b>Your name</b><br>Your bio goes here</p>
               <div class="edit-btn">Edit profile</div>
               <div class="grid"><i class="img-sunset"></i><i class="img-sea"></i><i class="img-lime"></i><i class="img-sea"></i><i class="img-lime"></i><i class="img-sunset"></i></div>`]
     ],

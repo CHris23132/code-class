@@ -99,6 +99,7 @@ ${p.screens.map(([caption, html]) => `          <figure class="phone">
             <figcaption>${caption}</figcaption>
           </figure>`).join('\n')}
         </div>
+        <p class="demo-note">Illustrative demo screens with sample content. Your app’s design and data will be your own.</p>
         <ul class="outcome-list">
 ${p.outcomes.map(o => `          <li>${icon('check')}${o}</li>`).join('\n')}
         </ul>
