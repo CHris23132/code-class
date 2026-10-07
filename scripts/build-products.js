@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { products, goals, testimonials } from './products.js';
+import { products, goals, testimonials, press, credentials } from './products.js';
 
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const money = n => `$${n.toLocaleString('en-US')}`;
@@ -40,8 +40,25 @@ const footer = link => `<footer class="site-footer">
 const founderCard = `<article class="card founder-card">
             <img src="assets/products/founder.webp" alt="Portrait of the Code Class founder" width="480" height="480" loading="lazy" decoding="async">
             <h3>Built by a builder.</h3>
-            <p>I started as a broke beginner teaching myself to code. I became a top-rated developer on Fiverr, then a startup CTO, then went to big tech — building apps that serve millions. This is the path I wish I’d had.</p>
+            <p>I started as a broke beginner teaching myself to code. This is the path I wish I’d had.</p>
+            <ul class="credentials">
+${credentials.map(c => `              <li>${icon('check')}${c}</li>`).join('\n')}
+            </ul>
           </article>`;
+
+const pressLogos = hidden => press.map(([file, name, w72, h]) => `<li><img src="assets/press/${file}.webp" alt="${hidden ? '' : attr(name)}" width="${Math.round(w72 * h / 72)}" height="${h}" loading="lazy" decoding="async"></li>`).join('');
+
+const pressStrip = `
+    <section class="press" aria-label="Work featured in">
+      <p class="press-label">Work featured in</p>
+      <div class="ticker">
+        <div class="ticker-track">
+          <ul>${pressLogos(false)}</ul>
+          <ul aria-hidden="true">${pressLogos(true)}</ul>
+        </div>
+      </div>
+    </section>
+`;
 
 function testimonialSection(p) {
   const quotes = testimonials.filter(t => t.course === p.slug && t.quote.trim());
@@ -99,7 +116,7 @@ function productPage(p) {
         </div>
       </div>
     </section>
-
+${pressStrip}
     <section class="section problem">
       <div class="wrap narrow">
         <h2>${p.problemTitle}</h2>

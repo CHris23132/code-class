@@ -14,6 +14,27 @@ export const testimonials = [
   { name: 'Aera', detail: '', course: 'future-founder', quote: 'I wanted a real skill, not another certificate. Now I have a working app I can show people, and I understand how modern apps fit together well enough to keep building on my own.' }
 ];
 
+// [file in assets/press, outlet, logo width at 72px tall, display height]
+export const press = [
+  ['cbs-news', 'CBS News', 477, 24],
+  ['reuters', 'Reuters', 284, 26],
+  ['yahoo-news', 'Yahoo News', 196, 36],
+  ['new-york-post', 'New York Post', 568, 22],
+  ['the-independent', 'The Independent', 1020, 17],
+  ['morning-brew', 'Morning Brew', 433, 26],
+  ['the-business-journals', 'The Business Journals', 901, 17],
+  ['newsbreak', 'NewsBreak', 448, 24],
+  ['daily-voice', 'Daily Voice', 145, 34],
+  ['the-news-international', 'The News International', 262, 32]
+];
+
+export const credentials = [
+  'Led technology at a startup that raised millions',
+  'Helped a company build the software that led to its acquisition',
+  'Top-rated developer on Fiverr',
+  'Built apps used by millions in big tech'
+];
+
 export const goals = [
   ['all', 'All courses'],
   ['app', 'My own app', 'future-founder'],
