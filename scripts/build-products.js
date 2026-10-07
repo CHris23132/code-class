@@ -34,7 +34,7 @@ ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
 
 const footer = link => `<footer class="site-footer">
-    <div class="wrap">© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.${link ? ` <a href="courses.html">Browse all courses</a>` : ''}</div>
+    <div class="wrap">© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.${link ? ` <a href="./">Browse all courses</a>` : ''}</div>
   </footer>`;
 
 const founderCard = `<article class="card founder-card">
@@ -227,7 +227,8 @@ function galleryPage() {
 
   <header class="site-header">
     <div class="wrap header-inner">
-      ${logo('courses.html')}
+      ${logo('./')}
+      <a class="header-link" href="future-founder-class.html">Student login ${icon('arrow')}</a>
     </div>
   </header>
 
@@ -281,5 +282,5 @@ ${products.map((p, i) => `          <article class="course-card" data-slug="${p.
 }
 
 for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
-await writeFile('courses.html', galleryPage());
-console.log(`Generated ${products.length} product pages and courses.html`);
+await writeFile('index.html', galleryPage());
+console.log(`Generated ${products.length} product pages and the index.html course gallery`);
