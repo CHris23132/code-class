@@ -53,8 +53,11 @@ function productPage(p) {
 
   <header class="site-header">
     <div class="wrap header-inner">
-      ${logo('#top')}
-      <a class="button button-small" href="#offer" data-enroll>Enroll now</a>
+      ${logo('./')}
+      <div class="header-actions">
+        <a class="header-link" href="./">All courses</a>
+        <a class="button button-small" href="#offer" data-enroll>Enroll now</a>
+      </div>
     </div>
   </header>
 
@@ -204,6 +207,22 @@ ${p.faq.map(([q, a]) => `        <details>
           <a class="button button-large" href="#offer" data-enroll>${enroll}</a>
           <p class="trust">${p.finalTrust}</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section more-courses">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Compare courses</span>
+          <h2>Looking for something else?</h2>
+        </div>
+        <div class="mini-grid">
+${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-card" href="${o.slug}.html">
+            <img src="assets/products/${o.slug}.webp" alt="" width="720" height="720" loading="lazy" decoding="async">
+            <span class="mini-body"><b>${o.name}</b><small>${o.tagline}</small><span class="mini-price">${money(o.price)} <span class="mini-view">View course ${icon('arrow')}</span></span></span>
+          </a>`).join('\n')}
+        </div>
+        <p class="more-all"><a href="./">See all courses ${icon('arrow')}</a></p>
       </div>
     </section>
   </main>

@@ -13,4 +13,4 @@ const observer = new IntersectionObserver(entries => {
   sticky.setAttribute('aria-hidden', String(!show));
   stickyLink.tabIndex = show ? 0 : -1;
 });
-[document.querySelector('.hero .cta-group'), document.getElementById('offer'), document.getElementById('final')].forEach(el => observer.observe(el));
+[document.querySelector('.hero .cta-group'), document.getElementById('offer'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
