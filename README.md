@@ -58,6 +58,14 @@ The course uses the original PDF's progression, consolidating its skipped number
 
 Google Fonts provides DM Sans and Manrope, with sans-serif fallbacks. The hero artwork is built entirely in CSS. Firebase is the only runtime dependency, served from the bundled `vendor/firebase.js`.
 
+## Product page
+
+`future-founder.html` is the standalone sales page for the Future Founder course (`/future-founder.html` locally or on GitHub Pages). It uses its own lightweight `product.css` and `product.js` and doesn't load the course app or Firebase, so it stays fast on phones.
+
+- Every Enroll button points to the URL in `<meta name="checkout-url" content="">` in the page head. Until that is set, the buttons scroll to the offer section.
+- Box images live in `assets/products/` as compressed WebP files (`future-founder.webp`, `business-accelerator.webp`, `ios-app-builder.webp`, `ai-app-wizard.webp`). The original PNGs are kept alongside them.
+- To add another course, copy `future-founder.html`, swap the box image, headline, outcome, offer stack, and FAQ answers, and add the new file to `server.js` and `scripts/build.js`.
+
 ## Edit content
 
 - `course.js`: modules, lessons, prompts, commands, checklists, resource links

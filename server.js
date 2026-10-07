@@ -3,13 +3,13 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 const root = process.cwd();
 const port = Number(process.env.PORT || 3000);
-const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.pdf': 'application/pdf', '.png': 'image/png' };
+const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.pdf': 'application/pdf', '.png': 'image/png', '.webp': 'image/webp' };
 http.createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    const allowed = ['/index.html','/styles.css','/app.js','/course.js','/firebase.js','/vendor/firebase.js'];
+    const allowed = ['/index.html','/styles.css','/app.js','/course.js','/firebase.js','/vendor/firebase.js','/future-founder.html','/product.css','/product.js'];
     const requestPath = pathname === '/' ? '/index.html' : pathname;
-    if (!allowed.includes(requestPath) && !/^\/assets\/[a-zA-Z0-9_.-]+$/.test(requestPath)) throw new Error('Not found');
+    if (!allowed.includes(requestPath) && !/^\/assets\/(?:[a-zA-Z0-9_-]+\/)?[a-zA-Z0-9_.-]+$/.test(requestPath)) throw new Error('Not found');
     const file = path.join(root, requestPath);
     if (!(await stat(file)).isFile()) throw new Error('Not found');
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
