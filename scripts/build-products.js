@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { products, goals } from './products.js';
+import { products, goals, testimonials } from './products.js';
 
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const money = n => `$${n.toLocaleString('en-US')}`;
@@ -42,6 +42,27 @@ const founderCard = `<article class="card founder-card">
             <h3>Built by a builder.</h3>
             <p>I started as a broke beginner teaching myself to code. I became a top-rated developer on Fiverr, then a startup CTO, then went to big tech — building apps that serve millions. This is the path I wish I’d had.</p>
           </article>`;
+
+function testimonialSection(p) {
+  const quotes = testimonials.filter(t => t.course === p.slug && t.quote.trim());
+  if (!quotes.length) return '';
+  return `
+    <section class="section testimonials">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">From students</span>
+          <h2>What builders are saying.</h2>
+        </div>
+        <div class="quote-grid">
+${quotes.map(t => `          <figure class="quote-card">
+            <blockquote>“${t.quote.trim()}”</blockquote>
+            <figcaption><span class="quote-avatar" aria-hidden="true">${t.name.trim()[0].toUpperCase()}</span><span><b>${t.name}</b>${t.detail ? `<small>${t.detail}</small>` : ''}</span></figcaption>
+          </figure>`).join('\n')}
+        </div>
+      </div>
+    </section>
+`;
+}
 
 function productPage(p) {
   const image = `assets/products/${p.slug}.webp`;
@@ -161,7 +182,7 @@ ${p.notForYou.map(t => `            <li>${icon('x')}${t}</li>`).join('\n')}
         </div>
       </div>
     </section>
-
+${testimonialSection(p)}
     <section class="section offer" id="offer">
       <div class="wrap">
         <div class="offer-card">

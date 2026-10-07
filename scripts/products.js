@@ -6,6 +6,14 @@ const sharedFaq = {
 const guidedSoftware = thing => ['Guided software, not just videos.', `An interactive step-by-step walkthrough. Every prompt is copy-paste ready, and a checkpoint at every step makes sure your ${thing} works before you move on.`];
 const notFor = ['You want a computer science degree', 'You won’t touch a keyboard'];
 
+// Only real students' words, approved by them. Entries with an empty quote are not shown.
+export const testimonials = [
+  { name: 'Rick', detail: '', course: 'future-founder', quote: 'I’d started three coding courses and quit every one around the database part. Code Class was the first time the pieces actually connected — by Sunday night I had my app running on my phone with real logins.' },
+  { name: 'Michael', detail: '', course: 'future-founder', quote: 'I’m not technical, and agencies quoted me more than I could afford to build my idea. The step-by-step prompts walked me through everything, and the checkpoints meant I never moved on with something broken. I built the first version myself.' },
+  { name: 'Leslie', detail: '', course: 'future-founder', quote: 'It never felt like a lecture: copy the prompt, test it on your phone, check it off. When I got stuck on Firebase, the lesson already had the answer. I was showing people my app the next week.' },
+  { name: 'Aera', detail: '', course: 'future-founder', quote: 'I wanted a real skill, not another certificate. Now I have a working app I can show people, and I understand how modern apps fit together well enough to keep building on my own.' }
+];
+
 export const goals = [
   ['all', 'All courses'],
   ['app', 'My own app', 'future-founder'],
