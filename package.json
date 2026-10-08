@@ -10,6 +10,7 @@
     "build:firebase": "node scripts/build-firebase.js",
     "build:products": "node scripts/build-products.js",
     "verify:launch": "node scripts/verify-launch.js",
+    "access-code": "node scripts/access-code.js",
     "check": "node --check app.js && node --check course.js && node --check firebase.js && node --check product.js && node --check catalog.js && node --check server.js"
   },
   "devDependencies": {

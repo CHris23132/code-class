@@ -74,3 +74,7 @@ export function saveGuest(uid, data) {
 export function saveStudent(uid, data) {
   return updateDoc(studentRef(uid), { ...data, updatedAt: serverTimestamp(), lastActiveAt: serverTimestamp() });
 }
+
+export function unlockStudent(uid, access) {
+  return updateDoc(studentRef(uid), { access, updatedAt: serverTimestamp() });
+}

@@ -33,13 +33,16 @@ Deploy the contents of `dist/` to a static host. All page navigation uses URL ha
 
 ## Data and scope
 
-Visitors can open and complete lessons 1–2, save their checklists and lesson notes, and copy any prompt or command without an account. Firebase Anonymous Authentication creates a guest UID when enabled; guest progress is saved to that UID's `students/{uid}` document and also cached in localStorage. If anonymous auth or its Firestore rule is not enabled yet, the two free lessons still work and progress remains on that device. After lesson 2, a clear prompt invites the learner to create a free account before lesson 3. Sign-up links email/password credentials to the anonymous Firebase user, preserving its UID and progress. Sign-up collects name, email, and role (Student, Founder, Educator, Developer, Designer, Other).
+The whole course (all 12 lessons, the prompt library, notes and resources) is locked behind an access code. The current code is `APP2026`, and it's case-insensitive. New students click **I have a code — unlock** and enter the code with their name, email, password and role (Student, Founder, Educator, Developer, Designer, Other). The code is checked before the account is created. Returning students just sign in. A signed-in student whose record isn't unlocked yet, such as an older free account, sees a single access-code field. The unlock is saved on the student's Firestore record as `access: { code, unlockedAt }`, so it follows them to any device.
+
+The codes are stored in `ACCESS_CODE_HASHES` at the top of `app.js` as SHA-256 hashes, not plain text. To add a code for a new cohort, run `npm run access-code -- NEWCODE` and paste the printed hash into that list. Remove a hash to stop new sign-ups with that code; students who already unlocked keep access. This is a client-side gate, so it keeps casual visitors out but isn't DRM: the lesson text ships in `course.js`.
 
 Each student has one document in the Firestore `students` collection, keyed by their Firebase Auth UID:
 
 ```
 students/{uid}
   uid, email, name, role, app: "codeclass"
+  access:   { code, unlockedAt }              (set when the access code is accepted)
   createdAt, updatedAt, lastActiveAt          (server timestamps)
   project:  { name, idea }
   progress: { completedLessons: number[], completedCount, totalLessons, percent,
@@ -48,7 +51,7 @@ students/{uid}
   notes:    { project, [lessonId]: string }
 ```
 
-Guest changes save to Firestore about a second after each edit when anonymous access is enabled, and are cached in localStorage under `codeclass-v1`. Linking email/password upgrades the same Firebase UID, so the existing progress document becomes the account's document. Signing in on another device loads it. Signing out clears the local copy. Security rules for the `students` collection, including owner-only anonymous guest access, are in `firestore-students.rules`. Paste the block into your existing Firestore rules; don't replace them. In Firebase Console, enable Authentication → Sign-in method → Anonymous as well as Email/Password.
+Changes save to Firestore about a second after each edit and are cached in localStorage under `codeclass-v1`. Signing in on another device loads it. Signing out clears the local copy. Security rules for the `students` collection, including owner-only anonymous guest access, are in `firestore-students.rules`. Paste the block into your existing Firestore rules; don't replace them. In Firebase Console, enable Authentication → Sign-in method → Email/Password.
 
 The Firebase web config lives in `firebase.js`. The SDK is installed from npm and bundled into `vendor/firebase.js` by `npm run build:firebase` (which `npm run dev` and `npm run build` also run), so the site stays deployable to GitHub Pages without a bundler at runtime. Commit `vendor/firebase.js`. For GitHub Pages, add your `<user>.github.io` domain under Firebase Console → Authentication → Settings → Authorized domains.
 
