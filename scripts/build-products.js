@@ -1,7 +1,7 @@
 import { writeFile } from 'node:fs/promises';
 import { products, goals, testimonials, press, credentials, funnel, SESSION, host } from './products.js';
 
-const SITE = 'https://chris23132.github.io/code-class/';
+const SITE = 'https://torontoinnovationlab.com/';
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const money = n => `$${n.toLocaleString('en-US')}`;
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
