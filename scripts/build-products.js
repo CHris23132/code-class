@@ -46,7 +46,7 @@ const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home
 const footer = link => `<footer class="site-footer">
     <div class="wrap">
       <p>© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</p>
-      <nav class="footer-links" aria-label="Footer">${link ? '<a href="./">Browse all courses</a>' : ''}<a href="terms.html">Terms</a><a href="refund.html">Refund policy</a>${supportLink}</nav>
+      <nav class="footer-links" aria-label="Footer">${link ? '<a href="courses.html">Browse all courses</a>' : ''}<a href="terms.html">Terms</a><a href="refund.html">Refund policy</a>${supportLink}</nav>
     </div>
   </footer>`;
 
@@ -156,7 +156,7 @@ function productPage(p) {
     <div class="wrap header-inner">
       ${logo('./')}
       <div class="header-actions">
-        <a class="header-link" href="./">All courses</a>
+        <a class="header-link" href="courses.html">All courses</a>
         <a class="button button-small" href="#offer" data-enroll>${cta}</a>
       </div>
     </div>
@@ -324,7 +324,7 @@ ${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-car
             <span class="mini-body"><b>${o.name}</b><small>${o.tagline}</small><span class="mini-price">${money(o.price)} <span class="mini-view">View course ${icon('arrow')}</span></span></span>
           </a>`).join('\n')}
         </div>
-        <p class="more-all"><a href="./">See all courses ${icon('arrow')}</a></p>
+        <p class="more-all"><a href="courses.html">See all courses ${icon('arrow')}</a></p>
       </div>
     </section>
   </main>
@@ -460,7 +460,7 @@ function legalPage({ title, intro, sections }) {
   <header class="site-header">
     <div class="wrap header-inner">
       ${logo('./')}
-      <a class="header-link" href="./">All courses</a>
+      <a class="header-link" href="courses.html">All courses</a>
     </div>
   </header>
 
@@ -514,7 +514,7 @@ function workshopPage() {
   const schedule = attr(JSON.stringify({ slots: SESSION.slots, timeZone: SESSION.timeZone, days: sessionDays.replace('&amp;', '&') }));
   const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">${sessionText}</p>`;
   const trust = `Live on Google Meet <i>·</i> Recording included <i>·</i> Max ${SESSION.maxSeats} seats`;
-  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product' })}
+  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n` })}
 <body class="workshop-page">
   ${sprite}
 
@@ -645,7 +645,7 @@ ${workshop.faq.map(([q, a]) => `        <details>
     </section>
   </main>
 
-  ${footer(false)}
+  ${footer(true)}
 
   <div class="sticky-cta" aria-hidden="true">
     <span><b>First Screen</b> · Live · $47</span>
@@ -715,9 +715,10 @@ ${program.sessions.map(([title, text], i) => `            <li><b>Session ${i + 1
 }
 
 for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
-await writeFile('index.html', galleryPage());
+await writeFile('index.html', workshopPage());
 await writeFile('workshop.html', workshopPage());
+await writeFile('courses.html', galleryPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, the index.html course gallery, workshop.html, thanks-workshop.html, terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+console.log(`Generated ${products.length} product pages, index.html + workshop.html (the workshop), courses.html (the course gallery), thanks-workshop.html, terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);

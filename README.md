@@ -8,7 +8,7 @@ A responsive, framework-free HTML, CSS, and JavaScript learning website with Fir
 npm run dev
 ```
 
-Open http://localhost:3000 for the course gallery, or http://localhost:3000/future-founder-class.html for the Future Founder class. Set `PORT` to use another port. Node.js 18 or later is required for the development server and build script; the deployed website only requires static hosting.
+Open http://localhost:3000 for the First Screen workshop (the home page), http://localhost:3000/courses.html for the course gallery, or http://localhost:3000/future-founder-class.html for the Future Founder class. Set `PORT` to use another port. Node.js 18 or later is required for the development server and build script; the deployed website only requires static hosting.
 
 ## Build
 
@@ -62,7 +62,8 @@ Google Fonts provides DM Sans and Manrope, with sans-serif fallbacks. The hero a
 
 Each course has a standalone sales page, plus a gallery that filters courses by goal:
 
-- `index.html`: the course gallery and the site’s home page. Its header has a Student login link to the Future Founder class. Choosing a goal under "What do you want to build?" highlights the best-match course with a glow and fades unrelated ones. On phones, the best match also moves to the top. The goal-to-course mapping is the third value in each `goals` entry in `scripts/products.js`. Link straight to a goal with `?goal=app` (for example `chris23132.github.io/code-class/?goal=ai`), `mobile`, `business`, `ai`, or `income`.
+- `index.html`: the site's home page, which is the First Screen workshop page. The same page is also generated as `workshop.html`, so existing links and the Calendly setup keep working. Both declare the home page as canonical.
+- `courses.html`: the course gallery. Its header has a Student login link to the Future Founder class. Choosing a goal under "What do you want to build?" highlights the best-match course with a glow and fades unrelated ones. On phones, the best match also moves to the top. The goal-to-course mapping is the third value in each `goals` entry in `scripts/products.js`. Link straight to a goal with `?goal=app` (for example `chris23132.github.io/code-class/courses.html?goal=ai`), `mobile`, `business`, `ai`, or `income`. Every "All courses" link points here.
 - `future-founder.html`, `ios-app-builder.html`, `ai-app-wizard.html`, `business-accelerator.html`: one landing page per course.
 
 These pages are generated. Edit course content (price, checkout URL, headline, phases, offer stack, guarantee, FAQ, gallery goals) in `scripts/products.js`, then run `npm run build:products`. `npm run dev` and `npm run build` regenerate them automatically. Commit the generated `.html` files so GitHub Pages can serve them.

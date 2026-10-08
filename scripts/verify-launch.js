@@ -3,7 +3,7 @@
 import { readFile } from 'node:fs/promises';
 import { funnel } from './products.js';
 
-const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['workshop.html', 'thanks-workshop.html', 'future-founder.html'];
+const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['index.html', 'workshop.html', 'thanks-workshop.html', 'future-founder.html'];
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const banned = ['STRIPE_WORKSHOP_URL', 'DATE_PLACEHOLDER', 'CALENDLY_WORKSHOP_URL', 'SUPPORT_EMAIL', 'announced soon', 'DRAFT: not launch-ready'];
@@ -26,7 +26,7 @@ for (const page of pages) {
     for (const s of banned.filter(s => html.includes(s))) problems.push(`contains "${s}"`);
     if (/name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   }
-  if (page === 'workshop.html') {
+  if (page === 'workshop.html' || page === 'index.html') {
     const seatButtons = [...html.matchAll(/<a class="button[^"]*" href="([^"]*)"[^>]*>Save my seat/g)].map(m => m[1]);
     if (seatButtons.length < 5) problems.push(`found ${seatButtons.length} "Save my seat" buttons, expected 5 (header, hero, offer, final, sticky bar)`);
     for (const href of seatButtons.filter(h => h !== '#booking')) problems.push(`a "Save my seat" button points at ${href}, not #booking`);
