@@ -22,6 +22,9 @@ for (const page of pages) {
   for (const [name, count] of Object.entries(buttons.reduce((acc, n) => ({ ...acc, [n]: (acc[n] || 0) + 1 }), {}))) {
     if (!isUrl(metas[name])) problems.push(`${count} button(s) use <meta name="${name}"> = "${metas[name] ?? 'missing'}", not a real checkout URL`);
   }
+  if (!html.includes(`fbq('init', '${funnel.metaPixel}')`)) problems.push(`missing the Meta Pixel base code (funnel.metaPixel = "${funnel.metaPixel}")`);
+  const pixelEvent = { 'index.html': "fbq('track', 'ViewContent')", 'workshop.html': "fbq('track', 'ViewContent')", 'thanks-workshop.html': "fbq('trackCustom', 'WorkshopBooked')" }[page];
+  if (pixelEvent && !html.includes(pixelEvent)) problems.push(`missing the Meta Pixel event ${pixelEvent}`);
   if (page !== 'thanks-workshop.html') {
     for (const s of banned.filter(s => html.includes(s))) problems.push(`contains "${s}"`);
     if (/name="robots" content="noindex"/.test(html)) problems.push('marked noindex');

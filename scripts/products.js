@@ -14,7 +14,8 @@ export const funnel = {
   evergreenCheckout: 'EVERGREEN_COURSE_URL',
   software: 'SOFTWARE_ACCESS_URL',
   ebook: 'EBOOK_URL',
-  supportEmail: 'SUPPORT_EMAIL'
+  supportEmail: 'SUPPORT_EMAIL',
+  metaPixel: '592481416326540'
 };
 
 const sharedFaq = {

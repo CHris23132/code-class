@@ -97,6 +97,9 @@ The other settings also live in `scripts/products.js`. Fill them in, run `npm ru
 | Workshop weekly slots | `SESSION.slots` |
 | Next Build & Launch cohort date | `funnel.cohortDate`, for example `'Monday, October 19'` |
 | `SUPPORT_EMAIL` | `funnel.supportEmail` |
+| Meta Pixel ID | `funnel.metaPixel` (also hard-coded in `future-founder-class.html`) |
+
+Every page loads the Meta Pixel (Christopher's Pixel P3) and fires `PageView`. The workshop page (`index.html` and `workshop.html`) also fires `ViewContent`. `thanks-workshop.html` fires `trackCustom('WorkshopBooked')`, and Calendly only redirects there after a paid booking, so each fire is one $47 sale. `npm run verify:launch` fails if any of these events go missing.
 
 Checkout buttons use `<meta name="checkout-url">` with `data-enroll`. A named button such as `data-enroll="evergreen"` reads `<meta name="checkout-url-evergreen">` instead, so later ladder rungs ($149/mo Build Club, $1,997 1-on-1) can be added the same way.
 

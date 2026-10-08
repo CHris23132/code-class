@@ -11,6 +11,24 @@ const slotCount = Object.values(SESSION.slots).flat().length;
 const sessionDays = `Every ${SESSION.days.join(' &amp; ')}`;
 const sessionText = `${sessionDays} — ${slotCount} live sessions each weekend (ET)`;
 const supportLink = isEmail(funnel.supportEmail) ? `<a href="mailto:${attr(funnel.supportEmail)}">${funnel.supportEmail}</a>` : '';
+const pixel = (event = '') => /^\d+$/.test(funnel.metaPixel) ? `  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '${funnel.metaPixel}');
+  fbq('track', 'PageView');${event ? `\n  ${event}` : ''}
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=${funnel.metaPixel}&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+` : '';
 const icon = name => `<svg class="icon"><use href="#i-${name}"/></svg>`;
 
 const sprite = `<svg width="0" height="0" class="sprite" aria-hidden="true">
@@ -22,7 +40,7 @@ const sprite = `<svg width="0" height="0" class="sprite" aria-hidden="true">
     <symbol id="i-plus" viewBox="0 0 256 256"><path fill="currentColor" d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
   </svg>`;
 
-const head = ({ title, description, ogTitle, ogDescription, image, type, extra = '' }) => `<!doctype html>
+const head = ({ title, description, ogTitle, ogDescription, image, type, extra = '', track = '' }) => `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -39,7 +57,7 @@ ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="product.css">
-</head>`;
+${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
 
@@ -514,7 +532,7 @@ function workshopPage() {
   const schedule = attr(JSON.stringify({ slots: SESSION.slots, timeZone: SESSION.timeZone, days: sessionDays.replace('&amp;', '&') }));
   const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">${sessionText}</p>`;
   const trust = `Live on Google Meet <i>·</i> Recording included <i>·</i> Max ${SESSION.maxSeats} seats`;
-  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n` })}
+  return `${head({ track: "fbq('track', 'ViewContent');", title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n` })}
 <body class="workshop-page">
   ${sprite}
 
@@ -663,7 +681,7 @@ function thanksPage() {
     ? `<a class="button" href="${attr(url)}" target="_blank" rel="noopener">${label} ${icon('arrow')}</a>`
     : `<span class="button" aria-disabled="true">${ready}</span>`;
   const program = products.find(p => p.slug === 'future-founder');
-  return `${head({ title: 'You’re in — First Screen Workshop | Code Class', description: 'Your First Screen workshop seat is booked: your next step, software access, and bonuses.', ogTitle: 'You’re in — First Screen Workshop', ogDescription: 'Your seat is booked. Here’s everything you need.', image: 'assets/social/workshop.jpg', type: 'website', extra: '  <meta name="robots" content="noindex">\n' })}
+  return `${head({ track: "fbq('trackCustom', 'WorkshopBooked');", title: 'You’re in — First Screen Workshop | Code Class', description: 'Your First Screen workshop seat is booked: your next step, software access, and bonuses.', ogTitle: 'You’re in — First Screen Workshop', ogDescription: 'Your seat is booked. Here’s everything you need.', image: 'assets/social/workshop.jpg', type: 'website', extra: '  <meta name="robots" content="noindex">\n' })}
 <body class="thanks-page">
   ${sprite}
 
