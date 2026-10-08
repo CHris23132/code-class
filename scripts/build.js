@@ -4,7 +4,7 @@ import './build-firebase.js';
 import './build-products.js';
 import { products } from './products.js';
 await mkdir('dist', { recursive: true });
-const pages = ['index.html', 'future-founder-class.html', ...products.map(p => `${p.slug}.html`)];
+const pages = ['index.html', 'future-founder-class.html', 'workshop.html', 'thanks-workshop.html', ...products.map(p => `${p.slug}.html`)];
 for (const file of ['styles.css', 'app.js', 'course.js', 'firebase.js', 'product.css', 'product.js', 'catalog.js', ...pages]) await copyFile(file, `dist/${file}`);
 await cp('assets', 'dist/assets', { recursive: true });
 await cp('vendor', 'dist/vendor', { recursive: true });

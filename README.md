@@ -69,6 +69,27 @@ These pages are generated. Edit course content (price, checkout URL, headline, p
 
 The pages use their own lightweight `product.css`, `product.js`, and `catalog.js`, and don't load the course app or Firebase, so they stay fast on phones. Every Enroll button on a page goes to that course's `checkoutUrl`. Until it's set, the buttons scroll to the offer section. Box images are compressed WebP files in `assets/products/`, with the original PNGs kept alongside them.
 
+## Funnel (Phase 1)
+
+- `workshop.html`: the $47 "First Screen" live workshop. One action: buy a seat.
+- `future-founder.html`: the $497 "Build & Launch" live program, with a video slot in the hero and a $297 self-serve downsell under the offer.
+- `thanks-workshop.html`: delivery after the $47 checkout. It holds the Calendly booking, the software link, and the ebook. It's marked `noindex`.
+
+All settings live in `scripts/products.js`. Fill them in, run `npm run build:products`, and commit the regenerated pages. Until a URL starts with `http`, the page treats it as not set: buttons scroll to the offer section, and the thank-you page shows "coming soon" states.
+
+| Setting | Where |
+| --- | --- |
+| `STRIPE_WORKSHOP_URL` | `funnel.workshopCheckout` |
+| `STRIPE_PROGRAM_URL` | `checkoutUrl` on `future-founder` |
+| `EVERGREEN_COURSE_URL` ($297 downsell) | `funnel.evergreenCheckout` |
+| `VSL_URL_PLACEHOLDER` (YouTube, Vimeo, Loom, or a direct embed URL) | `vslUrl` on `future-founder` |
+| `CALENDLY_WORKSHOP_URL`, `SOFTWARE_ACCESS_URL`, `EBOOK_URL` | `funnel.calendly`, `funnel.software`, `funnel.ebook` |
+| Next workshop / cohort dates (weekly) | `funnel.workshopDate`, `funnel.cohortDate`, for example `'Thursday, Oct 15'`. When empty, the pages say "date announced soon". |
+
+Stripe Payment Link for the workshop: turn on required email collection, and set "After payment" to redirect to `https://chris23132.github.io/code-class/thanks-workshop.html`.
+
+Checkout buttons use `<meta name="checkout-url">` with `data-enroll`. A named button such as `data-enroll="evergreen"` reads `<meta name="checkout-url-evergreen">` instead, so later ladder rungs ($149/mo Build Club, $1,997 1-on-1) can be added the same way.
+
 ## Edit content
 
 - `course.js`: modules, lessons, prompts, commands, checklists, resource links
