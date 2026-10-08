@@ -236,7 +236,8 @@ details p{padding:0 2px 20px;color:var(--text)}
   .site-footer{padding-bottom:26px}
 }
 
-.site-footer a{color:var(--lime);margin-left:6px;text-decoration:underline;text-underline-offset:3px}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:8px}
+.site-footer a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}
 
 .pill{display:inline-block;padding:4px 10px;border-radius:20px;background:#e6f4f8;color:var(--link);font-weight:700;font-size:10px}
 .pill.lime{background:var(--lime);color:var(--navy)}
@@ -447,9 +448,24 @@ details p{padding:0 2px 20px;color:var(--text)}
 .share-host span{font-size:10px;font-weight:700;color:#c8d5dd}
 
 .host{background:var(--white)}
+.host-wrap{max-width:560px;text-align:center}
+.host-eyebrow{margin-bottom:14px}
+.host-card{text-align:left}
+.host-id{display:flex;align-items:center;gap:18px}
+.host-id img{flex:none}
+.host-card h3{margin:0;font-size:24px}
+.host-role{margin-top:4px;color:var(--lime)!important;font-weight:700;font-size:14px}
+.seat-note{margin-top:14px;text-align:center;font-size:13px;color:var(--muted);line-height:1.6}
+.quote-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+.legal{padding:44px 0 72px}
+.legal h1{font-size:clamp(32px,7vw,46px);font-weight:800}
+.legal-updated{margin:8px 0 18px;font-size:13px;color:var(--muted)}
+.legal h2{font-size:20px;font-weight:800;margin:30px 0 8px}
+.legal p{color:var(--text);margin-top:8px}
+.legal a{color:var(--link);text-decoration:underline;text-underline-offset:3px}
+.legal-page .site-footer{padding-bottom:26px}
 .workshop-page .testimonials{background:var(--paper)}
 .workshop-page .quote-card{background:var(--white)}
-.host-wrap{max-width:560px}
 .included{display:grid;gap:12px;margin-top:4px}
 .included li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5}
 .included .icon{width:22px;height:22px;padding:4px;border-radius:50%;background:var(--lime);color:var(--navy);margin-top:1px}

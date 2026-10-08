@@ -1,3 +1,19 @@
+// ─── Weekly workshop settings: edit, run `npm run build:products`, commit. ───
+// Shown as "Next session: Thursday, October 15 at 7:00 PM ET — 9 of 20 seats left." Keep seatsLeft accurate (null hides it).
+// workshop.html stays in draft (noindex, and `npm run verify:launch` fails) until date, checkout link, and support email are real.
+export const SESSION = { date: '', time: '7:00 PM ET', seatsLeft: null, maxSeats: 20 };
+
+// A URL left as its placeholder name (anything not starting with http) is treated as not set yet.
+export const funnel = {
+  cohortDate: '',
+  workshopCheckout: 'STRIPE_WORKSHOP_URL',
+  evergreenCheckout: 'EVERGREEN_COURSE_URL',
+  calendly: 'CALENDLY_WORKSHOP_URL',
+  software: 'SOFTWARE_ACCESS_URL',
+  ebook: 'EBOOK_URL',
+  supportEmail: 'SUPPORT_EMAIL'
+};
+
 const sharedFaq = {
   noCode: ['I’ve never written a line of code.', 'That’s who this is built for. The AI writes the code; you direct it. If you can follow a recipe, you can do this.'],
   stuck: ['What if I get stuck?', 'Every step ends with a checkpoint so you know it works before moving on, and the prompts are engineered to get you unstuck. If you’re still stuck, email me.'],
@@ -7,11 +23,17 @@ const guidedSoftware = thing => ['Guided software, not just videos.', `An intera
 const notFor = ['You want a computer science degree', 'You won’t touch a keyboard'];
 
 // Only real students' words, approved by them. Entries with an empty quote are not shown.
+// photo: optional square image path, e.g. 'assets/students/jane-doe.webp'. role: one-line descriptor.
 export const testimonials = [
-  { name: 'Rick', detail: '', course: 'future-founder', quote: 'I’d started three coding courses and quit every one around the database part. Code Class was the first time the pieces actually connected — by Sunday night I had my app running on my phone with real logins.' },
-  { name: 'Michael', detail: '', course: 'future-founder', quote: 'I’m not technical, and agencies quoted me more than I could afford to build my idea. The step-by-step prompts walked me through everything, and the checkpoints meant I never moved on with something broken. I built the first version myself.' },
-  { name: 'Leslie', detail: '', course: 'future-founder', quote: 'It never felt like a lecture: copy the prompt, test it on your phone, check it off. When I got stuck on Firebase, the lesson already had the answer. I was showing people my app the next week.' },
-  { name: 'Aera', detail: '', course: 'future-founder', quote: 'I wanted a real skill, not another certificate. Now I have a working app I can show people, and I understand how modern apps fit together well enough to keep building on my own.' }
+  // PLACEHOLDER: First Screen workshop slots. Fill with a real attendee's full name, role, photo, and approved quote that names the workshop.
+  // Until at least one is filled, workshop.html shows the Code Class student quotes below.
+  { name: '', role: '', photo: '', course: 'workshop', quote: '' },
+  { name: '', role: '', photo: '', course: 'workshop', quote: '' },
+  { name: '', role: '', photo: '', course: 'workshop', quote: '' },
+  { name: 'Rick', role: '', course: 'future-founder', quote: 'I’d started three coding courses and quit every one around the database part. Code Class was the first time the pieces actually connected — by Sunday night I had my app running on my phone with real logins.' },
+  { name: 'Michael', role: '', course: 'future-founder', quote: 'I’m not technical, and agencies quoted me more than I could afford to build my idea. The step-by-step prompts walked me through everything, and the checkpoints meant I never moved on with something broken. I built the first version myself.' },
+  { name: 'Leslie', role: '', course: 'future-founder', quote: 'It never felt like a lecture: copy the prompt, test it on your phone, check it off. When I got stuck on Firebase, the lesson already had the answer. I was showing people my app the next week.' },
+  { name: 'Aera', role: '', course: 'future-founder', quote: 'I wanted a real skill, not another certificate. Now I have a working app I can show people, and I understand how modern apps fit together well enough to keep building on my own.' }
 ];
 
 // [file in assets/press, outlet, logo width at 72px tall, display height]
@@ -35,16 +57,13 @@ export const credentials = [
   'Built apps at a big tech company'
 ];
 
-// Funnel settings. A URL left as its placeholder name (anything not starting with http) is treated as not set yet.
-// Dates are shown exactly as written, e.g. 'Thursday, Oct 15'. Leave empty to show "date announced soon".
-export const funnel = {
-  workshopDate: '',
-  cohortDate: '',
-  workshopCheckout: 'STRIPE_WORKSHOP_URL',
-  evergreenCheckout: 'EVERGREEN_COURSE_URL',
-  calendly: 'CALENDLY_WORKSHOP_URL',
-  software: 'SOFTWARE_ACCESS_URL',
-  ebook: 'EBOOK_URL'
+// Workshop host card. Credentials must be specific and checkable, with no company names and no digit metrics.
+// Christopher approves the final wording before launch; until then these are his current approved lines.
+export const host = {
+  name: 'Christopher Walsh',
+  role: 'Founder, Code Class',
+  photo: 'assets/products/founder.webp',
+  credentials: credentials.slice(0, 3)
 };
 
 export const goals = [

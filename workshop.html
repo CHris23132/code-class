@@ -8,9 +8,12 @@
   <meta name="description" content="A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.">
   <meta property="og:title" content="First Screen — a live 60-minute app-building workshop">
   <meta property="og:description" content="Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.">
-  <meta property="og:image" content="assets/products/future-founder.webp">
+  <meta property="og:image" content="https://chris23132.github.io/code-class/assets/social/workshop.jpg">
   <meta property="og:type" content="product">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="checkout-url" content="STRIPE_WORKSHOP_URL">
+  <!-- DRAFT: not launch-ready until SESSION.date, the Stripe link, and the support email are set. Run npm run verify:launch. -->
+  <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -113,20 +116,22 @@
 
     <section class="section host">
       <div class="wrap host-wrap">
-        <article class="card founder-card">
-            <img src="assets/products/founder.webp" alt="Portrait of the Code Class founder" width="480" height="480" loading="lazy" decoding="async">
-            <h3>Your host: a builder, not a guru.</h3>
-            <p>I started as a broke beginner teaching myself to code. This is the path I wish I’d had.</p>
+        <span class="eyebrow host-eyebrow">Your host</span>
+        <article class="card founder-card host-card">
+            <div class="host-id">
+              <img src="assets/products/founder.webp" alt="Christopher Walsh" width="480" height="480" loading="lazy" decoding="async">
+              <div><h3>Christopher Walsh</h3><p class="host-role">Founder, Code Class</p></div>
+            </div>
             <ul class="credentials">
               <li><svg class="icon"><use href="#i-check"/></svg>Led technology at a startup that raised millions</li>
               <li><svg class="icon"><use href="#i-check"/></svg>Helped a company build the software that led to its acquisition</li>
               <li><svg class="icon"><use href="#i-check"/></svg>Top-rated developer on Fiverr</li>
-              <li><svg class="icon"><use href="#i-check"/></svg>Built apps at a big tech company</li>
             </ul>
           </article>
       </div>
     </section>
 
+    <!-- TESTIMONIALS: 3 First Screen workshop slots in scripts/products.js. Showing Code Class student quotes until one is filled. -->
     <section class="section testimonials">
       <div class="wrap">
         <div class="section-head">
@@ -170,7 +175,7 @@
               <li><svg class="icon"><use href="#i-check"/></svg><span>Recording (yours to keep)</span></li>
               <li><svg class="icon"><use href="#i-check"/></svg><span>Starter kit: every prompt + template we use</span></li>
               <li><svg class="icon"><use href="#i-check"/></svg><span><b>Bonus:</b> “Build Your First App in a Weekend” ebook</span></li>
-              <li><svg class="icon"><use href="#i-check"/></svg><span><b>$47 credit toward Build &amp; Launch</b> if you join within 48 hours</span></li>
+              <li><svg class="icon"><use href="#i-check"/></svg><span><b>$47 credit toward Build &amp; Launch</b> ($497 program) if you join within 48 hours</span></li>
             </ul>
             <div class="price">
               <span class="total">One live seat</span>
@@ -180,8 +185,9 @@
             <a class="button button-large full" href="#offer" data-enroll>Save my seat — $47 <svg class="icon"><use href="#i-arrow"/></svg></a>
             <div class="guarantee">
               <svg class="icon"><use href="#i-shield"/></svg>
-              <p>Small by design: max 20 seats, minimum 5 to run. If we don't hit 5, you roll to the next week and keep every bonus.</p>
+              <p>Attend live, follow along, and if you don't leave with a working app screen on your phone, email us within 7 days for a full refund.</p>
             </div>
+            <p class="seat-note">Small by design: max 20 seats, minimum 5 to run. If we don't hit 5, you roll to the next week and keep every bonus.</p>
           </div>
         </div>
       </div>
@@ -251,7 +257,10 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</div>
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</p>
+      <nav class="footer-links" aria-label="Footer"><a href="terms.html">Terms</a><a href="refund.html">Refund policy</a></nav>
+    </div>
   </footer>
 
   <div class="sticky-cta" aria-hidden="true">

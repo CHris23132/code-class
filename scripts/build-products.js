@@ -1,11 +1,16 @@
 import { writeFile } from 'node:fs/promises';
-import { products, goals, testimonials, press, credentials, funnel } from './products.js';
+import { products, goals, testimonials, press, credentials, funnel, SESSION, host } from './products.js';
 
+const SITE = 'https://chris23132.github.io/code-class/';
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const money = n => `$${n.toLocaleString('en-US')}`;
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
+const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const cohortText = funnel.cohortDate ? `Next cohort starts ${funnel.cohortDate} — 4 live sessions over 2 weeks.` : 'Next cohort: dates announced soon — 4 live sessions over 2 weeks.';
-const sessionText = `Next session: ${funnel.workshopDate || 'date announced soon'} at 7:00 PM ET`;
+const seatsText = SESSION.seatsLeft == null ? '' : ` — ${SESSION.seatsLeft} of ${SESSION.maxSeats} seats left`;
+const sessionText = SESSION.date ? `Next session: ${SESSION.date} at ${SESSION.time}${seatsText}.` : `Next session: date announced soon at ${SESSION.time}`;
+const workshopReady = Boolean(SESSION.date) && isUrl(funnel.workshopCheckout) && isEmail(funnel.supportEmail);
+const supportLink = isEmail(funnel.supportEmail) ? `<a href="mailto:${attr(funnel.supportEmail)}">${funnel.supportEmail}</a>` : '';
 const icon = name => `<svg class="icon"><use href="#i-${name}"/></svg>`;
 
 const sprite = `<svg width="0" height="0" class="sprite" aria-hidden="true">
@@ -27,8 +32,9 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
   <meta name="description" content="${attr(description)}">
   <meta property="og:title" content="${attr(ogTitle)}">
   <meta property="og:description" content="${attr(ogDescription)}">
-  <meta property="og:image" content="${image}">
+  <meta property="og:image" content="${isUrl(image) ? image : SITE + image}">
   <meta property="og:type" content="${type}">
+  <meta name="twitter:card" content="summary_large_image">
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -38,8 +44,21 @@ ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
 
 const footer = link => `<footer class="site-footer">
-    <div class="wrap">© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.${link ? ` <a href="./">Browse all courses</a>` : ''}</div>
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</p>
+      <nav class="footer-links" aria-label="Footer">${link ? '<a href="./">Browse all courses</a>' : ''}<a href="terms.html">Terms</a><a href="refund.html">Refund policy</a>${supportLink}</nav>
+    </div>
   </footer>`;
+
+const hostCard = `<article class="card founder-card host-card">
+            <div class="host-id">
+              <img src="${host.photo}" alt="${attr(host.name)}" width="480" height="480" loading="lazy" decoding="async">
+              <div><h3>${host.name}</h3><p class="host-role">${host.role}</p></div>
+            </div>
+            <ul class="credentials">
+${host.credentials.map(c => `              <li>${icon('check')}${c}</li>`).join('\n')}
+            </ul>
+          </article>`;
 
 const founderCard = `<article class="card founder-card">
             <img src="assets/products/founder.webp" alt="Portrait of the Code Class founder" width="480" height="480" loading="lazy" decoding="async">
@@ -64,8 +83,9 @@ const pressStrip = `
     </section>
 `;
 
-function testimonialSection(p, eyebrow = 'From students') {
-  const quotes = testimonials.filter(t => t.course === p.slug && t.quote.trim());
+const quotesFor = course => testimonials.filter(t => t.course === course && t.quote.trim() && t.name.trim());
+
+function testimonialSection(p, eyebrow = 'From students', quotes = quotesFor(p.slug)) {
   const slot = p.live ? '\n    <!-- TESTIMONIALS: slot for founding-student videos -->\n' : '';
   if (!quotes.length) return slot;
   return `${slot}
@@ -80,7 +100,7 @@ function testimonialSection(p, eyebrow = 'From students') {
             <div class="quote-track">
 ${quotes.map((t, i) => `              <figure class="quote-card" aria-roledescription="slide" aria-label="${i + 1} of ${quotes.length}">
                 <blockquote>“${t.quote.trim()}”</blockquote>
-                <figcaption><span class="quote-avatar" aria-hidden="true">${t.name.trim()[0].toUpperCase()}</span><span><b>${t.name}</b>${t.detail ? `<small>${t.detail}</small>` : ''}</span></figcaption>
+                <figcaption>${t.photo ? `<img class="quote-photo" src="${attr(t.photo)}" alt="" width="48" height="48" loading="lazy" decoding="async">` : `<span class="quote-avatar" aria-hidden="true">${t.name.trim()[0].toUpperCase()}</span>`}<span><b>${t.name}</b>${t.role ? `<small>${t.role}</small>` : ''}</span></figcaption>
               </figure>`).join('\n')}
             </div>
           </div>
@@ -395,7 +415,7 @@ const workshop = {
     'Recording (yours to keep)',
     'Starter kit: every prompt + template we use',
     '<b>Bonus:</b> “Build Your First App in a Weekend” ebook',
-    '<b>$47 credit toward Build &amp; Launch</b> if you join within 48 hours'
+    '<b>$47 credit toward Build &amp; Launch</b> ($497 program) if you join within 48 hours'
   ],
   steps: [
     ['Grab your seat', 'Checkout takes 60 seconds.'],
@@ -431,10 +451,68 @@ const shareVisual = `<div class="share" role="img" aria-label="Illustration: a l
             <div class="share-host"><img src="assets/products/founder.webp" alt="" width="480" height="480" decoding="async"><span>Your host</span></div>
           </div>`;
 
+const LEGAL_UPDATED = 'October 7, 2026';
+
+function legalPage({ title, intro, sections }) {
+  const contact = supportLink ? `Email ${supportLink}` : 'Reply to your receipt email';
+  return `${head({ title: `${title} | Code Class`, description: intro, ogTitle: `${title} — Code Class`, ogDescription: intro, image: 'assets/products/future-founder.webp', type: 'website' })}
+<body class="legal-page">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('./')}
+      <a class="header-link" href="./">All courses</a>
+    </div>
+  </header>
+
+  <main class="legal">
+    <div class="wrap narrow">
+      <h1>${title}</h1>
+      <p class="legal-updated">Last updated ${LEGAL_UPDATED}</p>
+      <p class="lead">${intro}</p>
+${sections.map(([h, body]) => `      <h2>${h}</h2>
+      ${(Array.isArray(body) ? body : [body]).map(b => b.startsWith('<ul') ? b : `<p>${b}</p>`).join('\n      ')}`).join('\n')}
+      <h2>Questions</h2>
+      <p>${contact} and a real person will get back to you.</p>
+    </div>
+  </main>
+
+  ${footer(false)}
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
+const termsPage = () => legalPage({
+  title: 'Terms',
+  intro: 'The plain-English rules for buying and using Code Class workshops, programs, and courses.',
+  sections: [
+    ['What you’re buying', 'Each purchase gives one person access to what that page lists — for example a live workshop seat, live program sessions, session recordings, the guided software, and any bonuses. Access is for your own personal use.'],
+    ['Live sessions', [`Live sessions run on Zoom at the time shown on the page. Live workshops need at least 5 people to run; if a session doesn’t reach 5, your seat moves to the next session and you keep every bonus.`, 'If we ever have to move a session, we’ll email you the new time and the recording is still yours.']],
+    ['Please don’t share', 'Your login, the recordings, the software, and the course materials are for you. Please don’t share, resell, or re-upload them.'],
+    ['What you build is yours', 'The app and code you build during a workshop, program, or course belong to you.'],
+    ['Results', 'We teach a step-by-step system and back it with the guarantees on each page, but what you build afterwards depends on you. We don’t promise income or business results.'],
+    ['Payments and refunds', 'Payments are processed securely by Stripe. Refunds follow our <a href="refund.html">refund policy</a>.'],
+    ['Changes', 'If these terms change, the new version will be posted here with a new date.']
+  ]
+});
+
+const refundPage = () => legalPage({
+  title: 'Refund policy',
+  intro: 'Every Code Class offer has a simple guarantee: if you do the work and don’t get the first result we promise, you get your money back.',
+  sections: [
+    ['First Screen workshop ($47)', ['Attend live, follow along, and if you don\'t leave with a working app screen on your phone, email us within 7 days for a full refund.', 'If a session doesn’t reach the 5-person minimum, your seat moves to the next session and you keep every bonus.']],
+    ...products.map(p => [`${p.offerTitle || p.name} (${money(p.price)})`, `<strong>${p.guarantee[0]}:</strong> ${p.guarantee[1].replace('email me and I’ll', 'email us and we’ll')}`]),
+    ['Workshop credit', 'If you join Build &amp; Launch within 48 hours of your workshop, your $47 workshop payment is credited toward it.'],
+    ['How refunds are paid', 'Refunds go back to the card you paid with through Stripe. They usually appear within 5–10 business days, depending on your bank.']
+  ]
+});
+
 function workshopPage() {
   const seat = `Save my seat — $47 ${icon('arrow')}`;
   const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}">${sessionText}</p>`;
-  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/products/future-founder.webp', type: 'product', extra: `  <meta name="checkout-url" content="${attr(funnel.workshopCheckout)}">\n` })}
+  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <meta name="checkout-url" content="${attr(funnel.workshopCheckout)}">\n${workshopReady ? '' : '  <!-- DRAFT: not launch-ready until SESSION.date, the Stripe link, and the support email are set. Run npm run verify:launch. -->\n  <meta name="robots" content="noindex">\n'}` })}
 <body class="workshop-page">
   ${sprite}
 
@@ -482,10 +560,13 @@ ${workshop.wins.map(([title, text], i) => `          <li class="phase">
 
     <section class="section host">
       <div class="wrap host-wrap">
-        ${founderCard.replace('Built by a builder.', 'Your host: a builder, not a guru.')}
+        <span class="eyebrow host-eyebrow">Your host</span>
+        ${hostCard}
       </div>
     </section>
-${testimonialSection({ slug: 'future-founder' }, 'From Code Class students')}
+${quotesFor('workshop').length
+    ? testimonialSection({}, 'From First Screen attendees', quotesFor('workshop'))
+    : `\n    <!-- TESTIMONIALS: 3 First Screen workshop slots in scripts/products.js. Showing Code Class student quotes until one is filled. -->${testimonialSection({}, 'From Code Class students', quotesFor('future-founder'))}`}
     <section class="section offer" id="offer">
       <div class="wrap">
         <div class="offer-card single">
@@ -503,8 +584,9 @@ ${workshop.included.map(i => `              <li>${icon('check')}<span>${i}</span
             <a class="button button-large full" href="#offer" data-enroll>${seat}</a>
             <div class="guarantee">
               ${icon('shield')}
-              <p>Small by design: max 20 seats, minimum 5 to run. If we don't hit 5, you roll to the next week and keep every bonus.</p>
+              <p>Attend live, follow along, and if you don't leave with a working app screen on your phone, email us within 7 days for a full refund.</p>
             </div>
+            <p class="seat-note">Small by design: max 20 seats, minimum 5 to run. If we don't hit 5, you roll to the next week and keep every bonus.</p>
           </div>
         </div>
       </div>
@@ -620,4 +702,6 @@ for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
 await writeFile('index.html', galleryPage());
 await writeFile('workshop.html', workshopPage());
 await writeFile('thanks-workshop.html', thanksPage());
-console.log(`Generated ${products.length} product pages, the index.html course gallery, workshop.html, and thanks-workshop.html`);
+await writeFile('terms.html', termsPage());
+await writeFile('refund.html', refundPage());
+console.log(`Generated ${products.length} product pages, the index.html course gallery, workshop.html, thanks-workshop.html, terms.html, and refund.html${workshopReady ? '' : ' (workshop.html is a DRAFT: run npm run verify:launch)'}`);

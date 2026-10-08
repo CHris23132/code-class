@@ -75,7 +75,13 @@ The pages use their own lightweight `product.css`, `product.js`, and `catalog.js
 - `future-founder.html`: the $497 "Build & Launch" live program, with a video slot in the hero and a $297 self-serve downsell under the offer.
 - `thanks-workshop.html`: delivery after the $47 checkout. It holds the Calendly booking, the software link, and the ebook. It's marked `noindex`.
 
-All settings live in `scripts/products.js`. Fill them in, run `npm run build:products`, and commit the regenerated pages. Until a URL starts with `http`, the page treats it as not set: buttons scroll to the offer section, and the thank-you page shows "coming soon" states.
+The weekly workshop date, time, and seats left are the `SESSION` constant at the top of `scripts/products.js`. It renders into the hero, offer card, and final section as "Next session: Thursday, October 15 at 7:00 PM ET — 9 of 20 seats left." Keep `seatsLeft` accurate.
+
+**Launch rule:** a page isn't done until every CTA is click-verified against a real checkout URL. Run `npm run verify:launch` after building. It fails while any checkout button still points at a placeholder, a date says "announced soon", the support email is missing, or the thank-you links aren't set. While it's failing, `workshop.html` is generated as a draft (`noindex`). Don't send ad traffic until it passes and you've clicked every button on the live page.
+
+`terms.html` and `refund.html` are generated plain-language drafts linked from every footer. The refund page pulls each course's guarantee from `scripts/products.js`. Have them reviewed before launch. The support email (`funnel.supportEmail`) appears in the footer and on both pages once set.
+
+The other settings also live in `scripts/products.js`. Fill them in, run `npm run build:products`, and commit the regenerated pages. Until a URL starts with `http`, the page treats it as not set: buttons scroll to the offer section, and the thank-you page shows "coming soon" states.
 
 | Setting | Where |
 | --- | --- |
@@ -84,7 +90,9 @@ All settings live in `scripts/products.js`. Fill them in, run `npm run build:pro
 | `EVERGREEN_COURSE_URL` ($297 downsell) | `funnel.evergreenCheckout` |
 | `VSL_URL_PLACEHOLDER` (YouTube, Vimeo, Loom, or a direct embed URL) | `vslUrl` on `future-founder` |
 | `CALENDLY_WORKSHOP_URL`, `SOFTWARE_ACCESS_URL`, `EBOOK_URL` | `funnel.calendly`, `funnel.software`, `funnel.ebook` |
-| Next workshop / cohort dates (weekly) | `funnel.workshopDate`, `funnel.cohortDate`, for example `'Thursday, Oct 15'`. When empty, the pages say "date announced soon". |
+| Next workshop date, time, seats left (weekly) | `SESSION.date`, `SESSION.time`, `SESSION.seatsLeft` |
+| Next Build & Launch cohort date | `funnel.cohortDate`, for example `'Monday, October 19'` |
+| `SUPPORT_EMAIL` | `funnel.supportEmail` |
 
 Stripe Payment Link for the workshop: turn on required email collection, and set "After payment" to redirect to `https://chris23132.github.io/code-class/thanks-workshop.html`.
 
