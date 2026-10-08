@@ -1,11 +1,12 @@
-// Launch rule: a page isn't done until every checkout button resolves to a real checkout URL.
+// Launch rule: a page isn't done until every CTA is verified against a real destination.
 // Usage: npm run verify:launch [-- page.html ...]   (defaults to the funnel pages)
 import { readFile } from 'node:fs/promises';
-import { SESSION, funnel } from './products.js';
+import { funnel } from './products.js';
 
 const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['workshop.html', 'thanks-workshop.html', 'future-founder.html'];
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+const banned = ['STRIPE_WORKSHOP_URL', 'DATE_PLACEHOLDER', 'CALENDLY_WORKSHOP_URL', 'SUPPORT_EMAIL', 'announced soon', 'DRAFT: not launch-ready'];
 let failed = 0;
 
 const report = (page, problems) => {
@@ -21,14 +22,22 @@ for (const page of pages) {
   for (const [name, count] of Object.entries(buttons.reduce((acc, n) => ({ ...acc, [n]: (acc[n] || 0) + 1 }), {}))) {
     if (!isUrl(metas[name])) problems.push(`${count} button(s) use <meta name="${name}"> = "${metas[name] ?? 'missing'}", not a real checkout URL`);
   }
-  if (/date announced soon|dates announced soon/.test(html)) problems.push('shows "announced soon" instead of a real date');
-  if (/name="robots" content="noindex"/.test(html) && page !== 'thanks-workshop.html') problems.push('still marked noindex (draft)');
+  if (page !== 'thanks-workshop.html') {
+    for (const s of banned.filter(s => html.includes(s))) problems.push(`contains "${s}"`);
+    if (/name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
+  }
   if (page === 'workshop.html') {
-    if (!SESSION.date) problems.push('SESSION.date is empty');
-    if (!isEmail(funnel.supportEmail)) problems.push(`funnel.supportEmail = "${funnel.supportEmail}"`);
+    const seatButtons = [...html.matchAll(/<a class="button[^"]*" href="([^"]*)"[^>]*>Save my seat/g)].map(m => m[1]);
+    if (seatButtons.length < 5) problems.push(`found ${seatButtons.length} "Save my seat" buttons, expected 5 (header, hero, offer, final, sticky bar)`);
+    for (const href of seatButtons.filter(h => h !== '#booking')) problems.push(`a "Save my seat" button points at ${href}, not #booking`);
+    if (!/<section[^>]*id="booking"/.test(html)) problems.push('missing the #booking section');
+    const widget = html.match(/class="calendly-inline-widget" data-url="([^"]*)"/);
+    if (!widget || !isUrl(widget[1])) problems.push('the #booking section has no live Calendly URL');
+    if (!html.includes('href="mailto:')) problems.push(`no support mailto link (funnel.supportEmail = "${funnel.supportEmail}")`);
   }
   if (page === 'thanks-workshop.html') {
-    for (const key of ['calendly', 'software', 'ebook']) if (!isUrl(funnel[key])) problems.push(`funnel.${key} = "${funnel[key]}"`);
+    for (const key of ['software', 'ebook']) if (!isUrl(funnel[key])) problems.push(`funnel.${key} = "${funnel[key]}"`);
+    if (!isEmail(funnel.supportEmail)) problems.push(`funnel.supportEmail = "${funnel.supportEmail}"`);
   }
   report(page, problems);
 }

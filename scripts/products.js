@@ -1,14 +1,17 @@
-// ─── Weekly workshop settings: edit, run `npm run build:products`, commit. ───
-// Shown as "Next session: Thursday, October 15 at 7:00 PM ET — 9 of 20 seats left." Keep seatsLeft accurate (null hides it).
-// workshop.html stays in draft (noindex, and `npm run verify:launch` fails) until date, checkout link, and support email are real.
-export const SESSION = { date: '', time: '7:00 PM ET', seatsLeft: null, maxSeats: 20 };
+// ─── Workshop schedule: keep in sync with the Calendly event's weekly slots (24-hour times, Eastern). ───
+// The page shows "Every Saturday & Sunday — next session …" and works out the next slot in the visitor's browser.
+export const SESSION = {
+  days: ['Saturday', 'Sunday'],
+  slots: { Saturday: ['10:00', '13:00', '16:00', '19:00'], Sunday: ['11:00', '14:00', '17:00'] },
+  timeZone: 'America/New_York',
+  maxSeats: 20
+};
 
 // A URL left as its placeholder name (anything not starting with http) is treated as not set yet.
 export const funnel = {
   cohortDate: '',
-  workshopCheckout: 'STRIPE_WORKSHOP_URL',
+  calendly: 'https://calendly.com/play3dinc/first-screen-workshop',
   evergreenCheckout: 'EVERGREEN_COURSE_URL',
-  calendly: 'CALENDLY_WORKSHOP_URL',
   software: 'SOFTWARE_ACCESS_URL',
   ebook: 'EBOOK_URL',
   supportEmail: 'SUPPORT_EMAIL'

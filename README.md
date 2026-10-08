@@ -71,13 +71,13 @@ The pages use their own lightweight `product.css`, `product.js`, and `catalog.js
 
 ## Funnel (Phase 1)
 
-- `workshop.html`: the $47 "First Screen" live workshop. One action: buy a seat.
+- `workshop.html`: the $47 "First Screen" live workshop. One action: book a seat. All five "Save my seat" buttons scroll to the `#booking` section. That section embeds the live Calendly event (`funnel.calendly`), where visitors pick a weekend slot and pay $47 through Calendly's Stripe integration.
 - `future-founder.html`: the $497 "Build & Launch" live program, with a video slot in the hero and a $297 self-serve downsell under the offer.
-- `thanks-workshop.html`: delivery after the $47 checkout. It holds the Calendly booking, the software link, and the ebook. It's marked `noindex`.
+- `thanks-workshop.html`: Calendly redirects here after booking. In order, it shows the "You're in" headline, the $497 Build & Launch upsell, the software link, and the ebook. It's marked `noindex`.
 
-The weekly workshop date, time, and seats left are the `SESSION` constant at the top of `scripts/products.js`. It renders into the hero, offer card, and final section as "Next session: Thursday, October 15 at 7:00 PM ET — 9 of 20 seats left." Keep `seatsLeft` accurate.
+The workshop schedule is the `SESSION` constant at the top of `scripts/products.js`. Keep its slots in sync with the Calendly event. The hero, offer card, and final section show "Every Saturday & Sunday — next session Saturday, Oct 10 at 10:00 AM ET". The next slot is worked out in the visitor's browser, so it never goes stale. There's no seats-left count; Calendly enforces the 20-seat cap.
 
-**Launch rule:** a page isn't done until every CTA is click-verified against a real checkout URL. Run `npm run verify:launch` after building. It fails while any checkout button still points at a placeholder, a date says "announced soon", the support email is missing, or the thank-you links aren't set. While it's failing, `workshop.html` is generated as a draft (`noindex`). Don't send ad traffic until it passes and you've clicked every button on the live page.
+**Launch rule:** a page isn't done until every CTA is click-verified against a real destination. Run `npm run verify:launch` after building. It fails while any checkout button points at a placeholder or a "Save my seat" button doesn't go to `#booking`. It also fails if the Calendly embed is missing, a placeholder string or "announced soon" remains, the support email is missing, or the thank-you links aren't set. Don't send ad traffic until it passes and you've clicked every button on the live page.
 
 `terms.html` and `refund.html` are generated plain-language drafts linked from every footer. The refund page pulls each course's guarantee from `scripts/products.js`. Have them reviewed before launch. The support email (`funnel.supportEmail`) appears in the footer and on both pages once set.
 
@@ -85,16 +85,14 @@ The other settings also live in `scripts/products.js`. Fill them in, run `npm ru
 
 | Setting | Where |
 | --- | --- |
-| `STRIPE_WORKSHOP_URL` | `funnel.workshopCheckout` |
+| Workshop booking (Calendly event) | `funnel.calendly` |
 | `STRIPE_PROGRAM_URL` | `checkoutUrl` on `future-founder` |
 | `EVERGREEN_COURSE_URL` ($297 downsell) | `funnel.evergreenCheckout` |
 | `VSL_URL_PLACEHOLDER` (YouTube, Vimeo, Loom, or a direct embed URL) | `vslUrl` on `future-founder` |
-| `CALENDLY_WORKSHOP_URL`, `SOFTWARE_ACCESS_URL`, `EBOOK_URL` | `funnel.calendly`, `funnel.software`, `funnel.ebook` |
-| Next workshop date, time, seats left (weekly) | `SESSION.date`, `SESSION.time`, `SESSION.seatsLeft` |
+| `SOFTWARE_ACCESS_URL`, `EBOOK_URL` | `funnel.software`, `funnel.ebook` |
+| Workshop weekly slots | `SESSION.slots` |
 | Next Build & Launch cohort date | `funnel.cohortDate`, for example `'Monday, October 19'` |
 | `SUPPORT_EMAIL` | `funnel.supportEmail` |
-
-Stripe Payment Link for the workshop: turn on required email collection, and set "After payment" to redirect to `https://chris23132.github.io/code-class/thanks-workshop.html`.
 
 Checkout buttons use `<meta name="checkout-url">` with `data-enroll`. A named button such as `data-enroll="evergreen"` reads `<meta name="checkout-url-evergreen">` instead, so later ladder rungs ($149/mo Build Club, $1,997 1-on-1) can be added the same way.
 

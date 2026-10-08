@@ -10,6 +10,31 @@ document.querySelectorAll('[data-enroll]').forEach(a => {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
+function nextSession({ slots, timeZone }) {
+  const now = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  const nowMinutes = Number(now.hour) * 60 + Number(now.minute);
+  for (let offset = 0; offset < 8; offset++) {
+    const day = new Date(Date.UTC(Number(now.year), Number(now.month) - 1, Number(now.day) + offset));
+    const weekday = day.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' });
+    const time = (slots[weekday] || []).find(t => {
+      const [h, m] = t.split(':').map(Number);
+      return offset > 0 || h * 60 + m > nowMinutes;
+    });
+    if (time) {
+      const [h, m] = time.split(':').map(Number);
+      const date = day.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: 'UTC' });
+      return `${date} at ${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'} ET`;
+    }
+  }
+  return '';
+}
+
+document.querySelectorAll('[data-schedule]').forEach(line => {
+  const schedule = JSON.parse(line.dataset.schedule);
+  const next = nextSession(schedule);
+  if (next) line.textContent = `${schedule.days} — next session ${next}`;
+});
+
 function embedUrl(raw) {
   const url = new URL(raw);
   const host = url.hostname.replace(/^www\./, '');
@@ -85,5 +110,5 @@ if (sticky) {
     sticky.setAttribute('aria-hidden', String(!show));
     stickyLink.tabIndex = show ? 0 : -1;
   });
-  [document.querySelector('.hero .cta-group'), document.getElementById('offer'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
+  [document.querySelector('.hero .cta-group'), document.getElementById('offer'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
 }

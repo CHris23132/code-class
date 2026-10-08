@@ -7,9 +7,9 @@ const money = n => `$${n.toLocaleString('en-US')}`;
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const cohortText = funnel.cohortDate ? `Next cohort starts ${funnel.cohortDate} — 4 live sessions over 2 weeks.` : 'Next cohort: dates announced soon — 4 live sessions over 2 weeks.';
-const seatsText = SESSION.seatsLeft == null ? '' : ` — ${SESSION.seatsLeft} of ${SESSION.maxSeats} seats left`;
-const sessionText = SESSION.date ? `Next session: ${SESSION.date} at ${SESSION.time}${seatsText}.` : `Next session: date announced soon at ${SESSION.time}`;
-const workshopReady = Boolean(SESSION.date) && isUrl(funnel.workshopCheckout) && isEmail(funnel.supportEmail);
+const slotCount = Object.values(SESSION.slots).flat().length;
+const sessionDays = `Every ${SESSION.days.join(' &amp; ')}`;
+const sessionText = `${sessionDays} — ${slotCount} live sessions each weekend (ET)`;
 const supportLink = isEmail(funnel.supportEmail) ? `<a href="mailto:${attr(funnel.supportEmail)}">${funnel.supportEmail}</a>` : '';
 const icon = name => `<svg class="icon"><use href="#i-${name}"/></svg>`;
 
@@ -489,7 +489,7 @@ const termsPage = () => legalPage({
   intro: 'The plain-English rules for buying and using Code Class workshops, programs, and courses.',
   sections: [
     ['What you’re buying', 'Each purchase gives one person access to what that page lists — for example a live workshop seat, live program sessions, session recordings, the guided software, and any bonuses. Access is for your own personal use.'],
-    ['Live sessions', [`Live sessions run on Zoom at the time shown on the page. Live workshops need at least 5 people to run; if a session doesn’t reach 5, your seat moves to the next session and you keep every bonus.`, 'If we ever have to move a session, we’ll email you the new time and the recording is still yours.']],
+    ['Live sessions', [`Live sessions run on Google Meet or Zoom at the time you book or that’s shown on the page. Live workshops need at least 5 people to run; if a session doesn’t reach 5, your seat moves to the next session and you keep every bonus.`, 'If we ever have to move a session, we’ll email you the new time and the recording is still yours.']],
     ['Please don’t share', 'Your login, the recordings, the software, and the course materials are for you. Please don’t share, resell, or re-upload them.'],
     ['What you build is yours', 'The app and code you build during a workshop, program, or course belong to you.'],
     ['Results', 'We teach a step-by-step system and back it with the guarantees on each page, but what you build afterwards depends on you. We don’t promise income or business results.'],
@@ -511,15 +511,17 @@ const refundPage = () => legalPage({
 
 function workshopPage() {
   const seat = `Save my seat — $47 ${icon('arrow')}`;
-  const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}">${sessionText}</p>`;
-  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <meta name="checkout-url" content="${attr(funnel.workshopCheckout)}">\n${workshopReady ? '' : '  <!-- DRAFT: not launch-ready until SESSION.date, the Stripe link, and the support email are set. Run npm run verify:launch. -->\n  <meta name="robots" content="noindex">\n'}` })}
+  const schedule = attr(JSON.stringify({ slots: SESSION.slots, timeZone: SESSION.timeZone, days: sessionDays.replace('&amp;', '&') }));
+  const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">${sessionText}</p>`;
+  const trust = `Live on Google Meet <i>·</i> Recording included <i>·</i> Max ${SESSION.maxSeats} seats`;
+  return `${head({ title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product' })}
 <body class="workshop-page">
   ${sprite}
 
   <header class="site-header">
     <div class="wrap header-inner">
       ${logo('./')}
-      <a class="button button-small" href="#offer" data-enroll>Save my seat</a>
+      <a class="button button-small" href="#booking">Save my seat</a>
     </div>
   </header>
 
@@ -532,8 +534,8 @@ function workshopPage() {
           <p class="lead">60 minutes. A real app with a real database, on your phone by the end of the call. No experience needed.</p>
           <div class="cta-group">
             ${session()}
-            <a class="button button-large" href="#offer" data-enroll>${seat}</a>
-            <p class="trust">Live on Zoom <i>·</i> Recording included <i>·</i> Max 20 seats</p>
+            <a class="button button-large" href="#booking">${seat}</a>
+            <p class="trust">${trust}</p>
           </div>
         </div>
         <div class="hero-visual has-share">
@@ -581,14 +583,28 @@ ${workshop.included.map(i => `              <li>${icon('check')}<span>${i}</span
               <span class="today"><b>$47</b></span>
             </div>
             ${session('center')}
-            <a class="button button-large full" href="#offer" data-enroll>${seat}</a>
+            <a class="button button-large full" href="#booking">${seat}</a>
             <div class="guarantee">
               ${icon('shield')}
-              <p>Attend live, follow along, and if you don't leave with a working app screen on your phone, email us within 7 days for a full refund.</p>
+              <p>Attend live, follow along, and if you don't leave with a working app screen on your phone, email us within 7 days for a full refund.${supportLink ? ` ${supportLink}` : ''}</p>
             </div>
-            <p class="seat-note">Small by design: max 20 seats, minimum 5 to run. If we don't hit 5, you roll to the next week and keep every bonus.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Book now</span>
+          <h2>Reserve your seat</h2>
+          <p class="booking-flow">Pick your Saturday or Sunday slot below → pay $47 securely at booking → get your Google Meet link instantly.</p>
+        </div>
+        <div class="booking-card">
+          <div class="calendly-inline-widget" data-url="${attr(funnel.calendly)}" style="min-width:320px;height:720px;"></div>
+        </div>
+        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <p class="fine-print">Small by design: max ${SESSION.maxSeats} seats, minimum 5 to run. If we don't hit 5, you roll to the next session and keep every bonus.</p>
       </div>
     </section>
 
@@ -623,8 +639,8 @@ ${workshop.faq.map(([q, a]) => `        <details>
         <h2>Build your first real app screen — live with me.</h2>
         <p class="lead">60 minutes. A real app with a real database, on your phone by the end of the call.</p>
         ${session('center')}
-        <a class="button button-large" href="#offer" data-enroll>${seat}</a>
-        <p class="trust">Live on Zoom <i>·</i> Recording included <i>·</i> Max 20 seats</p>
+        <a class="button button-large" href="#booking">${seat}</a>
+        <p class="trust">${trust}</p>
       </div>
     </section>
   </main>
@@ -633,7 +649,7 @@ ${workshop.faq.map(([q, a]) => `        <details>
 
   <div class="sticky-cta" aria-hidden="true">
     <span><b>First Screen</b> · Live · $47</span>
-    <a class="button" href="#offer" data-enroll tabindex="-1">Save my seat</a>
+    <a class="button" href="#booking" tabindex="-1">Save my seat</a>
   </div>
 
   <script src="product.js" defer></script>
@@ -646,11 +662,8 @@ function thanksPage() {
   const linkButton = (url, label, ready) => isUrl(url)
     ? `<a class="button" href="${attr(url)}" target="_blank" rel="noopener">${label} ${icon('arrow')}</a>`
     : `<span class="button" aria-disabled="true">${ready}</span>`;
-  const calendar = isUrl(funnel.calendly)
-    ? `<div class="calendly-inline-widget" data-url="${attr(funnel.calendly)}"></div>
-          <script src="https://assets.calendly.com/assets/external/widget.js" async></script>`
-    : `<div class="embed-placeholder">The session calendar will appear here. If you don’t see it, reply to your receipt email and we’ll book you in.</div>`;
-  return `${head({ title: 'You’re in — First Screen Workshop | Code Class', description: 'Your First Screen workshop seat: book your session, open the software, and grab your bonuses.', ogTitle: 'You’re in — First Screen Workshop', ogDescription: 'Book your session, open the software, and grab your bonuses.', image: 'assets/products/future-founder.webp', type: 'website', extra: '  <meta name="robots" content="noindex">\n' })}
+  const program = products.find(p => p.slug === 'future-founder');
+  return `${head({ title: 'You’re in — First Screen Workshop | Code Class', description: 'Your First Screen workshop seat is booked: your next step, software access, and bonuses.', ogTitle: 'You’re in — First Screen Workshop', ogDescription: 'Your seat is booked. Here’s everything you need.', image: 'assets/social/workshop.jpg', type: 'website', extra: '  <meta name="robots" content="noindex">\n' })}
 <body class="thanks-page">
   ${sprite}
 
@@ -665,28 +678,31 @@ function thanksPage() {
       <div class="thanks-head">
         <span class="eyebrow">First Screen workshop</span>
         <h1>You're in. Here's everything.</h1>
+        <p class="lead">Your seat is booked. Your Google Meet link and calendar invite are in your confirmation email.</p>
       </div>
-      <ol class="step-list">
-        <li class="step-card">
-          <span class="phase-num">Step 1</span>
-          <h2>Book your seat</h2>
-          <p>Pick your session date below — your seat is reserved once you book.</p>
-          ${calendar}
-        </li>
-        <li class="step-card">
-          <span class="phase-num">Step 2</span>
+      <div class="step-list">
+        <section class="upsell-card" aria-labelledby="upsell-title">
+          <span class="eyebrow">Your next step · ${money(program.price)}</span>
+          <h2 id="upsell-title">Turn your first screen into a launched app.</h2>
+          <p>Build &amp; Launch is the ${program.sessions.length}-session live program that takes the app you start in the workshop all the way to production — in two weeks, live with me.</p>
+          <ol class="upsell-sessions">
+${program.sessions.map(([title, text], i) => `            <li><b>Session ${i + 1}: ${title}</b><span>${text}</span></li>`).join('\n')}
+          </ol>
+          <p class="upsell-credit">Your $47 workshop seat counts toward it if you join within 48 hours.</p>
+          <a class="button button-large" href="${program.slug}.html">See Build &amp; Launch — ${money(program.price)} ${icon('arrow')}</a>
+        </section>
+        <section class="step-card">
           <h2>Your software access</h2>
           <p>Open this during the workshop — it walks you through every step live.</p>
           ${linkButton(funnel.software, 'Open the software', 'Access link coming soon')}
-        </li>
-        <li class="step-card">
-          <span class="phase-num">Step 3</span>
-          <h2>Your bonuses</h2>
+        </section>
+        <section class="step-card">
+          <h2>Your ebook</h2>
           <p>Your “Build Your First App in a Weekend” ebook is ready now. Your starter kit (every prompt + template we use) arrives by email.</p>
           ${linkButton(funnel.ebook, 'Download the ebook', 'Ebook download coming soon')}
-        </li>
-      </ol>
-      <p class="fine-print">Small by design: minimum 5 to run — if we don’t hit 5, you roll to the next week and keep every bonus.</p>
+        </section>
+      </div>
+      <p class="fine-print">Small by design: minimum 5 to run — if we don’t hit 5, you roll to the next session and keep every bonus.${supportLink ? ` Questions? ${supportLink}` : ''}</p>
     </div>
   </main>
 
@@ -704,4 +720,4 @@ await writeFile('workshop.html', workshopPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, the index.html course gallery, workshop.html, thanks-workshop.html, terms.html, and refund.html${workshopReady ? '' : ' (workshop.html is a DRAFT: run npm run verify:launch)'}`);
+console.log(`Generated ${products.length} product pages, the index.html course gallery, workshop.html, thanks-workshop.html, terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
