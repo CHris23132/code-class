@@ -75,25 +75,21 @@ function testimonialSection(p, eyebrow = 'From students') {
           <span class="eyebrow">${eyebrow}</span>
           <h2>What builders are saying.</h2>
         </div>
-      </div>
-      <div class="ticker quote-ticker">
-        <div class="ticker-track">
-          <div class="quote-row">
-${quoteCards(quotes)}
+        <div class="quote-carousel" aria-roledescription="carousel" aria-label="Student testimonials">
+          <div class="quote-viewport">
+            <div class="quote-track">
+${quotes.map((t, i) => `              <figure class="quote-card" aria-roledescription="slide" aria-label="${i + 1} of ${quotes.length}">
+                <blockquote>“${t.quote.trim()}”</blockquote>
+                <figcaption><span class="quote-avatar" aria-hidden="true">${t.name.trim()[0].toUpperCase()}</span><span><b>${t.name}</b>${t.detail ? `<small>${t.detail}</small>` : ''}</span></figcaption>
+              </figure>`).join('\n')}
+            </div>
           </div>
-          <div class="quote-row" aria-hidden="true">
-${quoteCards(quotes)}
-          </div>
+          <div class="quote-dots">${quotes.map((t, i) => `<button type="button" aria-label="Show quote from ${attr(t.name)}" aria-current="${i === 0}"></button>`).join('')}</div>
         </div>
       </div>
     </section>
 `;
 }
-
-const quoteCards = quotes => quotes.map(t => `            <figure class="quote-card">
-              <blockquote>“${t.quote.trim()}”</blockquote>
-              <figcaption><span class="quote-avatar" aria-hidden="true">${t.name.trim()[0].toUpperCase()}</span><span><b>${t.name}</b>${t.detail ? `<small>${t.detail}</small>` : ''}</span></figcaption>
-            </figure>`).join('\n');
 
 function vslSlot(url) {
   const ready = isUrl(url);

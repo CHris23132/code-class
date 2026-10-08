@@ -385,15 +385,17 @@ details p{padding:0 2px 20px;color:var(--text)}
 .quote-card figcaption b{display:block;font-family:var(--heading)}
 .quote-card figcaption small{display:block;color:var(--muted);font-size:13px}
 .quote-avatar{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--lime);font-family:var(--heading);font-weight:800;flex:none}
-.quote-ticker .ticker-track{animation-duration:70s}
-.quote-ticker{-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.quote-ticker:focus-within .ticker-track,.quote-ticker:active .ticker-track{animation-play-state:paused}
-.quote-row{display:flex;align-items:stretch;gap:16px;padding-right:16px}
-.quote-row .quote-card{flex:none;width:min(360px,78vw)}
-@media(prefers-reduced-motion:reduce){
-  .quote-row{flex-wrap:wrap;justify-content:center;padding:0 20px}
-  .quote-row[aria-hidden]{display:none}
-}
+.quote-carousel{max-width:720px;margin:0 auto}
+.quote-viewport{overflow:hidden;border-radius:16px}
+.quote-track{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.quote-track .quote-card{flex:0 0 100%;padding:28px 24px}
+.quote-carousel blockquote{font-size:17px}
+.quote-dots{display:flex;justify-content:center;gap:2px;margin-top:14px}
+.quote-dots button{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;background:none;cursor:pointer}
+.quote-dots button::before{content:'';width:8px;height:8px;border-radius:8px;background:#c6d3d8;transition:width .25s,background .25s}
+.quote-dots button[aria-current="true"]::before{width:24px;background:var(--navy)}
+.quote-dots button:focus-visible{outline:3px solid var(--link);outline-offset:-3px;border-radius:50%}
+@media(min-width:720px){.quote-track .quote-card{padding:36px 40px}.quote-carousel blockquote{font-size:19px}}
 
 .cohort-line,.session-line{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;font-weight:700;color:var(--navy);line-height:1.45}
 .cohort-line::before,.session-line::before{content:'';flex:none;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(56,217,245,.22)}

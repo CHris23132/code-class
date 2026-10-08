@@ -32,6 +32,48 @@ if (vsl && isUrl(vsl.dataset.vsl)) {
   });
 }
 
+const carousel = document.querySelector('.quote-carousel');
+if (carousel) {
+  const track = carousel.querySelector('.quote-track');
+  const slides = [...track.children];
+  const dots = [...carousel.querySelectorAll('.quote-dots button')];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clone = slides[0].cloneNode(true);
+  clone.setAttribute('aria-hidden', 'true');
+  track.append(clone);
+  let index = 0;
+  let timer;
+  const show = (i, animate = true) => {
+    index = i;
+    track.style.transition = animate ? '' : 'none';
+    track.style.transform = `translateX(-${i * 100}%)`;
+    if (!animate) void track.offsetWidth;
+    dots.forEach((dot, n) => dot.setAttribute('aria-current', String(n === i % slides.length)));
+  };
+  const step = dir => {
+    if (index >= slides.length) show(0, false);
+    if (dir < 0 && index === 0) show(slides.length, false);
+    show(index + dir);
+  };
+  const stop = () => clearInterval(timer);
+  const start = () => { stop(); if (!still) timer = setInterval(() => step(1), 6000); };
+  track.addEventListener('transitionend', e => { if (e.target === track && index === slides.length) show(0, false); });
+  dots.forEach((dot, n) => dot.addEventListener('click', () => { show(n); start(); }));
+  let touchX = null;
+  track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; stop(); }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    start();
+  });
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+  carousel.addEventListener('focusin', stop);
+  carousel.addEventListener('focusout', start);
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+  start();
+}
+
 const sticky = document.querySelector('.sticky-cta');
 if (sticky) {
   const stickyLink = sticky.querySelector('a');
