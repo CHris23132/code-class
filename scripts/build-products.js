@@ -64,7 +64,7 @@ const pressStrip = `
     </section>
 `;
 
-function testimonialSection(p) {
+function testimonialSection(p, eyebrow = 'From students') {
   const quotes = testimonials.filter(t => t.course === p.slug && t.quote.trim());
   const slot = p.live ? '\n    <!-- TESTIMONIALS: slot for founding-student videos -->\n' : '';
   if (!quotes.length) return slot;
@@ -72,7 +72,7 @@ function testimonialSection(p) {
     <section class="section testimonials">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">From students</span>
+          <span class="eyebrow">${eyebrow}</span>
           <h2>What builders are saying.</h2>
         </div>
         <div class="quote-grid">
@@ -480,7 +480,7 @@ ${workshop.wins.map(([title, text], i) => `          <li class="phase">
         ${founderCard.replace('Built by a builder.', 'Your host: a builder, not a guru.')}
       </div>
     </section>
-
+${testimonialSection({ slug: 'future-founder' }, 'From Code Class students')}
     <section class="section offer" id="offer">
       <div class="wrap">
         <div class="offer-card single">

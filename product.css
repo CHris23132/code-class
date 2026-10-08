@@ -438,6 +438,8 @@ details p{padding:0 2px 20px;color:var(--text)}
 .share-host span{font-size:10px;font-weight:700;color:#c8d5dd}
 
 .host{background:var(--white)}
+.workshop-page .testimonials{background:var(--paper)}
+.workshop-page .quote-card{background:var(--white)}
 .host-wrap{max-width:560px}
 .included{display:grid;gap:12px;margin-top:4px}
 .included li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5}
