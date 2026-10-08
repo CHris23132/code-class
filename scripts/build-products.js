@@ -11,7 +11,8 @@ const slotCount = Object.values(SESSION.slots).flat().length;
 const sessionDays = `Every ${SESSION.days.join(' &amp; ')}`;
 const sessionText = `${sessionDays} — ${slotCount} live sessions each weekend (ET)`;
 const supportLink = isEmail(funnel.supportEmail) ? `<a href="mailto:${attr(funnel.supportEmail)}">${funnel.supportEmail}</a>` : '';
-const pixel = (event = '') => /^\d+$/.test(funnel.metaPixel) ? `  <!-- Meta Pixel Code -->
+const pixels = funnel.metaPixels.filter(id => /^\d+$/.test(id));
+const pixel = (event = '') => pixels.length ? `  <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,13 +22,12 @@ const pixel = (event = '') => /^\d+$/.test(funnel.metaPixel) ? `  <!-- Meta Pixe
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '${funnel.metaPixel}');
-  fbq('track', 'PageView');${event ? `\n  ${event}` : ''}
+${pixels.map(id => `  fbq('init', '${id}');\n`).join('')}  fbq('track', 'PageView');${event ? `\n  ${event}` : ''}
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=${funnel.metaPixel}&ev=PageView&noscript=1"
+${pixels.map(id => `  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel Code -->
+`).join('')}  <!-- End Meta Pixel Code -->
 ` : '';
 const icon = name => `<svg class="icon"><use href="#i-${name}"/></svg>`;
 

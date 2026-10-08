@@ -15,7 +15,8 @@ export const funnel = {
   software: 'SOFTWARE_ACCESS_URL',
   ebook: 'EBOOK_URL',
   supportEmail: 'SUPPORT_EMAIL',
-  metaPixel: '592481416326540'
+  // Christopher's Pixel P3, Christopher Walsh - Pixel
+  metaPixels: ['592481416326540', '711127870519369']
 };
 
 const sharedFaq = {
