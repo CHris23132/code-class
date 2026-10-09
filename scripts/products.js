@@ -14,7 +14,7 @@ export const funnel = {
   evergreenCheckout: 'EVERGREEN_COURSE_URL',
   software: 'SOFTWARE_ACCESS_URL',
   ebook: 'EBOOK_URL',
-  supportEmail: 'SUPPORT_EMAIL',
+  supportEmail: 'play3dinc@gmail.com',
   // Christopher's Pixel P3, Christopher Walsh - Pixel
   metaPixels: ['592481416326540', '711127870519369']
 };
