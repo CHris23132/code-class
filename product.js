@@ -32,7 +32,7 @@ function nextSession({ slots, timeZone }) {
 document.querySelectorAll('[data-schedule]').forEach(line => {
   const schedule = JSON.parse(line.dataset.schedule);
   const next = nextSession(schedule);
-  if (next) line.textContent = `${schedule.days} — next session ${next}`;
+  if (next) line.textContent = `${schedule.days} — next ${schedule.label || 'session'} ${next}`;
 });
 
 function embedUrl(raw) {
@@ -110,5 +110,5 @@ if (sticky) {
     sticky.setAttribute('aria-hidden', String(!show));
     stickyLink.tabIndex = show ? 0 : -1;
   });
-  [document.querySelector('.hero .cta-group'), document.getElementById('offer'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
+  [document.querySelector('.hero .cta-group, .lp-hero .cta-group'), document.getElementById('offer'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
 }

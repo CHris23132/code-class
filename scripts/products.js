@@ -1,16 +1,34 @@
-// ─── Workshop schedule: keep in sync with the Calendly event's weekly slots (24-hour times, Eastern). ───
-// The page shows "Every Saturday & Sunday — next session …" and works out the next slot in the visitor's browser.
-export const SESSION = {
+// ─── Free class (the home page, index.html). Keep `slots` in sync with the Calendly event (24-hour times, Eastern). ───
+export const freeClass = {
+  calendly: 'https://calendly.com/play3dinc/first-app-class-free',
   days: ['Saturday', 'Sunday'],
-  slots: { Saturday: ['10:00', '13:00', '16:00', '19:00'], Sunday: ['11:00', '14:00', '17:00'] },
+  slots: { Saturday: ['10:00', '13:00'], Sunday: ['11:00', '14:00'] },
   timeZone: 'America/New_York',
-  maxSeats: 20
+  maxSeats: 20,
+  minutes: 45,
+  // A/B test: `headline` is live; `altHeadlines` are written into the page as comments for the next test.
+  headline: 'Build Your First App — Live With Me, Free, in 45 Minutes',
+  altHeadlines: [
+    ['outcome', 'Leave With a Real App on Your Phone — Built Live, Free, in 45 Minutes'],
+    ['mechanism', 'Stop Watching Coding Videos. Build Your First App Face-to-Face With Me — Free']
+  ],
+  // Approved proof markers (the only numbers allowed in public copy besides the class details).
+  proof: ['40+ apps shipped', '25 five-star reviews', 'CTO experience', 'Apps serving millions of users'],
+  // Offer stack. Add a value like '$97' to show it struck through; leave '' to show no value.
+  stack: [
+    ['45-minute live build session with me', '1-on-20, face-to-face on Google Meet', ''],
+    ['Your first real app on your phone', 'Built by you, with a real database, by the end of the call', ''],
+    ['Session recording', 'Rebuild it anytime, at your own pace', ''],
+    ['Live Q&amp;A', 'Ask anything while you build', ''],
+    ['Premium unlock: the Code Class build software', 'All 12 guided lessons and the prompt library. Your access code is shared live in class', '']
+  ],
+  // Build-With-Me 1-on-1 booking link for the thank-you page upsell. Until it starts with http, the button emails you instead.
+  oneOnOne: 'ONE_ON_ONE_BOOKING_URL'
 };
 
 // A URL left as its placeholder name (anything not starting with http) is treated as not set yet.
 export const funnel = {
   cohortDate: '',
-  calendly: 'https://calendly.com/play3dinc/first-screen-workshop',
   evergreenCheckout: 'EVERGREEN_COURSE_URL',
   software: 'SOFTWARE_ACCESS_URL',
   ebook: 'EBOOK_URL',
@@ -63,13 +81,6 @@ export const credentials = [
 ];
 
 // Workshop host card. Credentials must be specific and checkable, with no company names and no digit metrics.
-// Christopher approves the final wording before launch; until then these are his current approved lines.
-export const host = {
-  name: 'Christopher Walsh',
-  role: 'Founder, Code Class',
-  photo: 'assets/products/founder.webp',
-  credentials: credentials.slice(0, 3)
-};
 
 export const goals = [
   ['all', 'All courses'],

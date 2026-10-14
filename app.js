@@ -5,7 +5,7 @@ const $ = (s, root = document) => root.querySelector(s);
 const icon = (name, cls='') => `<svg class="icon ${cls}" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">${phosphorIcons[name] || phosphorIcons.code}</svg>`;
 const escape = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Course access codes, stored as SHA-256 hashes of the uppercase code. Add a new one with: npm run access-code -- NEWCODE
-const ACCESS_CODE_HASHES=['866429597fe62c006232651c4815fc0d0267c5fe7080169cefd0a90670fb8dee'];
+const ACCESS_CODE_HASHES=['866429597fe62c006232651c4815fc0d0267c5fe7080169cefd0a90670fb8dee','6b92cbf763c8c5e0020d645c7108277d22c1d04a260bd646bfe89c64edeaa1b8'];
 const normalizeCode=code=>String(code||'').trim().toUpperCase();
 async function validCode(code){const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(normalizeCode(code)));return ACCESS_CODE_HASHES.includes([...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join(''));}
 const accessRecord=code=>({code:normalizeCode(code),unlockedAt:new Date().toISOString()});

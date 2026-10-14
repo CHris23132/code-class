@@ -65,7 +65,7 @@ Google Fonts provides DM Sans and Manrope, with sans-serif fallbacks. The hero a
 
 Each course has a standalone sales page, plus a gallery that filters courses by goal:
 
-- `index.html`: the site's home page, which is the First Screen workshop page. The same page is also generated as `workshop.html`, so existing links and the Calendly setup keep working. Both declare the home page as canonical.
+- `index.html`: the site's home page, the free First App Class offer page (see Funnel below). `workshop.html` now redirects here.
 - `courses.html`: the course gallery. Its header has a Student login link to the Future Founder class. Choosing a goal under "What do you want to build?" highlights the best-match course with a glow and fades unrelated ones. On phones, the best match also moves to the top. The goal-to-course mapping is the third value in each `goals` entry in `scripts/products.js`. Link straight to a goal with `?goal=app` (for example `torontoinnovationlab.com/courses.html?goal=ai`), `mobile`, `business`, `ai`, or `income`. Every "All courses" link points here.
 - `future-founder.html`, `ios-app-builder.html`, `ai-app-wizard.html`, `business-accelerator.html`: one landing page per course.
 
@@ -73,33 +73,43 @@ These pages are generated. Edit course content (price, checkout URL, headline, p
 
 The pages use their own lightweight `product.css`, `product.js`, and `catalog.js`, and don't load the course app or Firebase, so they stay fast on phones. Every Enroll button on a page goes to that course's `checkoutUrl`. Until it's set, the buttons scroll to the offer section. Box images are compressed WebP files in `assets/products/`, with the original PNGs kept alongside them.
 
-## Funnel (Phase 1)
+## Funnel: free class
 
-- `workshop.html`: the $47 "First Screen" live workshop. One action: book a seat. All five "Save my seat" buttons scroll to the `#booking` section. That section embeds the live Calendly event (`funnel.calendly`), where visitors pick a weekend slot and pay $47 through Calendly's Stripe integration.
-- `future-founder.html`: the $497 "Build & Launch" live program, with a video slot in the hero and a $297 self-serve downsell under the offer.
-- `thanks-workshop.html`: Calendly redirects here after booking. In order, it shows the "You're in" headline, the $497 Build & Launch upsell, the software link, and the ebook. It's marked `noindex`.
+The home page (`index.html`) sells one thing: a free 45-minute live class. It has no nav menu and one action. Every "Claim my free seat" button (header, hero, offer, sticky mobile bar) scrolls to `#booking`, which embeds the free Calendly event (`freeClass.calendly`). The only links off the page are the footer's Terms and support email.
 
-The workshop schedule is the `SESSION` constant at the top of `scripts/products.js`. Keep its slots in sync with the Calendly event. The hero, offer card, and final section show "Every Saturday & Sunday — next session Saturday, Oct 10 at 10:00 AM ET". The next slot is worked out in the visitor's browser, so it never goes stale. There's no seats-left count; Calendly enforces the 20-seat cap.
+Section order: hero (headline, subheadline, CTA, approved proof strip, Christopher's photo) → problem → why live building works → the 3 steps → the free-seat offer stack ($0) → the origin story slides → real scarcity (max 20 seats, 4 weekend slots) → FAQ → booking.
 
-**Launch rule:** a page isn't done until every CTA is click-verified against a real destination. Run `npm run verify:launch` after building. It fails while any checkout button points at a placeholder or a "Save my seat" button doesn't go to `#booking`. It also fails if the Calendly embed is missing, a placeholder string or "announced soon" remains, the support email is missing, or the thank-you links aren't set. Don't send ad traffic until it passes and you've clicked every button on the live page.
+- **Headline A/B test:** the live H1 is `freeClass.headline` in `scripts/products.js`. The two alternates in `freeClass.altHeadlines` are written into the page as HTML comments under the H1. Swap one in, rebuild, and push.
+- **Copy and settings:** proof strip (`freeClass.proof`), offer stack (`freeClass.stack`; add a value like `'$97'` to show one struck through), weekend slots (`freeClass.slots`; keep in sync with Calendly), and seat cap.
+- **Story slides:** `assets/free-class/story-1.webp` to `story-5.webp`, from `~/Downloads/slides`, with faces already blurred.
+- `thanks-free-class.html`: the free Calendly event redirects here. In order: "You're in", the Build-With-Me 1-on-1 upsell, what to expect, and the recording note. The upsell button emails the support address until `freeClass.oneOnOne` is set to a booking link. It's marked `noindex`.
+- `thanks-workshop.html` still exists for the old paid $47 Calendly event, which hasn't been changed.
+- **Course software:** the course software is still locked by access code. `APP2026` and `CODECLASS2026` both work.
 
-`terms.html` and `refund.html` are generated plain-language drafts linked from every footer. The refund page pulls each course's guarantee from `scripts/products.js`. Have them reviewed before launch. The support email (`funnel.supportEmail`) appears in the footer and on both pages once set.
+**Launch rule:** run `npm run verify:launch` after building. It checks that `index.html`, `thanks-free-class.html`, and `terms.html` have:
+- no old $47 or workshop strings;
+- exactly one CTA wording, with every CTA pointing at `#booking`;
+- no nav menu and no off-page links beyond the footer;
+- the free Calendly embed, both alternate H1 comments, the support email, and both Meta Pixels;
+- the upsell block on the thank-you page, plus a real 1-on-1 booking link.
 
-The other settings also live in `scripts/products.js`. Fill them in, run `npm run build:products`, and commit the regenerated pages. Until a URL starts with `http`, the page treats it as not set: buttons scroll to the offer section, and the thank-you page shows "coming soon" states.
+`future-founder.html`, the course pages, `courses.html`, and `refund.html` still exist but aren't linked from the home page.
+
 
 | Setting | Where |
 | --- | --- |
-| Workshop booking (Calendly event) | `funnel.calendly` |
+| Free class booking (Calendly event) | `freeClass.calendly` |
+| Build-With-Me 1-on-1 booking link | `freeClass.oneOnOne` |
 | `STRIPE_PROGRAM_URL` | `checkoutUrl` on `future-founder` |
 | `EVERGREEN_COURSE_URL` ($297 downsell) | `funnel.evergreenCheckout` |
 | `VSL_URL_PLACEHOLDER` (YouTube, Vimeo, Loom, or a direct embed URL) | `vslUrl` on `future-founder` |
 | `SOFTWARE_ACCESS_URL`, `EBOOK_URL` | `funnel.software`, `funnel.ebook` |
-| Workshop weekly slots | `SESSION.slots` |
+| Free class weekend slots | `freeClass.slots` |
 | Next Build & Launch cohort date | `funnel.cohortDate`, for example `'Monday, October 19'` |
 | `SUPPORT_EMAIL` | `funnel.supportEmail` |
 | Meta Pixel IDs | `funnel.metaPixels` (also hard-coded in `future-founder-class.html`) |
 
-Every page loads both Meta Pixels (Christopher's Pixel P3 and Christopher Walsh - Pixel) and fires `PageView` to each. Every event below goes to both pixels. The workshop page (`index.html` and `workshop.html`) also fires `ViewContent`. `thanks-workshop.html` fires `trackCustom('WorkshopBooked')`, and Calendly only redirects there after a paid booking, so each fire is one $47 sale. `npm run verify:launch` fails if any of these events go missing.
+Every page loads both Meta Pixels (Christopher's Pixel P3 and Christopher Walsh - Pixel) and fires `PageView` to each. Every event below goes to both pixels. The home page (`index.html`, the free class) also fires `ViewContent`. `thanks-free-class.html` fires only `PageView`, so a custom conversion on "URL contains `thanks-free-class.html`" counts free-class bookings. The old paid flow is unchanged: `thanks-workshop.html` fires `trackCustom('WorkshopBooked')`, and Calendly only redirects there after a paid booking, so each fire is one $47 sale. `npm run verify:launch` checks that both pixels and `ViewContent` are on the free-class pages.
 
 Checkout buttons use `<meta name="checkout-url">` with `data-enroll`. A named button such as `data-enroll="evergreen"` reads `<meta name="checkout-url-evergreen">` instead, so later ladder rungs ($149/mo Build Club, $1,997 1-on-1) can be added the same way.
 

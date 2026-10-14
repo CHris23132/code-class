@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { products, goals, testimonials, press, credentials, funnel, SESSION, host } from './products.js';
+import { products, goals, testimonials, press, credentials, funnel, freeClass } from './products.js';
 
 const SITE = 'https://torontoinnovationlab.com/';
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -7,9 +7,6 @@ const money = n => `$${n.toLocaleString('en-US')}`;
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const cohortText = funnel.cohortDate ? `Next cohort starts ${funnel.cohortDate} — 4 live sessions over 2 weeks.` : 'Next cohort: dates announced soon — 4 live sessions over 2 weeks.';
-const slotCount = Object.values(SESSION.slots).flat().length;
-const sessionDays = `Every ${SESSION.days.join(' &amp; ')}`;
-const sessionText = `${sessionDays} — ${slotCount} live sessions each weekend (ET)`;
 const supportLink = isEmail(funnel.supportEmail) ? `<a href="mailto:${attr(funnel.supportEmail)}">${funnel.supportEmail}</a>` : '';
 const pixels = funnel.metaPixels.filter(id => /^\d+$/.test(id));
 const pixel = (event = '') => pixels.length ? `  <!-- Meta Pixel Code -->
@@ -67,16 +64,6 @@ const footer = link => `<footer class="site-footer">
       <nav class="footer-links" aria-label="Footer">${link ? '<a href="courses.html">Browse all courses</a>' : ''}<a href="terms.html">Terms</a><a href="refund.html">Refund policy</a>${supportLink}</nav>
     </div>
   </footer>`;
-
-const hostCard = `<article class="card founder-card host-card">
-            <div class="host-id">
-              <img src="${host.photo}" alt="${attr(host.name)}" width="480" height="480" loading="lazy" decoding="async">
-              <div><h3>${host.name}</h3><p class="host-role">${host.role}</p></div>
-            </div>
-            <ul class="credentials">
-${host.credentials.map(c => `              <li>${icon('check')}${c}</li>`).join('\n')}
-            </ul>
-          </article>`;
 
 const founderCard = `<article class="card founder-card">
             <img src="assets/products/founder.webp" alt="Portrait of the Code Class founder" width="480" height="480" loading="lazy" decoding="async">
@@ -421,54 +408,6 @@ ${products.map((p, i) => `          <article class="course-card" data-slug="${p.
 `;
 }
 
-const workshop = {
-  wins: [
-    ['Spin up a real app project', 'Guided, step by step.'],
-    ['Set up real login', 'Create your own account, live.'],
-    ['Build your first screens', 'Feed, post, profile.'],
-    ['Write your first database entry', 'Post to the feed and watch it appear.']
-  ],
-  included: [
-    'Live 60-minute build-along workshop',
-    'Recording (yours to keep)',
-    'Starter kit: every prompt + template we use',
-    '<b>Bonus:</b> “Build Your First App in a Weekend” ebook',
-    '<b>$47 credit toward Build &amp; Launch</b> ($497 program) if you join within 48 hours'
-  ],
-  steps: [
-    ['Grab your seat', 'Checkout takes 60 seconds.'],
-    ['Join the live call', 'Link arrives instantly after checkout.'],
-    ['Build', 'You leave with a working app screen on your phone.']
-  ],
-  faq: [
-    ['I’ve never written a line of code.', 'That’s who this is built for. The AI writes the code; you direct it. If you can follow a recipe, you can do this.'],
-    ['What do I need?', 'A laptop and a phone. Everything else is free.'],
-    ['What if I can’t make it live?', 'The recording is included, but the live win is the point — grab a week you can attend.'],
-    ['Is this just a sales pitch?', 'No. You build a working app screen in the hour. The last 10 minutes show you what’s next — that’s it.'],
-    ['What if we don’t hit 5 people?', 'You roll to the next session automatically and keep all bonuses.']
-  ]
-};
-
-const shareVisual = `<div class="share" role="img" aria-label="Illustration: a live screen share of the guided software, with the app running on a phone">
-            <div class="share-bar"><i></i><i></i><i></i><span class="share-live">Live · Screen share</span></div>
-            <div class="share-body">
-              <div class="share-guide">
-                <span class="pill">Step 2 · Real login</span>
-                <b>Add sign-up and login</b>
-                <div class="share-prompt"><code>Add email sign-up and login to my app with Firebase Auth, then show the feed once signed in.</code><span class="share-copy">Copy prompt</span></div>
-                <div class="share-check">${icon('check')}<span>Checkpoint: create your account on your phone</span></div>
-                <div class="meter"><i style="width:45%"></i></div>
-              </div>
-              <div class="share-phone">
-                <div class="app-bar"><b class="app-logo">hello<span>world.</span></b><span>♡</span></div>
-                <div class="post-head"><i class="av a2 sm"></i><span>you</span></div>
-                <div class="post-img img-sea"></div>
-                <p class="post-meta"><b>you</b> my first post 🎉</p>
-              </div>
-            </div>
-            <div class="share-host"><img src="assets/products/founder.webp" alt="" width="480" height="480" decoding="async"><span>Your host</span></div>
-          </div>`;
-
 const LEGAL_UPDATED = 'October 7, 2026';
 
 function legalPage({ title, intro, sections }) {
@@ -507,7 +446,7 @@ const termsPage = () => legalPage({
   intro: 'The plain-English rules for buying and using Code Class workshops, programs, and courses.',
   sections: [
     ['What you’re buying', 'Each purchase gives one person access to what that page lists — for example a live workshop seat, live program sessions, session recordings, the guided software, and any bonuses. Access is for your own personal use.'],
-    ['Live sessions', [`Live sessions run on Google Meet or Zoom at the time you book or that’s shown on the page. Live workshops need at least 5 people to run; if a session doesn’t reach 5, your seat moves to the next session and you keep every bonus.`, 'If we ever have to move a session, we’ll email you the new time and the recording is still yours.']],
+    ['Live sessions', ['Live sessions run on Google Meet at the time you book or that’s shown on the page. Seats are limited per session.', 'If we ever have to move a session, we’ll email you the new time and the recording is still yours.']],
     ['Please don’t share', 'Your login, the recordings, the software, and the course materials are for you. Please don’t share, resell, or re-upload them.'],
     ['What you build is yours', 'The app and code you build during a workshop, program, or course belong to you.'],
     ['Results', 'We teach a step-by-step system and back it with the guarantees on each page, but what you build afterwards depends on you. We don’t promise income or business results.'],
@@ -526,155 +465,6 @@ const refundPage = () => legalPage({
     ['How refunds are paid', 'Refunds go back to the card you paid with through Stripe. They usually appear within 5–10 business days, depending on your bank.']
   ]
 });
-
-function workshopPage() {
-  const seat = `Save my seat — $47 ${icon('arrow')}`;
-  const schedule = attr(JSON.stringify({ slots: SESSION.slots, timeZone: SESSION.timeZone, days: sessionDays.replace('&amp;', '&') }));
-  const session = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">${sessionText}</p>`;
-  const trust = `Live on Google Meet <i>·</i> Recording included <i>·</i> Max ${SESSION.maxSeats} seats`;
-  return `${head({ track: "fbq('track', 'ViewContent');", title: 'First Screen — Build Your First Real App Screen, Live ($47 Workshop) | Code Class', description: 'A 60-minute live workshop: build a real app with a real database, on your phone by the end of the call. No experience needed. Max 20 seats.', ogTitle: 'First Screen — a live 60-minute app-building workshop', ogDescription: 'Build your first real app screen — live. A real app with a real database, on your phone by the end of the call. $47.', image: 'assets/social/workshop.jpg', type: 'product', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n` })}
-<body class="workshop-page">
-  ${sprite}
-
-  <header class="site-header">
-    <div class="wrap header-inner">
-      ${logo('./')}
-      <a class="button button-small" href="#booking">Save my seat</a>
-    </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <span class="eyebrow">Live workshop · 60 minutes</span>
-          <h1>Build your first real app screen — <span class="highlight">live with me.</span></h1>
-          <p class="lead">60 minutes. A real app with a real database, on your phone by the end of the call. No experience needed.</p>
-          <div class="cta-group">
-            ${session()}
-            <a class="button button-large" href="#booking">${seat}</a>
-            <p class="trust">${trust}</p>
-          </div>
-        </div>
-        <div class="hero-visual has-share">
-          ${shareVisual}
-        </div>
-      </div>
-    </section>
-${pressStrip}
-    <section class="section curriculum">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">The hour, step by step</span>
-          <h2>In 60 minutes you will:</h2>
-        </div>
-        <ol class="phases">
-${workshop.wins.map(([title, text], i) => `          <li class="phase">
-            <div class="phase-top"><span class="phase-num">Step ${i + 1}</span><span class="phase-time">Live</span></div>
-            <h3>${title}</h3>
-            <p>${text}</p>
-          </li>`).join('\n')}
-        </ol>
-      </div>
-    </section>
-
-    <section class="section host">
-      <div class="wrap host-wrap">
-        <span class="eyebrow host-eyebrow">Your host</span>
-        ${hostCard}
-      </div>
-    </section>
-${quotesFor('workshop').length
-    ? testimonialSection({}, 'From First Screen attendees', quotesFor('workshop'))
-    : `\n    <!-- TESTIMONIALS: 3 First Screen workshop slots in scripts/products.js. Showing Code Class student quotes until one is filled. -->${testimonialSection({}, 'From Code Class students', quotesFor('future-founder'))}`}
-    <section class="section offer" id="offer">
-      <div class="wrap">
-        <div class="offer-card single">
-          <div class="offer-body">
-            <span class="eyebrow">What’s included</span>
-            <h2>The First Screen workshop</h2>
-            <ul class="included">
-${workshop.included.map(i => `              <li>${icon('check')}<span>${i}</span></li>`).join('\n')}
-            </ul>
-            <div class="price">
-              <span class="total">One live seat</span>
-              <span class="today"><b>$47</b></span>
-            </div>
-            ${session('center')}
-            <a class="button button-large full" href="#booking">${seat}</a>
-            <div class="guarantee">
-              ${icon('shield')}
-              <p>Attend live, follow along, and if you don't leave with a working app screen on your phone, email us within 7 days for a full refund.${supportLink ? ` ${supportLink}` : ''}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section booking" id="booking">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">Book now</span>
-          <h2>Reserve your seat</h2>
-          <p class="booking-flow">Pick your Saturday or Sunday slot below → pay $47 securely at booking → get your Google Meet link instantly.</p>
-        </div>
-        <div class="booking-card">
-          <div class="calendly-inline-widget" data-url="${attr(funnel.calendly)}" style="min-width:320px;height:720px;"></div>
-        </div>
-        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <p class="fine-print">Small by design: max ${SESSION.maxSeats} seats, minimum 5 to run. If we don't hit 5, you roll to the next session and keep every bonus.</p>
-      </div>
-    </section>
-
-    <section class="section curriculum">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">How it works</span>
-          <h2>Three steps to your first screen.</h2>
-        </div>
-        <ol class="phases three">
-${workshop.steps.map(([title, text], i) => `          <li class="phase">
-            <div class="phase-top"><span class="phase-num">Step ${i + 1}</span></div>
-            <h3>${title}</h3>
-            <p>${text}</p>
-          </li>`).join('\n')}
-        </ol>
-      </div>
-    </section>
-
-    <section class="section faq">
-      <div class="wrap narrow">
-        <h2>Questions, answered.</h2>
-${workshop.faq.map(([q, a]) => `        <details>
-          <summary>${q}</summary>
-          <p>${a}</p>
-        </details>`).join('\n')}
-      </div>
-    </section>
-
-    <section class="section final" id="final">
-      <div class="wrap final-single">
-        <h2>Build your first real app screen — live with me.</h2>
-        <p class="lead">60 minutes. A real app with a real database, on your phone by the end of the call.</p>
-        ${session('center')}
-        <a class="button button-large" href="#booking">${seat}</a>
-        <p class="trust">${trust}</p>
-      </div>
-    </section>
-  </main>
-
-  ${footer(true)}
-
-  <div class="sticky-cta" aria-hidden="true">
-    <span><b>First Screen</b> · Live · $47</span>
-    <a class="button" href="#booking" tabindex="-1">Save my seat</a>
-  </div>
-
-  <script src="product.js" defer></script>
-</body>
-</html>
-`;
-}
 
 function thanksPage() {
   const linkButton = (url, label, ready) => isUrl(url)
@@ -732,11 +522,273 @@ ${program.sessions.map(([title, text], i) => `            <li><b>Session ${i + 1
 `;
 }
 
+const fc = freeClass;
+const claim = `Claim my free seat ${icon('arrow')}`;
+const time12 = t => { const [h, m] = t.split(':').map(Number); return `${h % 12 || 12}${m ? `:${String(m).padStart(2, '0')}` : ''}${h < 12 ? 'am' : 'pm'}`; };
+const slotList = fc.days.map(d => [d, fc.slots[d].map(time12)]);
+const freeFooter = `<footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</p>
+      <nav class="footer-links" aria-label="Legal"><a href="terms.html">Terms</a>${supportLink}</nav>
+    </div>
+  </footer>`;
+
+const story = [
+  ['Where I started', 'No money. No job.', 'Just me, a laptop, and a dream of breaking into tech.'],
+  ['Then it clicked', 'Top-rated on Fiverr.', 'Earned enough to take my first real vacation.'],
+  ['Then a startup noticed', 'Flown to San Francisco.', 'My first tech conference. Real investor meetings.'],
+  ['Software paid for this', 'My dream car.', 'Not rented. Not a prop. Mine — bought with software money.'],
+  ['And then', 'Big tech job. She said yes.', 'Full-time at a big tech company, engaged to the love of my life.']
+];
+
+const freeFaq = [
+  ['I’ve never written code — is this really for me?', 'Yes — it’s built for total beginners. You describe what you want, the AI writes the code, and I guide every click live.'],
+  ['What if I can’t make my slot?', 'Use the reschedule link in your confirmation email to move to another weekend slot. Seats are small, so move early.'],
+  ['What do I need installed before the class?', 'Just a laptop and your phone. Everything we use is free, and I walk you through setup at the start. <!-- CHRISTOPHER: confirm — or list anything people should install first (e.g. Expo Go on their phone) --> '],
+  ['Is it really free? What’s the catch?', 'It’s really free — no card needed to book. The honest catch: most people want to keep building after, and I offer a paid 1-on-1 for that.'],
+  ['Will there be a recording?', 'Yes. You get the session recording so you can rebuild your app anytime.']
+];
+
+function freeClassPage() {
+  const schedule = attr(JSON.stringify({ slots: fc.slots, timeZone: fc.timeZone, days: `Every ${fc.days.join(' & ')}`, label: 'class' }));
+  const sessionLine = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">Every ${fc.days.join(' &amp; ')} — ${slotList.map(([d, t]) => `${d.slice(0, 3)} ${t.join(' &amp; ')}`).join(', ')} ET</p>`;
+  return `${head({ track: "fbq('track', 'ViewContent');", title: 'Free Live Class: Build Your First App in 45 Minutes | Code Class', description: `A free ${fc.minutes}-minute live class: build your first app face-to-face with Christopher Walsh on Google Meet. A real app with a real database, on your phone. No experience needed.`, ogTitle: 'Build your first app — live with me, free, in 45 minutes', ogDescription: 'No experience needed. A real app with a real database, on your phone by the end of the call. Free live class on weekends.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
+<body class="free-class-page">
+  ${sprite}
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('#top')}
+      <a class="button button-small" href="#booking">Claim my free seat</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="lp-hero">
+      <div class="wrap lp-hero-grid">
+        <div class="lp-hero-copy">
+          <span class="eyebrow">Free live class — Saturdays &amp; Sundays</span>
+          <!-- HEADLINE (A/B test): the live H1 lives in freeClass.headline in scripts/products.js. -->
+          <h1>${fc.headline}</h1>
+${fc.altHeadlines.map(([angle, text]) => `          <!-- ALT H1 (${angle}): ${text} -->`).join('\n')}
+          <p class="lead">No experience needed. I walk you through it face-to-face on Google Meet — you leave with a real app, with a real database, on your phone.</p>
+          <div class="cta-group">
+            <a class="button button-large" href="#booking">${claim}</a>
+            <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Live with <b>Christopher Walsh</b> · ${fc.minutes} min · Free</span></p>
+          </div>
+          <ul class="proof-strip" aria-label="Christopher’s track record">
+${fc.proof.map(p => `            <li>${icon('check')}${p}</li>`).join('\n')}
+          </ul>
+        </div>
+        <figure class="lp-photo">
+          <img src="assets/free-class/christopher.webp" alt="Christopher Walsh, your host" width="560" height="552" fetchpriority="high">
+          <figcaption><b>Christopher Walsh</b><span>Your host · live on Google Meet</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section lp-problem">
+      <div class="wrap narrow">
+        <span class="eyebrow">Why it hasn’t worked yet</span>
+        <h2>You don’t need more information. You need someone building with you.</h2>
+        <div class="lp-prose">
+          <p>Courses, PDFs, communities — they all hand you information and leave you alone with it.</p>
+          <p>So you watch hours of videos, nod along, and still have no app.</p>
+          <p>The moment something breaks, there’s nobody to ask. That’s where most people quit.</p>
+          <p><b>Information was never the problem. Nobody builds <em>with</em> you.</b></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lp-mechanism">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why this works</span>
+          <h2>Live, guided, face-to-face. You build it — I’m right there.</h2>
+          <p class="lead">The class is the method: you build while I watch, fix, and guide in real time.</p>
+        </div>
+        <ul class="lp-cards">
+          <li><h3>I see your screen</h3><p>Stuck? Share your screen and I see exactly what you see — no guessing from a comment thread.</p></li>
+          <li><h3>Fixes in real time</h3><p>We fix it together on the spot, before it turns into a reason to quit.</p></li>
+          <li><h3>A working app, not homework</h3><p>The class ends with your app running on your phone — not a to-do list.</p></li>
+        </ul>
+        <p class="lp-aha">That’s why the course didn’t work for you: it couldn’t see your screen.</p>
+      </div>
+    </section>
+
+    <section class="section curriculum lp-steps">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">The ${fc.minutes} minutes</span>
+          <h2>What happens in the class</h2>
+          <p class="lead">Three steps, from “never built an app” to an app on your phone.</p>
+        </div>
+        <ol class="phases three">
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Join the Google Meet</h3><p>Click the link in your confirmation email. Laptop open, phone nearby.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Build your first app screen, live</h3><p>I walk you through it step by step — database, buttons, the works.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Leave with a working app</h3><p>It’s running on your phone — plus an invite to keep building 1-on-1.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section offer" id="offer">
+      <div class="wrap">
+        <div class="offer-card single">
+          <div class="offer-body">
+            <span class="eyebrow">Everything in your free seat</span>
+            <h2>Here’s what you get</h2>
+            <ul class="included lp-stack">
+${fc.stack.map(([item, detail, value]) => `              <li>${icon('check')}<span><b>${item}</b><small>${detail}</small></span>${value ? `<s class="lp-value">${value}</s>` : '<!-- CHRISTOPHER: confirm a value for this item, or leave it without one -->'}</li>`).join('\n')}
+            </ul>
+            <div class="price lp-price">
+              <span class="total">Today</span>
+              <span class="today"><b>$0</b></span>
+            </div>
+            <p class="lp-free-note">Free — no card required. You’re only giving ${fc.minutes} minutes and showing up.</p>
+            <a class="button button-large full" href="#booking">${claim}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lp-story">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why I teach this live</span>
+          <h2>I learned by building — not by watching.</h2>
+          <p class="lead">No money and no job, to a career in software. Every step came from building real apps.</p>
+        </div>
+        <ol class="story-strip">
+${story.map(([kicker, title, text], i) => `          <li><img src="assets/free-class/story-${i + 1}.webp" alt="${attr(`${kicker}: ${title} ${text}`)}" width="540" height="960" loading="lazy" decoding="async"></li>`).join('\n')}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section lp-scarcity">
+      <div class="wrap narrow">
+        <span class="eyebrow">Small by design</span>
+        <h2>Max ${fc.maxSeats} seats per session. Weekends only.</h2>
+        <p class="lead">So I can actually see your screen and help you. Four classes each weekend:</p>
+        <ul class="lp-slots">
+${slotList.map(([d, t]) => `          <li><b>${d}</b><span>${t.join(' &amp; ')} ET</span></li>`).join('\n')}
+        </ul>
+        ${sessionLine('center')}
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="wrap narrow">
+        <h2>Questions, answered.</h2>
+${freeFaq.map(([q, a]) => `        <details>
+          <summary>${q}</summary>
+          <p>${a}</p>
+        </details>`).join('\n')}
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="lp-repeat">${fc.headline}</p>
+          <h2>Claim your free seat</h2>
+          <p class="booking-flow">Pick your Saturday or Sunday slot below → free, no card required → get your Google Meet link instantly.</p>
+        </div>
+        <div class="booking-card">
+          <div class="calendly-inline-widget" data-url="${attr(fc.calendly)}" style="min-width:320px;height:720px;"></div>
+        </div>
+        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <p class="fine-print">Small by design: max ${fc.maxSeats} seats per session.</p>
+      </div>
+    </section>
+  </main>
+
+  ${freeFooter}
+
+  <div class="sticky-cta" aria-hidden="true">
+    <span><b>Free live class</b> · ${fc.minutes} min</span>
+    <a class="button" href="#booking" tabindex="-1">Claim my free seat</a>
+  </div>
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
+function thanksFreeClassPage() {
+  const oneOnOne = isUrl(fc.oneOnOne)
+    ? `<a class="button button-large" href="${attr(fc.oneOnOne)}" target="_blank" rel="noopener">Book my 1-on-1 ${icon('arrow')}</a>`
+    : `<a class="button button-large" href="mailto:${attr(funnel.supportEmail)}?subject=${encodeURIComponent('Build-With-Me 1-on-1')}">Ask about a 1-on-1 ${icon('arrow')}</a>`;
+  return `${head({ title: 'You’re in — First App Class (Free) | Code Class', description: 'Your free class seat is booked. Check your email for the Google Meet link.', ogTitle: 'You’re in — First App Class (Free)', ogDescription: 'Your seat is booked. Check your email for the Google Meet link.', image: 'assets/social/free-class.jpg', type: 'website', extra: '  <meta name="robots" content="noindex">\n' })}
+<body class="thanks-page">
+  ${sprite}
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('./')}
+    </div>
+  </header>
+
+  <main class="thanks">
+    <div class="wrap">
+      <div class="thanks-head">
+        <span class="eyebrow">First App Class (Free)</span>
+        <h1>You’re in — check your email for the Meet link.</h1>
+        <p class="lead">Your seat is booked. Your Google Meet link and calendar invite are in your confirmation email.</p>
+      </div>
+      <div class="step-list">
+        <section class="upsell-card" aria-labelledby="upsell-title">
+          <span class="eyebrow">Build-With-Me 1-on-1</span>
+          <h2 id="upsell-title">Want to keep going?</h2>
+          <p>Bring your idea — a startup, a company tool, whatever — I lay out the plan and we start building it together, live, one-on-one.</p>
+          ${oneOnOne}
+        </section>
+        <section class="step-card">
+          <h2>What to expect in the free class</h2>
+          <ul class="included">
+            <li>${icon('check')}<span>Join from a laptop on Google Meet, with your phone nearby.</span></li>
+            <li>${icon('check')}<span>We build your first app screen live — database, buttons, the works.</span></li>
+            <li>${icon('check')}<span>You leave with a working app on your phone, plus your access code to the Code Class build software.</span></li>
+          </ul>
+        </section>
+        <section class="step-card">
+          <h2>About the recording</h2>
+          <p>Can’t stay for all of it, or want to rebuild it later? You’ll get the session recording after class. <!-- CHRISTOPHER: confirm how the recording is delivered (email, Drive link, etc.) --></p>
+        </section>
+      </div>
+      <p class="fine-print">Need to change your time? Use the reschedule link in your confirmation email.${supportLink ? ` Questions? ${supportLink}` : ''}</p>
+    </div>
+  </main>
+
+  ${freeFooter}
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
+const redirectPage = to => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Class</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="${SITE}">
+  <meta http-equiv="refresh" content="0; url=${to}">
+</head>
+<body>
+  <p><a href="${to}">Continue to Code Class</a></p>
+</body>
+</html>
+`;
+
 for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
-await writeFile('index.html', workshopPage());
-await writeFile('workshop.html', workshopPage());
+await writeFile('index.html', freeClassPage());
+await writeFile('thanks-free-class.html', thanksFreeClassPage());
+await writeFile('workshop.html', redirectPage('./'));
 await writeFile('courses.html', galleryPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, index.html + workshop.html (the workshop), courses.html (the course gallery), thanks-workshop.html, terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+console.log(`Generated ${products.length} product pages, index.html (the free class), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
