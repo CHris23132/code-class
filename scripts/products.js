@@ -68,7 +68,7 @@ export const packages = {
       bullets: [
         'Everything in the full Build-With-Me (8 × 90-min sessions, complete app built together live)',
         'PLUS 60 days of async builder support with same-day weekday replies',
-        'PLUS 2 follow-up 1-on-1 sessions'
+        'PLUS 2 extra sessions after the build is done'
       ]
     }
   ],
@@ -79,7 +79,7 @@ export const packages = {
     ['Session recordings', true, true, true],
     ['Complete finished app', false, true, true],
     ['60 days async builder support', false, false, true],
-    ['Follow-up 1-on-1 sessions', false, false, '2']
+    ['Extra sessions after the build', false, false, '2']
   ]
 };
 
