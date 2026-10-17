@@ -26,6 +26,63 @@ export const freeClass = {
   oneOnOne: 'ONE_ON_ONE_BOOKING_URL'
 };
 
+// ─── Build-With-Me packages (packages.html). Stripe Payment Links — do not change names, prices, or URLs. ───
+export const packages = {
+  headline: 'Bring Your Idea. We’ll Build the App Together, Live.',
+  fromFreeClassNote: 'Graduated from the free class? This is the next step.',
+  tiers: [
+    {
+      id: 'mvp',
+      name: 'MVP Kickstart',
+      price: 497,
+      cta: 'Start my MVP — $497',
+      stripe: 'https://buy.stripe.com/bJe6oHauJfnofaYd7h6c00i',
+      // <!-- CHRISTOPHER: add "Most popular" badge to Tier 2 once it has the most buyers -->
+      note: 'Start here — upgrade to the full build anytime and your $497 applies.',
+      bullets: [
+        '3 × 90-minute 1-on-1 build sessions, live on Google Meet',
+        'We start building your app’s MVP together — you leave with a real working foundation, well on its way',
+        'Session recordings included'
+      ]
+    },
+    {
+      id: 'full',
+      name: 'Build-With-Me — Full App',
+      price: 997,
+      cta: 'Build my app — $997',
+      stripe: 'https://buy.stripe.com/28EaEX1YddfgbYM4AL6c00j',
+      note: '',
+      bullets: [
+        '6 × 90-minute 1-on-1 build sessions, live on Google Meet',
+        'We complete your full app together — you keep the working app',
+        'Session recordings included'
+      ]
+    },
+    {
+      id: 'support',
+      name: 'Build-With-Me + Builder Support',
+      price: 1497,
+      cta: 'Build + support — $1,497',
+      stripe: 'https://buy.stripe.com/28E7sL8mBgrs9QE8R16c00k',
+      note: '',
+      bullets: [
+        'Everything in the full Build-With-Me (6 × 90-min sessions, complete app built together live)',
+        'PLUS 60 days of async builder support with same-day weekday replies',
+        'PLUS 2 follow-up 1-on-1 sessions'
+      ]
+    }
+  ],
+  // Comparison rows: [label, cell for tier1, cell for tier2, cell for tier3]. Use true/false for ✓/✗, or a short string.
+  compare: [
+    ['1-on-1 live build sessions', '3 × 90 min', '6 × 90 min', '6 × 90 min'],
+    ['Working MVP foundation', true, true, true],
+    ['Complete finished app', false, true, true],
+    ['Session recordings', true, true, true],
+    ['60 days async builder support', false, false, true],
+    ['Follow-up 1-on-1 sessions', false, false, '2']
+  ]
+};
+
 // A URL left as its placeholder name (anything not starting with http) is treated as not set yet.
 export const funnel = {
   cohortDate: '',

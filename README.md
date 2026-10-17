@@ -82,15 +82,17 @@ Section order: hero (headline, subheadline, CTA, approved proof strip, Christoph
 - **Headline A/B test:** the live H1 is `freeClass.headline` in `scripts/products.js`. The two alternates in `freeClass.altHeadlines` are written into the page as HTML comments under the H1. Swap one in, rebuild, and push.
 - **Copy and settings:** proof strip (`freeClass.proof`), offer stack (`freeClass.stack`; add a value like `'$97'` to show one struck through), weekend slots (`freeClass.slots`; keep in sync with Calendly), and seat cap.
 - **Story slides:** `assets/free-class/story-1.webp` to `story-5.webp`, from `~/Downloads/slides`, with faces already blurred.
-- `thanks-free-class.html`: the free Calendly event redirects here. In order: "You're in", the Build-With-Me 1-on-1 upsell, what to expect, and the recording note. The upsell button emails the support address until `freeClass.oneOnOne` is set to a booking link. It's marked `noindex`.
+- `thanks-free-class.html`: the free Calendly event redirects here. In order: "You're in", the Build-With-Me 1-on-1 upsell, what to expect, and the recording note. The upsell button emails the support address until `freeClass.oneOnOne` is set (point it at `packages.html` when ready). It's marked `noindex`.
+- `packages.html`: the Build-With-Me 1-on-1 tiers ($497 / $997 / $1,497). No nav menu. Every paid CTA is an exact Stripe Payment Link from `packages.tiers` in `scripts/products.js`. Includes the comparison table and the Tier 1 upgrade note ($497 applies to the full build).
 - `thanks-workshop.html` still exists for the old paid $47 Calendly event, which hasn't been changed.
 - **Course software:** the course software is still locked by access code. `APP2026` and `CODECLASS2026` both work.
 
-**Launch rule:** run `npm run verify:launch` after building. It checks that `index.html`, `thanks-free-class.html`, and `terms.html` have:
+**Launch rule:** run `npm run verify:launch` after building. It checks that `index.html`, `thanks-free-class.html`, `packages.html`, and `terms.html` have:
 - no old $47 or workshop strings;
-- exactly one CTA wording, with every CTA pointing at `#booking`;
-- no nav menu and no off-page links beyond the footer;
+- exactly one CTA wording on the free class, with every CTA pointing at `#booking`;
+- no nav menu and no off-page links beyond the footer (plus Stripe on packages);
 - the free Calendly embed, both alternate H1 comments, the support email, and both Meta Pixels;
+- exact Stripe links, USD prices, the upgrade note, and the comparison table on packages;
 - the upsell block on the thank-you page, plus a real 1-on-1 booking link.
 
 `future-founder.html`, the course pages, `courses.html`, and `refund.html` still exist but aren't linked from the home page.
@@ -99,7 +101,8 @@ Section order: hero (headline, subheadline, CTA, approved proof strip, Christoph
 | Setting | Where |
 | --- | --- |
 | Free class booking (Calendly event) | `freeClass.calendly` |
-| Build-With-Me 1-on-1 booking link | `freeClass.oneOnOne` |
+| Build-With-Me 1-on-1 booking link | `freeClass.oneOnOne` (set to `packages.html` when wiring the thank-you upsell) |
+| Build-With-Me package Stripe links | `packages.tiers` in `scripts/products.js` |
 | `STRIPE_PROGRAM_URL` | `checkoutUrl` on `future-founder` |
 | `EVERGREEN_COURSE_URL` ($297 downsell) | `funnel.evergreenCheckout` |
 | `VSL_URL_PLACEHOLDER` (YouTube, Vimeo, Loom, or a direct embed URL) | `vslUrl` on `future-founder` |

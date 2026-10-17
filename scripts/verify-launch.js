@@ -1,12 +1,13 @@
 // Launch rule: a page isn't done until every CTA is verified against a real destination.
 // Usage: npm run verify:launch [-- page.html ...]   (defaults to the free-class funnel pages)
 import { readFile } from 'node:fs/promises';
-import { funnel, freeClass } from './products.js';
+import { funnel, freeClass, packages as buildPackages } from './products.js';
 
-const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['index.html', 'thanks-free-class.html', 'terms.html'];
+const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['index.html', 'thanks-free-class.html', 'packages.html', 'terms.html'];
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const banned = ['$47', 'Save my seat', 'refund', 'Refund', 'First Screen', 'STRIPE_', 'DATE_PLACEHOLDER', 'SUPPORT_EMAIL', 'announced soon', 'DRAFT: not launch-ready', 'minimum 5', 'at least 5'];
+const stripeLinks = buildPackages.tiers.map(t => t.stripe);
 let failed = 0;
 
 const report = (page, problems) => {
@@ -43,6 +44,22 @@ for (const page of pages) {
   if (page === 'thanks-free-class.html') {
     if (!/class="upsell-card"/.test(html)) problems.push('missing the Build-With-Me 1-on-1 upsell block');
     if (!isUrl(freeClass.oneOnOne)) problems.push(`freeClass.oneOnOne = "${freeClass.oneOnOne}" (the upsell button emails you until this is a booking link)`);
+  }
+  if (page === 'packages.html') {
+    for (const url of stripeLinks) if (!html.includes(url)) problems.push(`missing exact Stripe link ${url}`);
+    for (const t of buildPackages.tiers) {
+      if (!visible.includes(t.cta)) problems.push(`missing CTA wording "${t.cta}"`);
+      if (!visible.includes('USD')) { problems.push('prices must show USD'); break; }
+    }
+    if (!visible.includes('Start here — upgrade to the full build anytime and your $497 applies.')) problems.push('missing the Tier 1 upgrade note');
+    if (/most popular|best value/i.test(visible)) problems.push('has an invented "most popular" / "best value" badge');
+    if (!html.includes('CHRISTOPHER: add "Most popular" badge to Tier 2')) problems.push('missing the Most popular badge placeholder comment');
+    if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
+    const allowed = new Set([...stripeLinks, 'terms.html', `mailto:${funnel.supportEmail}`, '#top', '#packages', '#final']);
+    const offPage = [...visible.matchAll(/<a [^>]*href="([^"]*)"/g)].map(m => m[1]).filter(h => !h.startsWith('#') && !allowed.has(h));
+    for (const href of offPage) problems.push(`off-page link ${href} (only Stripe + footer legal are allowed)`);
+    if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
+    if (!/<table class="pk-table"/.test(html)) problems.push('missing the comparison table');
   }
   if (page === 'terms.html' && /\$47|at least 5|minimum 5/.test(visible)) problems.push('still mentions the old paid workshop');
   report(page, problems);

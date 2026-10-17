@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import { products, goals, testimonials, press, credentials, funnel, freeClass } from './products.js';
+import { products, goals, testimonials, press, credentials, funnel, freeClass, packages as buildPackages } from './products.js';
 
 const SITE = 'https://torontoinnovationlab.com/';
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -783,12 +783,176 @@ const redirectPage = to => `<!doctype html>
 </html>
 `;
 
+const pkg = buildPackages;
+const packagesFooter = `<footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Code Class · Made for curious minds. Built for what’s next.</p>
+      <nav class="footer-links" aria-label="Legal"><a href="terms.html">Terms</a>${supportLink}</nav>
+    </div>
+  </footer>`;
+
+const packagesFaq = [
+  ['I’ve never built anything — is this really for me?', 'Yes — that’s the point. We build your real app together, live. Try the free class first if you’re unsure.'],
+  ['What if my idea is too big for 6 sessions?', 'We scope it in session 1 — you leave with the core app working and a plan for the rest.'],
+  ['Who owns the app?', 'You do — 100%. Your idea, your code, your accounts.'],
+  ['What if I need to reschedule a session?', '<!-- CHRISTOPHER: confirm reschedule policy — do not invent one -->Email support and ask before your session.'],
+  ['How is this different from a course?', 'Courses give you videos to watch alone. This is you and me building your actual app, live.']
+];
+
+const cell = v => {
+  if (v === true) return `<span class="pk-yes" aria-label="Included">${icon('check')}</span>`;
+  if (v === false) return `<span class="pk-no" aria-label="Not included">${icon('x')}</span>`;
+  return `<span class="pk-text">${v}</span>`;
+};
+
+const tierCta = t => `<a class="button${t.id === 'mvp' ? '' : ''} full" href="${attr(t.stripe)}" target="_blank" rel="noopener">${t.cta} ${icon('arrow')}</a>`;
+
+function packagesPage() {
+  const shortNames = ['MVP Kickstart', 'Full App', 'Full App + Support'];
+  return `${head({ title: 'Build-With-Me Packages — 1-on-1 App Building | Code Class', description: 'Bring your idea. We’ll build the app together, live — 1-on-1 on Google Meet. MVP Kickstart from $497 USD, Full App $997, or Full App + Support $1,497.', ogTitle: 'Bring Your Idea. We’ll Build the App Together, Live.', ogDescription: 'No course. No videos to watch alone. You and me, face-to-face, building your real app — session by session.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}packages.html">\n  <meta property="og:url" content="${SITE}packages.html">\n` })}
+<body class="packages-page">
+  ${sprite}
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('#top')}
+      <a class="button button-small" href="#packages">See the packages</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="lp-hero pk-hero">
+      <div class="wrap">
+        <div class="lp-hero-copy pk-hero-copy">
+          <span class="eyebrow">1-on-1 — you bring the idea</span>
+          <h1>${pkg.headline}</h1>
+          <p class="lead">No course. No videos to watch alone. You and me, face-to-face, building your real app — session by session, until it’s done.</p>
+          <div class="cta-group">
+            <a class="button button-large" href="#packages">See the packages ${icon('arrow')}</a>
+            <p class="pk-bridge">${pkg.fromFreeClassNote}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section curriculum lp-steps">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps from idea to app.</h2>
+          <p class="lead">Pay once. Book your sessions. Build together live.</p>
+        </div>
+        <ol class="phases three">
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Pick your package</h3><p>Pay securely through Stripe. Your receipt is emailed instantly.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Get your booking link</h3><p>Christopher sends your private booking link — sessions on Google Meet, evenings and weekends ET.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Build together, live</h3><p>Recordings after every session. You own 100% of the app.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section offer pk-packages" id="packages">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">The packages</span>
+          <h2>Choose how far we build together.</h2>
+          <p class="lead">All prices in USD. Stripe handles checkout — this page never sees your card.</p>
+        </div>
+        <!-- CHRISTOPHER: add "Most popular" badge to Tier 2 once it has the most buyers -->
+        <div class="pk-grid">
+${pkg.tiers.map(t => `          <article class="pk-card" id="tier-${t.id}">
+            <header class="pk-card-head">
+              <h3>${t.name}</h3>
+              <p class="pk-price"><b>${money(t.price)}</b> <span>USD</span></p>
+            </header>
+            <ul class="included">
+${t.bullets.map(b => `              <li>${icon('check')}<span>${b}</span></li>`).join('\n')}
+            </ul>
+${t.note ? `            <p class="pk-upgrade">${t.note}</p>\n` : ''}            ${tierCta(t)}
+          </article>`).join('\n')}
+        </div>
+      </div>
+    </section>
+
+    <section class="section pk-compare">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Side by side</span>
+          <h2>What’s in each package.</h2>
+        </div>
+        <div class="pk-table-wrap" tabindex="0" role="region" aria-label="Package comparison">
+          <table class="pk-table">
+            <thead>
+              <tr>
+                <th scope="col"><span class="visually-hidden">Feature</span></th>
+${pkg.tiers.map((t, i) => `                <th scope="col">
+                  <span class="pk-th-name">${shortNames[i]}</span>
+                  <span class="pk-th-price">${money(t.price)} USD</span>
+                  <a class="button button-small" href="${attr(t.stripe)}" target="_blank" rel="noopener">${t.cta.replace(/ — .*/, '')}</a>
+                </th>`).join('\n')}
+              </tr>
+            </thead>
+            <tbody>
+${pkg.compare.map(([label, ...vals]) => `              <tr>
+                <th scope="row">${label}</th>
+${vals.map(v => `                <td>${cell(v)}</td>`).join('\n')}
+              </tr>`).join('\n')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lp-mechanism pk-after">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">After you pay</span>
+          <h2>What happens next.</h2>
+          <p class="lead">Simple, clear, no guessing.</p>
+        </div>
+        <ul class="lp-cards">
+          <li><h3>Your receipt</h3><p>Stripe emails your receipt instantly — that’s your proof of payment.</p></li>
+          <li><h3>Your booking link</h3><p>Christopher sends your private session booking link. <!-- CHRISTOPHER: confirm how quickly --> </p></li>
+          <li><h3>You build live</h3><p>Sessions on Google Meet. Recordings after each call. You own the app.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="wrap narrow">
+        <h2>Questions, answered.</h2>
+${packagesFaq.map(([q, a]) => `        <details>
+          <summary>${q}</summary>
+          <p>${a}</p>
+        </details>`).join('\n')}
+      </div>
+    </section>
+
+    <section class="section final pk-final" id="final">
+      <div class="wrap">
+        <h2>${pkg.headline}</h2>
+        <p class="lead">Pick the package that matches how far you want to go.</p>
+        <div class="pk-final-ctas">
+${pkg.tiers.map(t => `          <a class="button" href="${attr(t.stripe)}" target="_blank" rel="noopener">${t.cta} ${icon('arrow')}</a>`).join('\n')}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  ${packagesFooter}
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
 for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
 await writeFile('index.html', freeClassPage());
 await writeFile('thanks-free-class.html', thanksFreeClassPage());
+await writeFile('packages.html', packagesPage());
 await writeFile('workshop.html', redirectPage('./'));
 await writeFile('courses.html', galleryPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, index.html (the free class), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+console.log(`Generated ${products.length} product pages, index.html (the free class), packages.html, thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
