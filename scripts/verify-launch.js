@@ -51,7 +51,6 @@ for (const page of pages) {
       if (!visible.includes(t.cta)) problems.push(`missing CTA wording "${t.cta}"`);
       if (!visible.includes('USD')) { problems.push('prices must show USD'); break; }
     }
-    if (!visible.includes('Start here — upgrade to the full build anytime and your $497 applies.')) problems.push('missing the Tier 1 upgrade note');
     if (/most popular|best value/i.test(visible)) problems.push('has an invented "most popular" / "best value" badge');
     if (!html.includes('CHRISTOPHER: add "Most popular" badge to Tier 2')) problems.push('missing the Most popular badge placeholder comment');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');

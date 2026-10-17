@@ -604,7 +604,9 @@ details p{padding:0 2px 20px;color:var(--text)}
 .pk-packages .section-head .lead{color:#c8d5dd!important}
 .pk-page-title{font-size:clamp(28px,6.4vw,44px);font-weight:800;margin:10px auto 12px;max-width:760px;text-align:center;line-height:1.15;color:var(--white)}
 .pk-grid{display:grid;gap:16px}
-.pk-card{background:var(--white);color:var(--navy);border-radius:18px;padding:24px 20px 22px;display:grid;gap:16px;align-content:start}
+.pk-card{background:var(--white);color:var(--navy);border-radius:18px;padding:24px 20px 22px;display:flex;flex-direction:column;gap:16px;height:100%}
+.pk-card .included{flex:1}
+.pk-card .button.full{margin-top:auto}
 .pk-card-head{display:grid;gap:6px}
 .pk-card h3{font-size:22px;font-weight:800;line-height:1.25;color:var(--navy)}
 .pk-card .included li,.pk-card .included span{color:var(--text)}

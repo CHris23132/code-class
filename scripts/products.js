@@ -38,7 +38,7 @@ export const packages = {
       cta: 'Start my MVP — $497',
       stripe: 'https://buy.stripe.com/bJe6oHauJfnofaYd7h6c00i',
       // <!-- CHRISTOPHER: add "Most popular" badge to Tier 2 once it has the most buyers -->
-      note: 'Start here — upgrade to the full build anytime and your $497 applies.',
+      note: '',
       bullets: [
         '3 × 90-minute 1-on-1 build sessions, live on Google Meet',
         'We start building your app’s MVP together — you leave with a real working foundation, well on its way',
