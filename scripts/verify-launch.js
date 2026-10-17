@@ -55,7 +55,7 @@ for (const page of pages) {
     if (/most popular|best value/i.test(visible)) problems.push('has an invented "most popular" / "best value" badge');
     if (!html.includes('CHRISTOPHER: add "Most popular" badge to Tier 2')) problems.push('missing the Most popular badge placeholder comment');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
-    const allowed = new Set([...stripeLinks, 'terms.html', `mailto:${funnel.supportEmail}`, '#top', '#packages', '#final']);
+    const allowed = new Set([...stripeLinks, 'terms.html', `mailto:${funnel.supportEmail}`, '#top', '#packages']);
     const offPage = [...visible.matchAll(/<a [^>]*href="([^"]*)"/g)].map(m => m[1]).filter(h => !h.startsWith('#') && !allowed.has(h));
     for (const href of offPage) problems.push(`off-page link ${href} (only Stripe + footer legal are allowed)`);
     if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');

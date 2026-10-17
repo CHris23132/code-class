@@ -592,13 +592,13 @@ details p{padding:0 2px 20px;color:var(--text)}
 
 /* ─── Packages page (packages.html) ─── */
 .packages-page .site-footer{padding-bottom:26px}
-.pk-hero{padding-bottom:40px}
-.pk-hero-copy{max-width:720px}
-.pk-bridge{margin-top:14px;font-size:14px;color:var(--text);font-weight:600}
+.packages-page .site-header .header-inner{justify-content:center}
 .pk-packages{background:var(--navy)}
+.pk-packages-first{padding-top:36px}
 .pk-packages .section-head .eyebrow{color:var(--cyan)}
-.pk-packages .section-head h2,.pk-packages .section-head .lead{color:var(--white)}
+.pk-packages .section-head h2,.pk-packages .section-head .lead,.pk-packages .pk-page-title{color:var(--white)}
 .pk-packages .section-head .lead{color:#c8d5dd}
+.pk-page-title{font-size:clamp(28px,6.4vw,44px);font-weight:800;margin:10px auto 12px;max-width:760px;text-align:center;line-height:1.15}
 .pk-grid{display:grid;gap:16px}
 .pk-card{background:var(--white);border-radius:18px;padding:24px 20px 22px;display:grid;gap:16px;align-content:start}
 .pk-card-head{display:grid;gap:6px}

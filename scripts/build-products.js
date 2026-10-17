@@ -816,45 +816,15 @@ function packagesPage() {
   <header class="site-header">
     <div class="wrap header-inner">
       ${logo('#top')}
-      <a class="button button-small" href="#packages">See the packages</a>
     </div>
   </header>
 
   <main id="top">
-    <section class="lp-hero pk-hero">
+    <section class="section offer pk-packages pk-packages-first" id="packages">
       <div class="wrap">
-        <div class="lp-hero-copy pk-hero-copy">
+        <div class="section-head">
           <span class="eyebrow">1-on-1 — you bring the idea</span>
-          <h1>${pkg.headline}</h1>
-          <p class="lead">No course. No videos to watch alone. You and me, face-to-face, building your real app — session by session, until it’s done.</p>
-          <div class="cta-group">
-            <a class="button button-large" href="#packages">See the packages ${icon('arrow')}</a>
-            <p class="pk-bridge">${pkg.fromFreeClassNote}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section curriculum lp-steps">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">How it works</span>
-          <h2>Three steps from idea to app.</h2>
-          <p class="lead">Pay once. Book your sessions. Build together live.</p>
-        </div>
-        <ol class="phases three">
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Pick your package</h3><p>Pay securely through Stripe. Your receipt is emailed instantly.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Get your booking link</h3><p>Christopher sends your private booking link — sessions on Google Meet, evenings and weekends ET.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Build together, live</h3><p>Recordings after every session. You own 100% of the app.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section offer pk-packages" id="packages">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">The packages</span>
-          <h2>Choose how far we build together.</h2>
+          <h1 class="pk-page-title">${pkg.headline}</h1>
           <p class="lead">All prices in USD. Stripe handles checkout — this page never sees your card.</p>
         </div>
         <!-- CHRISTOPHER: add "Most popular" badge to Tier 2 once it has the most buyers -->
@@ -887,7 +857,6 @@ ${t.note ? `            <p class="pk-upgrade">${t.note}</p>\n` : ''}            
 ${pkg.tiers.map((t, i) => `                <th scope="col">
                   <span class="pk-th-name">${shortNames[i]}</span>
                   <span class="pk-th-price">${money(t.price)} USD</span>
-                  <a class="button button-small" href="${attr(t.stripe)}" target="_blank" rel="noopener">${t.cta.replace(/ — .*/, '')}</a>
                 </th>`).join('\n')}
               </tr>
             </thead>
@@ -899,6 +868,21 @@ ${vals.map(v => `                <td>${cell(v)}</td>`).join('\n')}
             </tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <section class="section curriculum lp-steps">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps from idea to app.</h2>
+          <p class="lead">Pay once. Book your sessions. Build together live.</p>
+        </div>
+        <ol class="phases three">
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Pick your package</h3><p>Pay securely through Stripe. Your receipt is emailed instantly.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Get your booking link</h3><p>Christopher sends your private booking link — sessions on Google Meet, evenings and weekends ET.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Build together, live</h3><p>Recordings after every session. You own 100% of the app.</p></li>
+        </ol>
       </div>
     </section>
 
@@ -924,16 +908,6 @@ ${packagesFaq.map(([q, a]) => `        <details>
           <summary>${q}</summary>
           <p>${a}</p>
         </details>`).join('\n')}
-      </div>
-    </section>
-
-    <section class="section final pk-final" id="final">
-      <div class="wrap">
-        <h2>${pkg.headline}</h2>
-        <p class="lead">Pick the package that matches how far you want to go.</p>
-        <div class="pk-final-ctas">
-${pkg.tiers.map(t => `          <a class="button" href="${attr(t.stripe)}" target="_blank" rel="noopener">${t.cta} ${icon('arrow')}</a>`).join('\n')}
-        </div>
       </div>
     </section>
   </main>
