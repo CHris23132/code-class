@@ -76,8 +76,8 @@ export const packages = {
   compare: [
     ['1-on-1 live build sessions', '3 × 90 min', '6 × 90 min', '6 × 90 min'],
     ['Working MVP foundation', true, true, true],
-    ['Complete finished app', false, true, true],
     ['Session recordings', true, true, true],
+    ['Complete finished app', false, true, true],
     ['60 days async builder support', false, false, true],
     ['Follow-up 1-on-1 sessions', false, false, '2']
   ]
