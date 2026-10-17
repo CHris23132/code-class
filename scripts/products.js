@@ -38,7 +38,7 @@ export const packages = {
       cta: 'Start my MVP — $497',
       stripe: 'https://buy.stripe.com/bJe6oHauJfnofaYd7h6c00i',
       // <!-- CHRISTOPHER: add "Most popular" badge to Tier 2 once it has the most buyers -->
-      note: '',
+      note: 'Start here — upgrade to the full build anytime and your $497 applies.',
       bullets: [
         '3 × 90-minute 1-on-1 build sessions, live on Google Meet',
         'We start building your app’s MVP together — you leave with a real working foundation, well on its way',
@@ -53,8 +53,8 @@ export const packages = {
       stripe: 'https://buy.stripe.com/28EaEX1YddfgbYM4AL6c00j',
       note: '',
       bullets: [
-        '6 × 90-minute 1-on-1 build sessions, live on Google Meet',
-        'We complete your full app together — you keep the working app',
+        '8 × 90-minute 1-on-1 build sessions, live on Google Meet',
+        'We complete the full app together — you keep the working app',
         'Session recordings included'
       ]
     },
@@ -66,7 +66,7 @@ export const packages = {
       stripe: 'https://buy.stripe.com/28E7sL8mBgrs9QE8R16c00k',
       note: '',
       bullets: [
-        'Everything in the full Build-With-Me (6 × 90-min sessions, complete app built together live)',
+        'Everything in the full Build-With-Me (8 × 90-min sessions, complete app built together live)',
         'PLUS 60 days of async builder support with same-day weekday replies',
         'PLUS 2 follow-up 1-on-1 sessions'
       ]
@@ -74,7 +74,7 @@ export const packages = {
   ],
   // Comparison rows: [label, cell for tier1, cell for tier2, cell for tier3]. Use true/false for ✓/✗, or a short string.
   compare: [
-    ['1-on-1 live build sessions', '3 × 90 min', '6 × 90 min', '6 × 90 min'],
+    ['1-on-1 live build sessions', '3 × 90 min', '8 × 90 min', '8 × 90 min'],
     ['Working MVP foundation', true, true, true],
     ['Session recordings', true, true, true],
     ['Complete finished app', false, true, true],
