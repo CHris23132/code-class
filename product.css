@@ -604,14 +604,15 @@ details p{padding:0 2px 20px;color:var(--text)}
 .pk-packages .section-head .lead{color:#c8d5dd!important}
 .pk-page-title{font-size:clamp(28px,6.4vw,44px);font-weight:800;margin:10px auto 12px;max-width:760px;text-align:center;line-height:1.15;color:var(--white)}
 .pk-grid{display:grid;gap:16px}
-.pk-card{background:var(--white);border-radius:18px;padding:24px 20px 22px;display:grid;gap:16px;align-content:start}
+.pk-card{background:var(--white);color:var(--navy);border-radius:18px;padding:24px 20px 22px;display:grid;gap:16px;align-content:start}
 .pk-card-head{display:grid;gap:6px}
-.pk-card h3{font-size:22px;font-weight:800;line-height:1.25}
+.pk-card h3{font-size:22px;font-weight:800;line-height:1.25;color:var(--navy)}
+.pk-card .included li,.pk-card .included span{color:var(--text)}
 .pk-price{display:flex;align-items:baseline;gap:8px}
 .pk-price b{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--navy)}
 .pk-price span{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .pk-upgrade{font-size:13px;line-height:1.5;color:var(--link);background:var(--cyan-soft);border-radius:10px;padding:12px 14px;margin:0}
-.pk-card .button.full{width:100%}
+.pk-card .button.full{width:100%;color:var(--navy)}
 .pk-compare{background:var(--paper)}
 .pk-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:16px;background:var(--white);box-shadow:0 10px 40px rgba(7,24,39,.06)}
 .pk-table{width:100%;min-width:640px;border-collapse:collapse;font-size:14px}

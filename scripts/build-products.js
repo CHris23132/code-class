@@ -53,7 +53,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=3">
+  <link rel="stylesheet" href="product.css?v=4">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
