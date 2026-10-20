@@ -648,3 +648,42 @@ details p{padding:0 2px 20px;color:var(--text)}
   .pk-final-ctas{max-width:none;grid-template-columns:repeat(3,1fr);gap:12px}
   .pk-table{min-width:0}
 }
+
+/* ─── Class prep page (class-prep.html) ─── */
+.prep-page .site-footer{padding-bottom:26px}
+.prep-page .site-header .header-inner{justify-content:center}
+.prep-hero{padding:28px 0 8px;background:linear-gradient(180deg,var(--cyan-soft),var(--white) 80%)}
+.prep-hero h1{font-size:clamp(30px,8vw,46px);font-weight:800;margin:10px 0 12px;line-height:1.12}
+.prep-hero .lead{font-size:16px;line-height:1.6}
+.prep-steps{padding-top:12px}
+.prep-list{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.prep-step{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:22px 20px;border-top:4px solid var(--cyan)}
+.prep-step:nth-child(even){border-top-color:var(--lime)}
+.prep-step-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.prep-step h2{font-size:22px;font-weight:800;margin:0 0 8px;text-align:left}
+.prep-step>p{color:var(--text);font-size:15px;line-height:1.55;margin:0 0 10px}
+.prep-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--cyan-soft);color:var(--link);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.prep-tag-optional{background:var(--paper);color:var(--muted)}
+.prep-actions{display:grid;gap:10px;margin:14px 0 10px}
+.prep-actions .button{min-height:52px;font-size:14px;padding:14px 16px}
+.prep-note{font-size:14px;color:var(--text);line-height:1.5;margin:0}
+.prep-warn{font-size:14px;line-height:1.5;color:var(--navy);background:#fff8e8;border:1px solid #f0e0b8;border-radius:12px;padding:12px 14px;margin:8px 0 0}
+.prep-checklist-section{background:var(--paper);padding-top:40px}
+.prep-checklist{background:var(--navy);color:var(--white);border-radius:20px;padding:26px 22px;box-shadow:0 0 0 3px var(--lime)}
+.prep-checklist .eyebrow{color:var(--cyan)}
+.prep-checklist h2{color:var(--white);text-align:left;font-size:clamp(24px,6vw,32px);margin:8px 0 18px}
+.prep-checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.prep-checklist li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.45}
+.prep-checklist small{display:block;color:#9fb3c0;font-size:12px;margin-top:2px}
+.prep-box{width:22px;height:22px;border:2px solid var(--lime);border-radius:6px;flex:none;margin-top:1px}
+.prep-close{padding-top:36px;padding-bottom:48px;text-align:center}
+.prep-stuck{font-size:17px;font-weight:600;color:var(--navy);margin:0}
+.prep-stuck a{color:var(--link);text-decoration:underline;text-underline-offset:3px}
+.prep-sign{margin:10px 0 0;color:var(--muted);font-size:15px}
+@media(min-width:720px){
+  .prep-hero{padding:40px 0 12px}
+  .prep-hero .lead{font-size:18px}
+  .prep-actions{grid-template-columns:1fr 1fr}
+  .prep-step#github .prep-actions{grid-template-columns:1fr}
+  .prep-checklist{padding:32px 36px}
+}

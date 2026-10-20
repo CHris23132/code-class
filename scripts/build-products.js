@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { products, goals, testimonials, press, credentials, funnel, freeClass, packages as buildPackages } from './products.js';
 
 const SITE = 'https://torontoinnovationlab.com/';
@@ -53,7 +53,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=6">
+  <link rel="stylesheet" href="product.css?v=7">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -920,13 +920,146 @@ ${packagesFaq.map(([q, a]) => `        <details>
 `;
 }
 
+function classPrepPage() {
+  const extBtn = (href, label) => `<a class="button full" href="${attr(href)}" target="_blank" rel="noopener">${label} ${icon('arrow')}</a>`;
+  return `${head({ title: 'Class prep — Get set up for First App Class | Code Class', description: 'A 10-minute setup before First App Class: install your editor, AI subscription, Expo Go, and optional GitHub.', ogTitle: 'You’re booked. Let’s get you set up.', ogDescription: 'About 10 minutes. Do this before class so we can build right away.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}class-prep">\n  <meta property="og:url" content="${SITE}class-prep">\n` })}
+<body class="prep-page">
+  ${sprite}
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('#top')}
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="prep-hero">
+      <div class="wrap narrow">
+        <span class="eyebrow">First App Class</span>
+        <h1>You’re booked. Let’s get you set up.</h1>
+        <p class="lead">About 10 minutes. Do this before class so we can build right away — not install software on the call.</p>
+      </div>
+    </section>
+
+    <section class="section prep-steps">
+      <div class="wrap narrow">
+        <ol class="prep-list">
+          <li class="prep-step" id="editor">
+            <div class="prep-step-top"><span class="phase-num">Step 1</span><span class="prep-tag">Required</span></div>
+            <h2>Install an editor</h2>
+            <p>Pick one. Cursor is recommended for this class.</p>
+            <div class="prep-actions">
+              ${extBtn('https://cursor.com/download', 'Download Cursor')}
+              ${extBtn('https://code.visualstudio.com/download', 'Download VS Code')}
+            </div>
+            <p class="prep-note"><b>Recommended:</b> Cursor. VS Code is fine too.</p>
+          </li>
+
+          <li class="prep-step" id="ai">
+            <div class="prep-step-top"><span class="phase-num">Step 2</span><span class="prep-tag">Required</span></div>
+            <h2>Get a paid AI subscription</h2>
+            <p>You need Claude Pro+ or ChatGPT Plus+. Free tiers won’t cut it for class.</p>
+            <div class="prep-actions">
+              ${extBtn('https://claude.ai', 'Claude (Pro+)')}
+              ${extBtn('https://chatgpt.com', 'ChatGPT (Plus+)')}
+            </div>
+            <p class="prep-note">Pick one for now. Either works.</p>
+          </li>
+
+          <li class="prep-step" id="extension">
+            <div class="prep-step-top"><span class="phase-num">Step 3</span><span class="prep-tag">VS Code only</span></div>
+            <h2>Install the AI extension</h2>
+            <p><b>Cursor users:</b> skip this step — AI is built in. Sign in when Cursor asks.</p>
+            <p><b>VS Code users:</b> install one extension, then sign in.</p>
+            <div class="prep-actions">
+              ${extBtn('https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code', 'Claude Code for VS Code')}
+              ${extBtn('https://marketplace.visualstudio.com/items?itemName=openai.chatgpt', 'Codex for VS Code')}
+            </div>
+            <p class="prep-warn">Before you install: check the publisher says <b>Anthropic</b> or <b>OpenAI</b>. Skip anything else.</p>
+          </li>
+
+          <li class="prep-step" id="expo">
+            <div class="prep-step-top"><span class="phase-num">Step 4</span><span class="prep-tag">Required</span></div>
+            <h2>Install Expo Go on your phone</h2>
+            <p>This is how your app opens on your phone during class.</p>
+            <div class="prep-actions">
+              ${extBtn('https://apps.apple.com/app/expo-go/id982107779', 'Expo Go for iPhone')}
+              ${extBtn('https://play.google.com/store/apps/details?id=host.exp.exponent', 'Expo Go for Android')}
+            </div>
+          </li>
+
+          <li class="prep-step" id="github">
+            <div class="prep-step-top"><span class="phase-num">Step 5</span><span class="prep-tag prep-tag-optional">Optional</span></div>
+            <h2>GitHub account</h2>
+            <p>Nice for saving projects later. <b>Not needed</b> to run the app in class with Expo Go.</p>
+            <div class="prep-actions">
+              ${extBtn('https://github.com/signup', 'Create a free GitHub account')}
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section prep-checklist-section">
+      <div class="wrap narrow">
+        <article class="prep-checklist" aria-labelledby="checklist-title">
+          <span class="eyebrow">Before class</span>
+          <h2 id="checklist-title">Your checklist</h2>
+          <ul>
+            <li><span class="prep-box" aria-hidden="true"></span><span>Cursor or VS Code installed</span></li>
+            <li><span class="prep-box" aria-hidden="true"></span><span>Claude Pro+ or ChatGPT Plus+ active</span></li>
+            <li><span class="prep-box" aria-hidden="true"></span><span>AI extension installed + signed in <small>(VS Code only)</small></span></li>
+            <li><span class="prep-box" aria-hidden="true"></span><span>Expo Go on your phone</span></li>
+            <li><span class="prep-box" aria-hidden="true"></span><span>GitHub account <small>(optional)</small></span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section prep-close">
+      <div class="wrap narrow">
+        <p class="prep-stuck">Stuck? Email <a href="mailto:play3dinc@gmail.com">play3dinc@gmail.com</a></p>
+        <p class="prep-sign">— Christopher</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="year">2026</span> Code Class</p>
+      <nav class="footer-links" aria-label="Legal"><a href="terms.html">Terms</a>${supportLink}</nav>
+    </div>
+  </footer>
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
 for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
 await writeFile('index.html', freeClassPage());
 await writeFile('thanks-free-class.html', thanksFreeClassPage());
 await writeFile('packages.html', packagesPage());
+await writeFile('class-prep.html', classPrepPage());
+await mkdir('class-prep', { recursive: true });
+await writeFile('class-prep/index.html', `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class prep — Code Class</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="${SITE}class-prep">
+  <meta http-equiv="refresh" content="0; url=../class-prep.html">
+</head>
+<body>
+  <p><a href="../class-prep.html">Continue to class prep</a></p>
+</body>
+</html>
+`);
 await writeFile('workshop.html', redirectPage('./'));
 await writeFile('courses.html', galleryPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, index.html (the free class), packages.html, thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+console.log(`Generated ${products.length} product pages, index.html (the free class), packages.html, class-prep.html (+ /class-prep/), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);

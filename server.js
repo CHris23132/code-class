@@ -8,8 +8,9 @@ http.createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const allowed = ['/styles.css','/app.js','/course.js','/firebase.js','/vendor/firebase.js','/product.css','/product.js','/catalog.js'];
-    const requestPath = pathname === '/' ? '/index.html' : pathname;
-    if (!allowed.includes(requestPath) && !/^\/[a-z0-9-]+\.html$/.test(requestPath) && !/^\/assets\/(?:[a-zA-Z0-9_-]+\/)?[a-zA-Z0-9_.-]+$/.test(requestPath)) throw new Error('Not found');
+    let requestPath = pathname === '/' ? '/index.html' : pathname;
+    if (requestPath === '/class-prep' || requestPath === '/class-prep/') requestPath = '/class-prep.html';
+    if (!allowed.includes(requestPath) && !/^\/[a-z0-9-]+\.html$/.test(requestPath) && !/^\/class-prep\/index\.html$/.test(requestPath) && !/^\/assets\/(?:[a-zA-Z0-9_-]+\/)?[a-zA-Z0-9_.-]+$/.test(requestPath)) throw new Error('Not found');
     const file = path.join(root, requestPath);
     if (!(await stat(file)).isFile()) throw new Error('Not found');
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
