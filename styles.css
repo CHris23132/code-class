@@ -302,13 +302,12 @@ body.watch-mode main{padding:0;max-width:none;margin:0;height:100dvh;overflow:hi
 .watch-top-actions{display:flex;align-items:center;gap:8px;flex:none}
 .watch-top-actions .button{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#e8f0f4}
 .watch-top-actions .button:hover:not(:disabled){background:rgba(255,255,255,.14)}
-.watch-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.85fr);flex:1;min-height:0}
-.watch-stage{display:flex;flex-direction:column;min-width:0;min-height:0;padding:14px;gap:10px}
-.watch-player-shell{position:relative;flex:1;min-height:180px;border-radius:10px;overflow:hidden;background:#000}
-#yt-player,.watch-player, .watch-player iframe, #lesson-video{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
-#yt-player, .watch-player iframe, #lesson-video{transform:scale(1.28);transform-origin:center center}
+.watch-main{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(340px,.8fr);flex:1;min-height:0;align-items:stretch}
+.watch-stage{display:flex;flex-direction:column;min-width:0;min-height:0;padding:14px;gap:10px;justify-content:flex-start}
+.watch-player-shell{position:relative;flex:none;width:min(100%,calc((100dvh - 140px) * 16 / 9));aspect-ratio:16/9;height:auto;border-radius:10px;overflow:hidden;background:#000;margin-inline:auto;align-self:center}
+#yt-player,.watch-player,.watch-player iframe,#lesson-video{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;transform:none!important}
 .watch-player-mask{position:absolute;inset:0;z-index:2;cursor:default;background:transparent}
-.watch-rail{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.watch-rail{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:thin;flex:none}
 .watch-rail-item{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#c5d5df;cursor:pointer;min-width:78px}
 .watch-rail-item span{font-size:9px;font-variant-numeric:tabular-nums;color:#7a93a3}
 .watch-rail-item strong{font-size:10px;font-weight:650}
@@ -324,16 +323,23 @@ body.watch-mode main{padding:0;max-width:none;margin:0;height:100dvh;overflow:hi
 .watch-lesson-tab:hover{background:var(--cyan-soft)}
 .watch-lesson-tab.is-active{background:var(--white);border-color:var(--border);box-shadow:0 -1px 0 var(--white)}
 .watch-lesson-tab.is-active span{background:var(--brand-cyan);color:var(--navy)}
-.watch-panel{flex:1;min-height:0;overflow:auto;background:var(--white)}
+.watch-panel{flex:1;min-height:0;overflow:auto;background:var(--white);color:var(--ink)}
 .watch-panel-inner{display:flex;flex-direction:column;min-height:100%}
-.watch-heading{padding:22px 22px 16px;background:var(--paper);border-bottom:1px solid var(--border)}
-.watch-heading h1{font-size:22px;letter-spacing:-.7px;margin:8px 0 8px}
-.watch-heading>p{font-size:12px;max-width:none}
-.watch-body{padding:16px 22px 28px}
+.watch-heading.lesson-heading{padding:22px 22px 16px;background:var(--paper);border-bottom:1px solid var(--border);border-color:var(--border)}
+.watch-heading .eyebrow{color:var(--link)}
+.watch-heading .lesson-heading-meta,
+.watch-heading .lesson-heading-meta span{color:var(--muted)}
+.watch-heading h1{font-size:22px;letter-spacing:-.7px;margin:8px 0 8px;color:var(--navy)}
+.watch-heading>p{font-size:12px;max-width:none;color:var(--text)}
+.watch-body{padding:16px 22px 28px;color:var(--ink)}
+.watch-body .lesson-step h2{color:var(--navy)}
+.watch-body .lesson-step p{color:var(--text)}
 .watch-step{padding:14px;margin:0 0 10px;border-radius:10px;border:1px solid transparent;transition:background .2s,border-color .2s,box-shadow .2s}
 .watch-step.is-active{background:var(--cyan-soft);border-color:#b7e8f1;box-shadow:0 0 0 1px rgba(56,217,245,.25)}
 .watch-step.is-active>span{background:var(--brand-cyan);border-color:var(--brand-cyan);color:var(--navy);font-weight:700}
-.watch-bottom{position:sticky;bottom:0;margin-top:auto}
+.watch-bottom{position:sticky;bottom:0;margin-top:auto;background:var(--paper);border-top:1px solid var(--border);color:var(--text)}
+.watch-bottom #completion-hint{color:var(--muted)}
+.watch-bottom .button.primary{background:var(--brand-cyan);border-color:var(--brand-cyan);color:var(--navy)}
 @media(max-width:1099px){
   body.watch-mode{overflow:auto}
   body.watch-mode main{height:auto;min-height:100dvh;overflow:auto}
