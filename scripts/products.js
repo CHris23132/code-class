@@ -20,7 +20,7 @@ export const freeClass = {
     ['Your first real app on your phone', 'Built by you, with a real database, by the end of the call', ''],
     ['Session recording', 'Rebuild it anytime, at your own pace', ''],
     ['Live Q&amp;A', 'Ask anything while you build', ''],
-    ['Premium unlock: the Code Class build software', 'All 12 guided lessons and the prompt library. Your access code is shared live in class', '']
+    ['Premium unlock: the Code Class build software', 'All 12 guided lessons and the prompt library — create a free account to start', '']
   ],
   // Build-With-Me 1-on-1 booking link for the thank-you page upsell. Until it starts with http, the button emails you instead.
   oneOnOne: 'ONE_ON_ONE_BOOKING_URL'
@@ -153,32 +153,31 @@ export const products = [
     slug: 'future-founder',
     name: 'Future Founder',
     tagline: 'Build your own Instagram-style app',
-    price: 497,
-    checkoutUrl: 'STRIPE_PROGRAM_URL',
-    vslUrl: 'VSL_URL_PLACEHOLDER',
-    live: true,
-    eyebrow: 'Build &amp; Launch · Live program',
-    cta: 'Claim my spot',
-    offerTitle: 'The Build &amp; Launch Program',
-    downsell: [297, 'evergreen'],
+    freeStart: true,
+    startUrl: 'future-founder-class.html',
+    price: 0,
+    checkoutUrl: '',
+    eyebrow: 'Free video course · Guided software',
+    cta: 'Start the course',
+    offerTitle: 'Code Class — Free to start',
     goals: ['app', 'mobile', 'income'],
     badge: 'Best place to start',
-    summary: 'A live two-week program: build and launch a real Instagram-style app with login, a database, and payments — from zero.',
-    title: 'Build &amp; Launch — Your First Real App, Live in Two Weeks',
-    description: 'A 4-session live program with video lessons plus interactive software that takes you from zero to a production Instagram-style app with a real database, real login, and real payments. No experience needed.',
-    ogDescription: 'Build and launch your first real app — live, in two weeks. Real database, real login, real payments. No experience needed.',
-    headline: 'Build and launch your first real app — <span class="highlight">live with me, in two weeks.</span>',
-    finalHeadline: 'Build and launch your first real app — live with me, in two weeks.',
-    subhead: 'A 4-session live program. Video lessons plus interactive software that walks you through every prompt, every click, every checkpoint — until your production app is live.',
-    trust: ['No experience needed', 'Live on Zoom, recordings included', 'Real app, real database, real login'],
+    summary: 'A free self-paced course: build a real Instagram-style app with login, a database, and posts — from zero, with video plus guided software.',
+    title: 'Build Your First Real App — Free Video Course + Guided Software',
+    description: 'A free self-paced course with video lessons plus interactive software that takes you from zero to a production Instagram-style app with a real database and real login. No experience needed.',
+    ogDescription: 'Build your first real app free — video course plus guided software. Real database, real login. No experience needed.',
+    headline: 'Build your first real app — <span class="highlight">free, at your pace.</span>',
+    finalHeadline: 'Ready when you are. Start building today.',
+    subhead: 'Video walkthrough plus interactive software. Every prompt is copy-paste ready. Create a free account and open all 12 lessons.',
+    trust: ['No experience needed', 'Free account · full course', 'Real app, real database, real login'],
     problemTitle: 'Here’s why you haven’t built your app yet.',
     problems: [
       ['Tutorials teach syntax.', 'Nobody teaches you how the pieces connect into a real product.'],
       ['You get stuck at 11pm', 'on a Firebase error with no one to ask — so you quit.'],
       ['Dev agencies quoted you $30k–$80k,', 'so the idea sits in your notes app.']
     ],
-    outcomeEyebrow: 'What you’ll launch',
-    outcomeTitle: 'In two weeks, you will have built and launched <span class="highlight">this:</span>',
+    outcomeEyebrow: 'What you’ll build',
+    outcomeTitle: 'By the end, you will have built <span class="highlight">this:</span>',
     screensLabel: 'Screens from the app you will build: feed, new post, messages, and profile',
     screens: [
       ['Feed', `<div class="app-bar"><b class="app-logo">hello<span>world.</span></b><span class="app-icons">♡ ✉</span></div>
@@ -207,42 +206,35 @@ export const products = [
               <div class="edit-btn">Edit profile</div>
               <div class="grid"><i class="img-sunset"></i><i class="img-sea"></i><i class="img-lime"></i><i class="img-sea"></i><i class="img-lime"></i><i class="img-sunset"></i></div>`]
     ],
-    outcomes: ['Design professional app screens with AI', 'Set up a real cloud database with login and user accounts', 'Automate your business with cloud functions and emails', 'Take payments with Stripe and launch to production'],
+    outcomes: ['Design professional app screens with AI', 'Set up a real cloud database with login and user accounts', 'Wire posts, comments, likes, and profiles that save', 'Prepare a mobile build you can test on a real device'],
     applied: 'And you’ll understand the full anatomy of modern apps — the same foundation behind every internal business tool, client project, and startup MVP.',
-    different: [guidedSoftware('app'), ['Production-grade, not toy projects.', 'Real Firebase backend. Real auth. Real deployment. The same stack companies pay developers $150/hr to build.']],
-    sessions: [
-      ['Spin up + design', 'Your app’s screens, built live.'],
-      ['Database + auth', 'Real login, real data, posts and DMs.'],
-      ['Business automations', 'Cloud functions, database triggers, automated emails.'],
-      ['Stripe payments + launch', 'Take money, ship it, then split tracks — founders build their own idea, career builders build a portfolio piece.']
-    ],
-    phasesNote: 'The guided software you’ll use between sessions — every prompt and checkpoint, about 4 hours of building in total.',
+    different: [guidedSoftware('app'), ['Production-grade, not toy projects.', 'Real Firebase backend. Real auth. Real deployment. The same stack companies pay developers to build.']],
+    phasesNote: 'Four modules inside the guided software — every prompt and checkpoint, about 4 hours of building in total.',
     phases: [
-      ['Setup', 35, ['Your workspace ready with Cursor, Node, and Expo', 'Your first app created from a single AI prompt', 'Your app running live in the browser']],
-      ['Design', 65, ['Professional screens designed with AI', 'Your app running on your own phone', 'Your work saved and backed up on GitHub']],
-      ['Accounts &amp; Data', 90, ['A real Firebase cloud database', 'Sign-in, user accounts, and profiles', 'Posts, comments, likes, and messages that save']],
-      ['Build &amp; Share', 30, ['A production build for iOS or Android', 'Your app tested on a real device', 'A finished app you can show anyone']]
+      ['Set up and start', 35, ['Your workspace ready with Cursor, Node, and Expo', 'Your first app created from a single AI prompt', 'Your app running live in the browser']],
+      ['Design and test', 65, ['Professional screens designed with AI', 'Your app running on your own phone', 'Your work saved and backed up on GitHub']],
+      ['Add accounts and data', 90, ['A real Firebase cloud database', 'Sign-in, user accounts, and profiles', 'Posts, comments, likes, and messages that save']],
+      ['Build and share', 30, ['A production build for iOS or Android', 'Your app tested on a real device', 'A finished app you can show anyone']]
     ],
-    appliedTrack: 'the applied track: turning these skills into company tools and client work.',
+    appliedTrack: 'Want 1-on-1 help after the free course? Build with me on the packages page.',
     forYou: ['You have an app idea you keep putting off', 'You want a skill people will pay you for', 'You learn best by building something real'],
     notForYou: notFor,
     stack: [
-      ['Build &amp; Launch live program — 4 sessions', 997],
-      ['Guided software access', 297],
-      ['Session recordings', 197],
-      ['“From clone to company tools” applied track', 197, true]
+      ['12 guided lessons + prompt library', 297],
+      ['Video walkthrough of the full build', 197],
+      ['Checklists, notes, and progress sync', 97]
     ],
-    guarantee: ['The First-Screen Guarantee', 'follow along and if you don’t have an app running on your phone within the first session, email me and I’ll refund every cent.'],
-    finalTrust: 'First-Screen Guarantee: an app on your phone within the first session, or every cent back.',
+    guarantee: ['Free to start', 'Create an account, open the software, and build at your own pace — no credit card required.'],
+    finalTrust: 'Free account. Full course. Start in under a minute.',
     faq: [
       sharedFaq.noCode,
       sharedFaq.stuck,
-      ['When are the live sessions?', 'Evenings, Eastern Time. The schedule is published for each cohort before it starts.'],
-      ['What if I miss one?', 'Every session is recorded, and the guided software’s checkpoints keep you on track between sessions.'],
-      ['Do I need a Mac or paid tools?', 'No. Everything is free to start, and it works on Mac or Windows.'],
-      ['How is this different from YouTube tutorials?', 'Tutorials end. This ends with your production app live, built alongside me — plus the applied track that turns it into income.']
+      sharedFaq.time,
+      ['Is this really free?', 'Yes. Create a free account to open all 12 lessons and the prompt library. No access code and no payment for this course.'],
+      ['Do I need a Mac or paid tools?', 'No. Everything is free to start, and it works on Mac or Windows. You’ll use Cursor (or another AI coding tool) and free Expo / Firebase accounts.'],
+      ['Can I get live help?', 'Yes. Book a free live class, or see Build-With-Me packages if you want 1-on-1 sessions after the course.']
     ],
-    finalLead: 'No experience needed. Four live sessions, and a production app with a real database, real login, and real payments.'
+    finalLead: 'No experience needed. Create a free account and start building your first production app today.'
   },
   {
     slug: 'ios-app-builder',

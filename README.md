@@ -33,16 +33,14 @@ Deploy the contents of `dist/` to a static host. All page navigation uses URL ha
 
 ## Data and scope
 
-The whole course (all 12 lessons, the prompt library, notes and resources) is locked behind an access code. The current code is `APP2026`, and it's case-insensitive. New students click **I have a code — unlock** and enter the code with their name, email, password and role (Student, Founder, Educator, Developer, Designer, Other). The code is checked before the account is created. Returning students just sign in. A signed-in student whose record isn't unlocked yet, such as an older free account, sees a single access-code field. The unlock is saved on the student's Firestore record as `access: { code, unlockedAt }`, so it follows them to any device.
-
-The codes are stored in `ACCESS_CODE_HASHES` at the top of `app.js` as SHA-256 hashes, not plain text. To add a code for a new cohort, run `npm run access-code -- NEWCODE` and paste the printed hash into that list. Remove a hash to stop new sign-ups with that code; students who already unlocked keep access. This is a client-side gate, so it keeps casual visitors out but isn't DRM: the lesson text ships in `course.js`.
+The whole course (all 12 lessons, the prompt library, notes and resources) opens after a free account signup. New students create an account with name, email, password, and role (Student, Founder, Educator, Developer, Designer, Other). Returning students sign in. Successful signup fires Meta `CompleteRegistration` and custom `CodeClassSignup` for ads conversion. Unlock is saved on the student Firestore record as `access: { source, unlockedAt }` and follows them to any device. This is a client-side gate (lesson text ships in `course.js`).
 
 Each student has one document in the Firestore `students` collection, keyed by their Firebase Auth UID:
 
 ```
 students/{uid}
   uid, email, name, role, app: "codeclass"
-  access:   { code, unlockedAt }              (set when the access code is accepted)
+  access:   { source, unlockedAt }            (set on free signup)
   createdAt, updatedAt, lastActiveAt          (server timestamps)
   project:  { name, idea }
   progress: { completedLessons: number[], completedCount, totalLessons, percent,
@@ -71,7 +69,7 @@ Each course has a standalone sales page, plus a gallery that filters courses by 
 
 These pages are generated. Edit course content (price, checkout URL, headline, phases, offer stack, guarantee, FAQ, gallery goals) in `scripts/products.js`, then run `npm run build:products`. `npm run dev` and `npm run build` regenerate them automatically. Commit the generated `.html` files so GitHub Pages can serve them.
 
-The pages use their own lightweight `product.css`, `product.js`, and `catalog.js`, and don't load the course app or Firebase, so they stay fast on phones. Every Enroll button on a page goes to that course's `checkoutUrl`. Until it's set, the buttons scroll to the offer section. Box images are compressed WebP files in `assets/products/`, with the original PNGs kept alongside them.
+`future-founder.html` is the free-start lander (`freeStart: true`): primary CTAs go to `future-founder-class.html`, with Calendly and packages as secondary links. Other product pages still use `checkoutUrl` / Enroll. The pages use their own lightweight `product.css`, `product.js`, and `catalog.js`, and don't load the course app or Firebase, so they stay fast on phones. Box images are compressed WebP files in `assets/products/`.
 
 ## Funnel: free class
 
@@ -85,9 +83,9 @@ Section order: hero (headline, subheadline, CTA, approved proof strip, Christoph
 - `thanks-free-class.html`: the free Calendly event redirects here. In order: "You're in", the Build-With-Me 1-on-1 upsell, what to expect, and the recording note. The upsell button emails the support address until `freeClass.oneOnOne` is set (point it at `packages.html` when ready). It's marked `noindex`.
 - `packages.html`: the Build-With-Me 1-on-1 tiers ($497 / $997 / $1,497). No nav menu. Every paid CTA is an exact Stripe Payment Link from `packages.tiers` in `scripts/products.js`. Includes the comparison table and the Tier 1 upgrade note ($497 applies to the full build).
 - `thanks-workshop.html` still exists for the old paid $47 Calendly event, which hasn't been changed.
-- **Course software:** the course software is still locked by access code. `APP2026` and `CODECLASS2026` both work.
+- **Course software:** free signup unlocks the full course. No access code.
 
-**Launch rule:** run `npm run verify:launch` after building. It checks that `index.html`, `thanks-free-class.html`, `packages.html`, and `terms.html` have:
+**Launch rule:** run `npm run verify:launch` after building. It checks that `index.html`, `thanks-free-class.html`, `packages.html`, `terms.html`, and `future-founder.html` have:
 - no old $47 or workshop strings;
 - exactly one CTA wording on the free class, with every CTA pointing at `#booking`;
 - no nav menu and no off-page links beyond the footer (plus Stripe on packages);

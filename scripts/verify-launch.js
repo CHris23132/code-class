@@ -2,8 +2,9 @@
 // Usage: npm run verify:launch [-- page.html ...]   (defaults to the free-class funnel pages)
 import { readFile } from 'node:fs/promises';
 import { funnel, freeClass, packages as buildPackages } from './products.js';
+// future-founder.html is included so free-start CTAs stay pointed at the course software.
 
-const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['index.html', 'thanks-free-class.html', 'packages.html', 'terms.html'];
+const pages = process.argv.slice(2).length ? process.argv.slice(2) : ['index.html', 'thanks-free-class.html', 'packages.html', 'terms.html', 'future-founder.html'];
 const isUrl = v => /^https?:\/\//i.test(String(v || '').trim());
 const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
 const banned = ['$47', 'Save my seat', 'refund', 'Refund', 'First Screen', 'STRIPE_', 'DATE_PLACEHOLDER', 'SUPPORT_EMAIL', 'announced soon', 'DRAFT: not launch-ready', 'minimum 5', 'at least 5'];
@@ -21,7 +22,8 @@ for (const page of pages) {
   if (!html) { report(page, ['page is missing']); continue; }
   const visible = html.replace(/<!--[\s\S]*?-->/g, '');
   for (const id of funnel.metaPixels) if (!html.includes(`fbq('init', '${id}')`)) problems.push(`missing fbq('init', '${id}') for Meta Pixel ${id}`);
-  if (page !== 'terms.html') for (const s of banned.filter(s => visible.includes(s))) problems.push(`contains old workshop/paid string "${s}"`);
+  const bannedHere = page === 'future-founder.html' ? banned.filter(s => s !== 'refund' && s !== 'Refund') : banned;
+  if (page !== 'terms.html') for (const s of bannedHere.filter(s => visible.includes(s))) problems.push(`contains old workshop/paid string "${s}"`);
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
@@ -61,6 +63,21 @@ for (const page of pages) {
     if (!/<table class="pk-table"/.test(html)) problems.push('missing the comparison table');
   }
   if (page === 'terms.html' && /\$47|at least 5|minimum 5/.test(visible)) problems.push('still mentions the old paid workshop');
+  if (page === 'future-founder.html') {
+    if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
+    const startLinks = [...visible.matchAll(/<a class="button[^"]*" href="([^"]*)"[^>]*>([^<]*)/g)].map(m => [m[1], m[2].trim()]);
+    if (startLinks.length < 4) problems.push(`found ${startLinks.length} CTA buttons, expected at least 4 (header, hero, offer, sticky)`);
+    for (const [href, text] of startLinks) {
+      if (href !== 'future-founder-class.html') problems.push(`CTA "${text}" points at ${href}, not future-founder-class.html`);
+      if (!/start the course/i.test(text)) problems.push(`CTA wording "${text}" should be Start the course`);
+    }
+    if (!/class="sticky-cta"/.test(html)) problems.push('missing the sticky mobile CTA bar');
+    if (!/class="module-strip"/.test(html)) problems.push('missing the above-the-fold module strip');
+    if (!/youtube\.com\/embed\/3nYfZG-rAuM/.test(html)) problems.push('missing the YouTube class video embed');
+    if (/data-enroll|STRIPE_PROGRAM_URL|Claim my spot — \$/.test(html)) problems.push('still has paid Stripe enroll flow');
+    if (!html.includes(freeClass.calendly)) problems.push('missing free-class Calendly secondary link');
+    if (!html.includes('packages.html')) problems.push('missing packages.html secondary link');
+  }
   report(page, problems);
 }
 

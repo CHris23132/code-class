@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { products, goals, testimonials, press, credentials, funnel, freeClass, packages as buildPackages } from './products.js';
+import { COURSE_VIDEO_ID } from '../course.js';
 
 const SITE = 'https://torontoinnovationlab.com/';
 const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -53,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="product.css?v=8">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -146,7 +147,223 @@ ${p.sessions.map(([title, text], i) => `          <li class="phase">
     </section>
 `;
 
+function freeStartPage(p) {
+  const image = `assets/products/${p.slug}.webp`;
+  const start = p.startUrl || 'future-founder-class.html';
+  const cta = p.cta || 'Start the course';
+  const startBtn = `${cta} ${icon('arrow')}`;
+  const calendly = freeClass.calendly;
+  const metas = `  <link rel="preload" as="image" href="${image}" fetchpriority="high">\n`;
+  return `${head({ title: `${p.title} | Code Class`, description: p.description, ogTitle: p.title, ogDescription: p.ogDescription, image, type: 'product', extra: metas, track: "fbq('track', 'ViewContent');" })}
+<body class="free-start-page">
+  ${sprite}
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      ${logo('./')}
+      <div class="header-actions">
+        <a class="header-link" href="courses.html">All courses</a>
+        <a class="button button-small" href="${start}">${cta}</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero start-hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">${p.eyebrow || 'Free to start'}</span>
+          <h1>${p.headline}</h1>
+          <p class="lead">${p.subhead}</p>
+          <div class="cta-group">
+            <a class="button button-large" href="${start}">${startBtn}</a>
+            <p class="trust">${p.trust.join(' <i>·</i> ')}</p>
+            <p class="start-secondary">Prefer live help? <a href="${calendly}" target="_blank" rel="noopener noreferrer">Book a free class</a> <i>·</i> <a href="packages.html">Build with me 1-on-1</a></p>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="course-thumb course-thumb-video">
+            <iframe src="https://www.youtube.com/embed/${COURSE_VIDEO_ID}?rel=0&modestbranding=1" title="Code Class — build your first real app" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="eager"></iframe>
+          </div>
+          <p class="course-thumb-caption-out"><a href="${start}">Open the guided software · 12 lessons ${icon('arrow')}</a></p>
+        </div>
+      </div>
+      <div class="wrap">
+        <ol class="module-strip" aria-label="Course modules">
+${p.phases.map(([name, minutes], i) => `          <li><span class="module-strip-num">0${i + 1}</span><strong>${name}</strong><small>~${minutes} min</small></li>`).join('\n')}
+        </ol>
+      </div>
+    </section>
+${pressStrip}
+    <section class="section problem">
+      <div class="wrap narrow">
+        <h2>${p.problemTitle}</h2>
+        <ul class="pain-list">
+${p.problems.map(([strong, rest]) => `          <li><span class="pain-mark">${icon('x')}</span><p><strong>${strong}</strong> ${rest}</p></li>`).join('\n')}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section outcome">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">${p.outcomeEyebrow}</span>
+          <h2>${p.outcomeTitle}</h2>
+        </div>
+        <div class="phones" aria-label="${attr(p.screensLabel)}">
+${p.screens.map(([caption, html]) => `          <figure class="phone">
+            <div class="screen">
+              ${html}
+            </div>
+            <figcaption>${caption}</figcaption>
+          </figure>`).join('\n')}
+        </div>
+        <p class="demo-note">Illustrative demo screens with sample content. Your app’s design and data will be your own.</p>
+        <ul class="outcome-list">
+${p.outcomes.map(o => `          <li>${icon('check')}${o}</li>`).join('\n')}
+        </ul>
+        <p class="applied">${p.applied}</p>
+        <div class="cta-group center">
+          <a class="button button-large" href="${start}">${startBtn}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section different">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Why this works</span>
+          <h2>This isn’t another video course.</h2>
+        </div>
+        <div class="columns">
+${p.different.map(([title, text], i) => `          <article class="card">
+            <span class="card-num">0${i + 1}</span>
+            <h3>${title}</h3>
+            <p>${text}</p>
+          </article>`).join('\n')}
+          ${founderCard}
+        </div>
+      </div>
+    </section>
+
+    <section class="section curriculum" id="modules">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">What’s inside</span>
+          <h2>The 4 modules.</h2>
+          <p>${p.phasesNote || 'About 4 hours in total. One focused weekend, or one module at a time.'}</p>
+        </div>
+        <ol class="phases">
+${p.phases.map(([name, minutes, bullets], i) => `          <li class="phase">
+            <div class="phase-top"><span class="phase-num">Module ${i + 1}</span><span class="phase-time">${minutes} min</span></div>
+            <h3>${name}</h3>
+            <ul>${bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+          </li>`).join('\n')}
+        </ol>
+        <p class="phase-plus">${icon('plus')} ${p.appliedTrack}</p>
+        <div class="cta-group center">
+          <a class="button button-large" href="${start}">${startBtn}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fit">
+      <div class="wrap fit-grid">
+        <div class="fit-col yes">
+          <h2>For you if:</h2>
+          <ul>
+${p.forYou.map(t => `            <li>${icon('check')}${t}</li>`).join('\n')}
+          </ul>
+        </div>
+        <div class="fit-col no">
+          <h2>Not for you if:</h2>
+          <ul>
+${p.notForYou.map(t => `            <li>${icon('x')}${t}</li>`).join('\n')}
+          </ul>
+        </div>
+      </div>
+    </section>
+${testimonialSection(p)}
+    <section class="section offer" id="offer">
+      <div class="wrap">
+        <div class="offer-card single start-offer">
+          <div class="offer-body">
+            <span class="eyebrow">Everything you get</span>
+            <h2>${p.offerTitle || p.name}</h2>
+            <ul class="stack">
+${p.stack.map(([label]) => `              <li><span>${label}</span><b>Included</b></li>`).join('\n')}
+            </ul>
+            <div class="price">
+              <span class="today">Today: <b>Free</b></span>
+            </div>
+            <a class="button button-large full" href="${start}">${startBtn}</a>
+            <div class="guarantee">
+              ${icon('shield')}
+              <p><strong>${p.guarantee[0]}:</strong> ${p.guarantee[1]}</p>
+            </div>
+            <p class="downsell">Want live 1-on-1? <a href="packages.html">See Build-With-Me packages ${icon('arrow')}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="wrap narrow">
+        <h2>Questions, answered.</h2>
+${p.faq.map(([q, a]) => `        <details>
+          <summary>${q}</summary>
+          <p>${a}</p>
+        </details>`).join('\n')}
+      </div>
+    </section>
+
+    <section class="section final" id="final">
+      <div class="wrap final-grid">
+        <div class="course-thumb course-thumb-video final-thumb">
+          <iframe src="https://www.youtube.com/embed/${COURSE_VIDEO_ID}?rel=0&modestbranding=1" title="Code Class walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div>
+          <h2>${p.finalHeadline}</h2>
+          <p class="lead">${p.finalLead}</p>
+          <a class="button button-large" href="${start}">${startBtn}</a>
+          <p class="trust">${p.finalTrust}</p>
+          <p class="start-secondary">Or <a href="${calendly}" target="_blank" rel="noopener noreferrer">book a free live class</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section more-courses">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Compare courses</span>
+          <h2>Looking for something else?</h2>
+        </div>
+        <div class="mini-grid">
+${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-card" href="${o.slug}.html">
+            <img src="assets/products/${o.slug}.webp" alt="" width="720" height="720" loading="lazy" decoding="async">
+            <span class="mini-body"><b>${o.name}</b><small>${o.tagline}</small><span class="mini-price">${o.freeStart ? 'Free' : money(o.price)} <span class="mini-view">View course ${icon('arrow')}</span></span></span>
+          </a>`).join('\n')}
+        </div>
+        <p class="more-all"><a href="courses.html">See all courses ${icon('arrow')}</a></p>
+      </div>
+    </section>
+  </main>
+
+  ${footer(true)}
+
+  <div class="sticky-cta" aria-hidden="true">
+    <span><b>${p.name}</b> · Free</span>
+    <a class="button" href="${start}" tabindex="-1">${cta}</a>
+  </div>
+
+  <script src="product.js" defer></script>
+</body>
+</html>
+`;
+}
+
 function productPage(p) {
+  if (p.freeStart) return freeStartPage(p);
   const image = `assets/products/${p.slug}.webp`;
   const total = p.stack.reduce((sum, [, value]) => sum + value, 0);
   const cta = p.cta || 'Enroll now';
@@ -388,7 +605,7 @@ ${products.map((p, i) => `          <article class="course-card" data-slug="${p.
               <p class="course-tagline">${p.tagline}</p>
               <p class="course-summary">${p.summary}</p>
               <ul class="course-tags">${p.goals.map(g => `<li>${goals.find(([id]) => id === g)[1]}</li>`).join('')}</ul>
-              <div class="course-foot"><span class="course-price">${money(p.price)}</span><span class="course-cta">View course ${icon('arrow')}</span></div>
+              <div class="course-foot"><span class="course-price">${p.freeStart ? 'Free' : money(p.price)}</span><span class="course-cta">View course ${icon('arrow')}</span></div>
             </div>
           </article>`).join('\n')}
         </div>
@@ -460,7 +677,7 @@ const refundPage = () => legalPage({
   intro: 'Every Code Class offer has a simple guarantee: if you do the work and don’t get the first result we promise, you get your money back.',
   sections: [
     ['First Screen workshop ($47)', ['Attend live, follow along, and if you don\'t leave with a working app screen on your phone, email us within 7 days for a full refund.', 'If a session doesn’t reach the 5-person minimum, your seat moves to the next session and you keep every bonus.']],
-    ...products.map(p => [`${p.offerTitle || p.name} (${money(p.price)})`, `<strong>${p.guarantee[0]}:</strong> ${p.guarantee[1].replace('email me and I’ll', 'email us and we’ll')}`]),
+    ...products.map(p => [`${p.offerTitle || p.name} (${p.freeStart ? 'Free' : money(p.price)})`, `<strong>${p.guarantee[0]}:</strong> ${p.guarantee[1].replace('email me and I’ll', 'email us and we’ll')}`]),
     ['Workshop credit', 'If you join Build &amp; Launch within 48 hours of your workshop, your $47 workshop payment is credited toward it.'],
     ['How refunds are paid', 'Refunds go back to the card you paid with through Stripe. They usually appear within 5–10 business days, depending on your bank.']
   ]
@@ -490,19 +707,19 @@ function thanksPage() {
       </div>
       <div class="step-list">
         <section class="upsell-card" aria-labelledby="upsell-title">
-          <span class="eyebrow">Your next step · ${money(program.price)}</span>
-          <h2 id="upsell-title">Turn your first screen into a launched app.</h2>
-          <p>Build &amp; Launch is the ${program.sessions.length}-session live program that takes the app you start in the workshop all the way to production — in two weeks, live with me.</p>
+          <span class="eyebrow">Your next step · Free</span>
+          <h2 id="upsell-title">Turn your first screen into a full app.</h2>
+          <p>Continue with the free Future Founder course — video walkthrough plus guided software with all 12 lessons, prompts, and checkpoints.</p>
           <ol class="upsell-sessions">
-${program.sessions.map(([title, text], i) => `            <li><b>Session ${i + 1}: ${title}</b><span>${text}</span></li>`).join('\n')}
+${program.phases.map(([title, minutes], i) => `            <li><b>Module ${i + 1}: ${title}</b><span>~${minutes} min</span></li>`).join('\n')}
           </ol>
-          <p class="upsell-credit">Your $47 workshop seat counts toward it if you join within 48 hours.</p>
-          <a class="button button-large" href="${program.slug}.html">See Build &amp; Launch — ${money(program.price)} ${icon('arrow')}</a>
+          <p class="upsell-credit">Create a free account to open the software. Want 1-on-1 help later? See Build-With-Me packages.</p>
+          <a class="button button-large" href="${program.slug}.html">Start the free course ${icon('arrow')}</a>
         </section>
         <section class="step-card">
           <h2>Your software access</h2>
-          <p>Open this during the workshop — it walks you through every step live.</p>
-          ${linkButton(funnel.software, 'Open the software', 'Access link coming soon')}
+          <p>Open the guided classroom — create a free account to unlock all 12 lessons.</p>
+          <a class="button" href="${program.startUrl || 'future-founder-class.html'}">Open the software ${icon('arrow')}</a>
         </section>
         <section class="step-card">
           <h2>Your ebook</h2>
@@ -748,7 +965,7 @@ function thanksFreeClassPage() {
           <ul class="included">
             <li>${icon('check')}<span>Join from a laptop on Google Meet, with your phone nearby.</span></li>
             <li>${icon('check')}<span>We build your first app screen live — database, buttons, the works.</span></li>
-            <li>${icon('check')}<span>You leave with a working app on your phone, plus your access code to the Code Class build software.</span></li>
+            <li>${icon('check')}<span>You leave with a working app on your phone, plus a free account to open the Code Class build software.</span></li>
           </ul>
         </section>
         <section class="step-card">

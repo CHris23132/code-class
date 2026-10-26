@@ -12,7 +12,7 @@ for (const [name, file] of Object.entries(mappings)) {
 }
 await mkdir('assets/icons', { recursive: true });
 const appFile = (await readFile('app.js', 'utf8')).replace(/^const phosphorIcons = .*\n/gm, '');
-const importLine = "import { lessons, modules } from './course.js';";
+const importLine = "import { lessons, modules, COURSE_VIDEO_ID } from './course.js';";
 if (!appFile.includes(importLine)) throw new Error('Could not find the icon library insertion point in app.js');
 const appWithIcons = appFile.replace(importLine, `const phosphorIcons = ${JSON.stringify(icons)};\n${importLine}`);
 await writeFile('app.js', appWithIcons);
