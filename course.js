@@ -23,6 +23,26 @@ export const lessons = [
  {id:12,videoAt:1183,stepAt:[1183,1191,1215],title:'Build, test, and celebrate',time:15,tag:'Your final milestone',intro:'You’ve taken an idea all the way to a working app. Create your builds, give them a final test, and save the milestone.',steps:[['Create a build','Run the command for the platform you want to test. In the EAS build section you’ll see each export; watch progress and logs from the build URL.'],['Install and test','Download the build when it’s ready. On iOS, tools like Transporter help with distribution. Test authentication, posts, profiles, and messages on a real device.'],['Save and share your milestone','Commit your final changes and push to GitHub. Record the build link in your notes. Complete this checklist — then celebrate what you built.']],command:'eas build --platform ios --profile production --clear-cache --message "Class milestone"\n\neas build --platform android --profile preview --message "Class milestone"',checks:['My chosen platform build completed successfully','I tested the installed build on a device','My final code is committed and backed up','I saved my build link in my project notes'],tip:'Build time is separate from the lesson estimate. If a build fails, find the first meaningful error in the EAS logs and fix that issue before retrying.',links:[['EAS Build guide','https://docs.expo.dev/build/introduction/']]}
 ];
 
+/** Flat chapter timeline sorted by video time (for follow-along sync). */
+export function videoChapters() {
+  const list = [];
+  for (const lesson of lessons) {
+    const times = Array.isArray(lesson.stepAt) ? lesson.stepAt : [];
+    lesson.steps.forEach(([title, text], i) => {
+      list.push({
+        key: `${lesson.id}-${i}`,
+        lessonId: lesson.id,
+        stepIndex: i,
+        at: typeof times[i] === 'number' ? times[i] : (typeof lesson.videoAt === 'number' ? lesson.videoAt : 0),
+        title,
+        text,
+        lessonTitle: lesson.title
+      });
+    });
+  }
+  return list.sort((a, b) => a.at - b.at || a.lessonId - b.lessonId || a.stepIndex - b.stepIndex);
+}
+
 // Focused follow-up prompts from the worksheet, expanded into reusable examples.
 lessons.find(l => l.id === 6).extraPrompts = [
   {title:'Open an explore post',text:'When I tap a post on Explore, open a post detail view showing that selected post. Include its image, author, caption, and a working back button.'},

@@ -1,12 +1,46 @@
 const phosphorIcons = {"arrowLeft":"<path d=\"M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z\"/>","arrowRight":"<path d=\"M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z\"/>","arrowUpRight":"<path d=\"M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z\"/>","bolt":"<path d=\"M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z\"/>","book":"<path d=\"M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64Z\"/>","check":"<path d=\"M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z\"/>","chevron":"<path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/>","clock":"<path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z\"/>","close":"<path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/>","code":"<path d=\"M69.12,94.15,28.5,128l40.62,33.85a8,8,0,1,1-10.24,12.29l-48-40a8,8,0,0,1,0-12.29l48-40a8,8,0,0,1,10.24,12.3Zm176,27.7-48-40a8,8,0,1,0-10.24,12.3L227.5,128l-40.62,33.85a8,8,0,1,0,10.24,12.29l48-40a8,8,0,0,0,0-12.29ZM162.73,32.48a8,8,0,0,0-10.25,4.79l-64,176a8,8,0,0,0,4.79,10.26A8.14,8.14,0,0,0,96,224a8,8,0,0,0,7.52-5.27l64-176A8,8,0,0,0,162.73,32.48Z\"/>","copy":"<path d=\"M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z\"/>","download":"<path d=\"M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z\"/>","flag":"<path d=\"M42.76,50A8,8,0,0,0,40,56V224a8,8,0,0,0,16,0V179.77c26.79-21.16,49.87-9.75,76.45,3.41,16.4,8.11,34.06,16.85,53,16.85,13.93,0,28.54-4.75,43.82-18a8,8,0,0,0,2.76-6V56A8,8,0,0,0,218.76,50c-28,24.23-51.72,12.49-79.21-1.12C111.07,34.76,78.78,18.79,42.76,50ZM216,172.25c-26.79,21.16-49.87,9.74-76.45-3.41-25-12.35-52.81-26.13-83.55-8.4V59.79c26.79-21.16,49.87-9.75,76.45,3.4,25,12.35,52.82,26.13,83.55,8.4Z\"/>","github":"<path d=\"M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z\"/>","help":"<path d=\"M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/>","layers":"<path d=\"M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z\"/>","note":"<path d=\"M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,128v80a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h80a8,8,0,0,1,0,16H48V208H208V128a8,8,0,0,1,16,0Z\"/>","rocket":"<path d=\"M223.85,47.12a16,16,0,0,0-15-15c-12.58-.75-44.73.4-71.41,27.07L132.69,64H74.36A15.91,15.91,0,0,0,63,68.68L28.7,103a16,16,0,0,0,9.07,27.16l38.47,5.37,44.21,44.21,5.37,38.49a15.94,15.94,0,0,0,10.78,12.92,16.11,16.11,0,0,0,5.1.83A15.91,15.91,0,0,0,153,227.3L187.32,193A15.91,15.91,0,0,0,192,181.64V123.31l4.77-4.77C223.45,91.86,224.6,59.71,223.85,47.12ZM74.36,80h42.33L77.16,119.52,40,114.34Zm74.41-9.45a76.65,76.65,0,0,1,59.11-22.47,76.46,76.46,0,0,1-22.42,59.16L128,164.68,91.32,128ZM176,181.64,141.67,216l-5.19-37.17L176,139.31Zm-74.16,9.5C97.34,201,82.29,224,40,224a8,8,0,0,1-8-8c0-42.29,23-57.34,32.86-61.85a8,8,0,0,1,6.64,14.56c-6.43,2.93-20.62,12.36-23.12,38.91,26.55-2.5,36-16.69,38.91-23.12a8,8,0,1,1,14.56,6.64Z\"/>","search":"<path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/>","shield":"<path d=\"M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z\"/>","sparkles":"<path d=\"M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z\"/>","terminal":"<path d=\"M128,128a8,8,0,0,1-3,6.25l-40,32a8,8,0,1,1-10-12.5L107.19,128,75,102.25a8,8,0,1,1,10-12.5l40,32A8,8,0,0,1,128,128Zm48,24H136a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm56-96V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Z\"/>","trophy":"<path d=\"M232,64H208V48a8,8,0,0,0-8-8H56a8,8,0,0,0-8,8V64H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-29,64.64-64,64.9a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z\"/>","palette":"<path d=\"M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z\"/>","database":"<path d=\"M128,24C74.17,24,32,48.6,32,80v96c0,31.4,42.17,56,96,56s96-24.6,96-56V80C224,48.6,181.83,24,128,24Zm80,104c0,9.62-7.88,19.43-21.61,26.92C170.93,163.35,150.19,168,128,168s-42.93-4.65-58.39-13.08C55.88,147.43,48,137.62,48,128V111.36c17.06,15,46.23,24.64,80,24.64s62.94-9.68,80-24.64ZM69.61,53.08C85.07,44.65,105.81,40,128,40s42.93,4.65,58.39,13.08C200.12,60.57,208,70.38,208,80s-7.88,19.43-21.61,26.92C170.93,115.35,150.19,120,128,120s-42.93-4.65-58.39-13.08C55.88,99.43,48,89.62,48,80S55.88,60.57,69.61,53.08ZM186.39,202.92C170.93,211.35,150.19,216,128,216s-42.93-4.65-58.39-13.08C55.88,195.43,48,185.62,48,176V159.36c17.06,15,46.23,24.64,80,24.64s62.94-9.68,80-24.64V176C208,185.62,200.12,195.43,186.39,202.92Z\"/>"};
-import { lessons, modules, COURSE_VIDEO_ID } from './course.js';
+import { lessons, modules, COURSE_VIDEO_ID, videoChapters } from './course.js';
 const formatStamp = s => { const n = Math.max(0, Math.floor(Number(s) || 0)), m = Math.floor(n / 60), sec = n % 60; return `${m}:${String(sec).padStart(2, '0')}`; };
-const videoEmbedUrl = (start = 0, autoplay = false) => `https://www.youtube.com/embed/${COURSE_VIDEO_ID}?start=${Math.max(0, Math.floor(Number(start) || 0))}&rel=0&modestbranding=1${autoplay ? '&autoplay=1' : ''}`;
-function seekLessonVideo(seconds, autoplay = true) {
+const CHAPTERS = videoChapters();
+let ytPlayer = null, watchPoll = null, activeChapterKey = '', watchBootAt = 0, ytApiPromise = null;
+
+function loadYouTubeAPI() {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (ytApiPromise) return ytApiPromise;
+  ytApiPromise = new Promise(resolve => {
+    const done = () => { if (window.YT?.Player) resolve(window.YT); };
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { prev?.(); done(); };
+    if (![...document.scripts].some(s => /youtube\.com\/iframe_api/.test(s.src))) {
+      const s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.append(s);
+    }
+    const tick = setInterval(() => { if (window.YT?.Player) { clearInterval(tick); done(); } }, 40);
+  });
+  return ytApiPromise;
+}
+function destroyWatchPlayer() {
+  clearInterval(watchPoll); watchPoll = null; activeChapterKey = '';
+  if (ytPlayer) { try { ytPlayer.destroy(); } catch {} ytPlayer = null; }
+  document.body.classList.remove('watch-mode');
+}
+function chapterIndexAt(t) {
+  let i = 0;
+  for (let j = 0; j < CHAPTERS.length; j++) { if (CHAPTERS[j].at <= t) i = j; else break; }
+  return i;
+}
+function seekClassVideo(seconds) {
+  const sec = Math.max(0, Math.floor(Number(seconds) || 0));
+  if (ytPlayer?.seekTo) {
+    ytPlayer.seekTo(sec, true);
+    try { ytPlayer.playVideo(); } catch {}
+    syncWatchFromTime(sec);
+    return;
+  }
+  watchBootAt = sec;
   const frame = $('#lesson-video');
-  if (!frame) return;
-  frame.src = videoEmbedUrl(seconds, autoplay);
-  frame.closest('.lesson-video')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  if (frame) frame.src = `https://www.youtube.com/embed/${COURSE_VIDEO_ID}?start=${sec}&rel=0&modestbranding=1&controls=0&disablekb=1&fs=0&playsinline=1&autoplay=1&mute=1&enablejsapi=1`;
 }
 import { ROLES, watchAuth, signUp, signIn, signOutStudent, resetPassword, loadStudent, createStudent, saveStudent, createGuest, saveGuest, unlockStudent } from './firebase.js';
 const $ = (s, root = document) => root.querySelector(s);
@@ -92,21 +126,190 @@ function lockScreen(){
     :`<button class="button primary full-width" data-action="auth-signup">Create free account ${icon('arrowRight')}</button><div class="auth-switch">Already have an account? <button type="button" class="text-link" data-action="auth-signin">Sign in</button></div>`;
   return `<section class="lock-screen"><div class="card lock-card form-modal"><span class="lock-icon">${icon('shield')}</span><span class="eyebrow">FREE TO START</span><h1>Create your account to begin.</h1><p>Sign up with your name, email, and password to open all 12 lessons, the prompt library, and your notes. Your progress saves on any device.</p>${body}</div></section>`;
 }
-function render(){page=location.hash.slice(1)||'overview';if(!['overview','start','curriculum','prompts','notes','resources'].includes(page))page='overview';const titles={start:'How it works',overview:'Overview',curriculum:'The 4 steps',prompts:'Prompt library',notes:'My notes',resources:'Resources'};document.title=`${titles[page]} — Code Class`;$('#breadcrumb-title').textContent=titles[page];document.querySelectorAll('[data-nav]').forEach(a=>{a.classList.toggle('active',a.dataset.nav===page);if(a.dataset.nav===page)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});$('#main').innerHTML=(unlocked()?{overview,start:startGuide,curriculum,prompts,notes:notesPage,resources}[page]:lockScreen)();profileUI();document.body.classList.remove('nav-open');$('[data-action=menu]').setAttribute('aria-expanded','false');hydrate();}
+function parseRoute(){
+  const raw=(location.hash.slice(1)||'overview').split('/');
+  const name=raw[0]||'overview';
+  const lessonId=raw[1]?Number(raw[1]):null;
+  return {name,lessonId:Number.isFinite(lessonId)?lessonId:null};
+}
+function render(){
+  const route=parseRoute();
+  const wasWatch=page==='watch';
+  page=['overview','start','curriculum','prompts','notes','resources','watch'].includes(route.name)?route.name:'overview';
+  if(page!=='watch')destroyWatchPlayer();
+  else document.body.classList.add('watch-mode');
+  const titles={start:'How it works',overview:'Overview',curriculum:'The 4 steps',prompts:'Prompt library',notes:'My notes',resources:'Resources',watch:'Watch class'};
+  document.title=`${titles[page]} — Code Class`;
+  $('#breadcrumb-title').textContent=titles[page];
+  document.querySelectorAll('[data-nav]').forEach(a=>{const on=a.dataset.nav===page;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(!unlocked()){$('#main').innerHTML=lockScreen();profileUI();document.body.classList.remove('nav-open','watch-mode');$('[data-action=menu]').setAttribute('aria-expanded','false');hydrate();return;}
+  if(page==='watch'){
+    const startLesson=lessons.find(l=>l.id===route.lessonId)||lessons.find(l=>l.id===state.last)||lessons[0];
+    const bootChapter=CHAPTERS.find(c=>c.lessonId===startLesson.id)||CHAPTERS[0];
+    watchBootAt=typeof startLesson.videoAt==='number'?startLesson.videoAt:(bootChapter?.at||0);
+    state.last=startLesson.id;state.started=true;save();
+    document.body.classList.add('watch-mode');
+    profileUI();document.body.classList.remove('nav-open');$('[data-action=menu]').setAttribute('aria-expanded','false');
+    if(ytPlayer&&$('#watch-panel')){
+      activeChapterKey='';
+      seekClassVideo(watchBootAt);
+      hydrate();
+      return;
+    }
+    destroyWatchPlayer();
+    document.body.classList.add('watch-mode');
+    $('#main').innerHTML=watchPage(startLesson.id, bootChapter?.stepIndex||0);
+    hydrate();
+    mountWatchPlayer(watchBootAt);
+    return;
+  }
+  $('#main').innerHTML=({overview,start:startGuide,curriculum,prompts,notes:notesPage,resources}[page])();
+  profileUI();document.body.classList.remove('nav-open');$('[data-action=menu]').setAttribute('aria-expanded','false');hydrate();
+  if(wasWatch)window.scrollTo({top:0});
+}
 function modalShell(title,content,cls=''){const dialog=$('#modal');dialog.className=cls;if(dialog.contains($('#toast')))document.body.append($('#toast'));dialog.innerHTML=`<div class="modal-top"><a class="modal-brand" href="#overview" data-action="close"><img class="modal-brand-photo" src="assets/brand-portrait.png" alt=""> <span>codeclass.</span></a><button class="icon-button" data-action="close" aria-label="Close dialog">${icon('close')}</button></div>${content}`;if(!dialog.open)dialog.showModal();const heading=$('#modal-title');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}dialog.scrollTop=0;}
 function openLesson(id){
   const lesson=lessons.find(l=>l.id===Number(id));if(!lesson)return;
   state.last=lesson.id;state.started=true;save();
-  const mi=modules.findIndex(m=>m.lessons.includes(lesson.id));
+  location.hash=`watch/${lesson.id}`;
+}
+function watchPanelHtml(lessonId, stepIndex){
+  const lesson=lessons.find(l=>l.id===Number(lessonId))||lessons[0];
+  const id=lesson.id;
+  const mi=modules.findIndex(m=>m.lessons.includes(id));
   const checked=state.checks[id]||[];
-  const startAt=typeof lesson.videoAt==='number'?lesson.videoAt:0;
-  const videoBlock=`<section class="lesson-video"><div class="lesson-video-frame"><iframe id="lesson-video" src="${videoEmbedUrl(startAt)}" title="Code Class video — ${escape(lesson.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div><p class="lesson-video-hint">Class walkthrough starts at <button type="button" class="text-link" data-video-at="${startAt}">${formatStamp(startAt)}</button> for this lesson. Tap a step below to jump to that moment.</p></section>`;
+  const active=Math.max(0, Math.min(stepIndex, lesson.steps.length-1));
   const stepsHtml=lesson.steps.map(([t,d],i)=>{
     const at=Array.isArray(lesson.stepAt)?lesson.stepAt[i]:undefined;
-    const stamp=typeof at==='number'?`<button type="button" class="step-stamp" data-video-at="${at}" title="Jump to ${formatStamp(at)} in the video">${icon('bolt')} ${formatStamp(at)}</button>`:'';
-    return `<section class="lesson-step"><span>${i+1}</span><div><div class="lesson-step-top"><h2>${t}</h2>${stamp}</div><p>${d}</p></div></section>`;
+    const stamp=typeof at==='number'?`<button type="button" class="step-stamp" data-video-at="${at}" title="Jump to ${formatStamp(at)}">${icon('bolt')} ${formatStamp(at)}</button>`:'';
+    return `<section class="lesson-step watch-step ${i===active?'is-active':''}" data-watch-step="${i}" ${typeof at==='number'?`data-video-at="${at}"`:''}><span>${i+1}</span><div><div class="lesson-step-top"><h2>${t}</h2>${stamp}</div><p>${d}</p></div></section>`;
   }).join('');
-  modalShell(lesson.title,`<div class="lesson-heading"><span class="eyebrow">STEP ${String(mi+1).padStart(2,'0')} OF 04 · ${modules[mi].title.toUpperCase()}</span><div class="lesson-heading-meta"><span>LESSON ${String(id).padStart(2,'0')} OF 12 · STEP ${String(mi+1).padStart(2,'0')} OF 04</span><span>${icon('clock')} ${lesson.time} min</span></div><h1 id="modal-title">${lesson.title}</h1><p>${lesson.intro}</p></div><div class="lesson-body">${videoBlock}<div class="lesson-steps">${stepsHtml}</div>${lessonSnippets(lesson).map(n=>`<section class="lesson-code ${n.type==='command'?'terminal-code':''}"><div>${icon(n.type==='command'?'terminal':'sparkles')} ${n.type==='command'?(lesson.id===12?n.title.toUpperCase():'IN YOUR TERMINAL'):(n.type==='extra'?escape(n.title.toUpperCase()):'YOUR CURSOR PROMPT')}<button ${copyAttributes(id,n)}>${icon('copy')} Copy ${n.type==='command'?'command':'prompt'}</button></div><pre>${escape(n.text)}</pre></section>`).join('')}<div class="lesson-tip">${icon('sparkles')}<p><strong>A little help along the way</strong>${lesson.tip}</p></div><section class="lesson-checklist"><div class="section-title"><h2>Before you move on</h2><span id="check-count">${checked.filter(Boolean).length} / ${lesson.checks.length}</span></div><p>Try each step in your own project, then check it off.</p>${lesson.checks.map((t,i)=>`<label><input type="checkbox" data-check="${i}" data-lesson-id="${id}" ${checked[i]?'checked':''}><span>${escape(t)}</span></label>`).join('')}</section><section class="lesson-note-section"><label for="lesson-note">${icon('note')} Your lesson notes <span>Saved as you type</span></label><textarea id="lesson-note" data-note-lesson="${id}" placeholder="A thought, a question, a little breakthrough...">${escape(state.notes[id]||'')}</textarea></section>${lesson.links.length?`<div class="lesson-links">${lesson.links.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${t} ${icon('arrowUpRight')}</a>`).join('')}</div>`:''}</div><div class="lesson-bottom"><button class="button secondary" data-lesson="${id-1}" ${id===1?'disabled':''}>${icon('arrowLeft')} Previous</button><span id="completion-hint">${state.done.includes(Number(id))?'Lesson completed. Nicely done!':'Finish the checklist to complete this lesson.'}</span><button class="button primary" id="complete-lesson" data-complete="${id}" ${!lesson.checks.every((_,i)=>checked[i])?'disabled':''}>${state.done.includes(Number(id))?'Continue':Number(id)===12?'Finish course':'Complete lesson'} ${icon('arrowRight')}</button></div>`,'lesson-modal');
+  return `<div class="watch-panel-inner" data-watch-lesson="${id}" data-watch-step-active="${active}">
+    <div class="lesson-heading watch-heading">
+      <span class="eyebrow">STEP ${String(mi+1).padStart(2,'0')} OF 04 · ${modules[mi].title.toUpperCase()}</span>
+      <div class="lesson-heading-meta"><span>LESSON ${String(id).padStart(2,'0')} OF 12</span><span>${icon('clock')} ${lesson.time} min</span></div>
+      <h1 id="watch-lesson-title">${lesson.title}</h1>
+      <p>${lesson.intro}</p>
+    </div>
+    <div class="lesson-body watch-body">
+      <div class="lesson-steps">${stepsHtml}</div>
+      ${lessonSnippets(lesson).map(n=>`<section class="lesson-code ${n.type==='command'?'terminal-code':''}"><div>${icon(n.type==='command'?'terminal':'sparkles')} ${n.type==='command'?(lesson.id===12?n.title.toUpperCase():'IN YOUR TERMINAL'):(n.type==='extra'?escape(n.title.toUpperCase()):'YOUR CURSOR PROMPT')}<button ${copyAttributes(id,n)}>${icon('copy')} Copy ${n.type==='command'?'command':'prompt'}</button></div><pre>${escape(n.text)}</pre></section>`).join('')}
+      <div class="lesson-tip">${icon('sparkles')}<p><strong>A little help along the way</strong>${lesson.tip}</p></div>
+      <section class="lesson-checklist"><div class="section-title"><h2>Before you move on</h2><span id="check-count">${checked.filter(Boolean).length} / ${lesson.checks.length}</span></div><p>Try each step in your own project, then check it off.</p>${lesson.checks.map((t,i)=>`<label><input type="checkbox" data-check="${i}" data-lesson-id="${id}" ${checked[i]?'checked':''}><span>${escape(t)}</span></label>`).join('')}</section>
+      <section class="lesson-note-section"><label for="lesson-note">${icon('note')} Your lesson notes <span>Saved as you type</span></label><textarea id="lesson-note" data-note-lesson="${id}" placeholder="A thought, a question, a little breakthrough...">${escape(state.notes[id]||'')}</textarea></section>
+      ${lesson.links.length?`<div class="lesson-links">${lesson.links.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${t} ${icon('arrowUpRight')}</a>`).join('')}</div>`:''}
+    </div>
+    <div class="lesson-bottom watch-bottom">
+      <button class="button secondary" data-lesson="${id-1}" ${id===1?'disabled':''}>${icon('arrowLeft')} Previous</button>
+      <span id="completion-hint">${state.done.includes(id)?'Lesson completed. Nicely done!':'Finish the checklist to complete this lesson.'}</span>
+      <button class="button primary" id="complete-lesson" data-complete="${id}" ${!lesson.checks.every((_,i)=>checked[i])?'disabled':''}>${state.done.includes(id)?'Continue':id===12?'Finish course':'Complete lesson'} ${icon('arrowRight')}</button>
+    </div>
+  </div>`;
+}
+function watchPage(lessonId, stepIndex){
+  const lesson=lessons.find(l=>l.id===Number(lessonId))||lessons[0];
+  const rail=CHAPTERS.map((c,i)=>`<button type="button" class="watch-rail-item" data-chapter-key="${c.key}" data-video-at="${c.at}" title="${escape(c.title)}"><span>${formatStamp(c.at)}</span><strong>L${c.lessonId}.${c.stepIndex+1}</strong></button>`).join('');
+  return `<section class="watch-layout" aria-label="Class walkthrough">
+    <div class="watch-stage">
+      <div class="watch-player-shell">
+        <div id="yt-player" class="watch-player"></div>
+        <div class="watch-player-mask" aria-hidden="true"></div>
+      </div>
+      <div class="watch-controls">
+        <button type="button" class="button secondary small" data-watch-prev>${icon('arrowLeft')} Prev</button>
+        <p class="watch-now" id="watch-now-label">Following the class…</p>
+        <button type="button" class="button secondary small" data-watch-sound>Sound on</button>
+        <button type="button" class="button secondary small" data-watch-next>Next ${icon('arrowRight')}</button>
+      </div>
+      <div class="watch-rail" aria-label="Chapter bookmarks">${rail}</div>
+    </div>
+    <aside class="watch-panel" id="watch-panel">${watchPanelHtml(lesson.id, stepIndex)}</aside>
+  </section>`;
+}
+function syncWatchFromTime(t){
+  if(!CHAPTERS.length)return;
+  const idx=chapterIndexAt(t);
+  const chapter=CHAPTERS[idx];
+  if(!chapter)return;
+  const label=$('#watch-now-label');
+  if(label)label.textContent=`${formatStamp(Math.floor(t))} · Lesson ${chapter.lessonId}: ${chapter.title}`;
+  document.querySelectorAll('.watch-rail-item').forEach(el=>el.classList.toggle('is-active',el.dataset.chapterKey===chapter.key));
+  if(chapter.key===activeChapterKey){
+    const panel=$('#watch-panel');
+    if(panel?.dataset.watchLesson===String(chapter.lessonId)){
+      panel.querySelectorAll('.watch-step').forEach(el=>el.classList.toggle('is-active',Number(el.dataset.watchStep)===chapter.stepIndex));
+      const active=panel.querySelector('.watch-step.is-active');
+      if(active)active.scrollIntoView({block:'nearest',behavior:'smooth'});
+    }
+    return;
+  }
+  activeChapterKey=chapter.key;
+  const panel=$('#watch-panel');
+  if(!panel)return;
+  const keepChecks=state.checks[chapter.lessonId];
+  const keepNotes=state.notes[chapter.lessonId];
+  panel.innerHTML=watchPanelHtml(chapter.lessonId, chapter.stepIndex);
+  if(keepChecks)state.checks[chapter.lessonId]=keepChecks;
+  if(keepNotes!=null)state.notes[chapter.lessonId]=keepNotes;
+  state.last=chapter.lessonId;save();
+  if(location.hash!==`#watch/${chapter.lessonId}` && location.hash.startsWith('#watch')){
+    history.replaceState(null,'',`#watch/${chapter.lessonId}`);
+  }
+  const active=panel.querySelector('.watch-step.is-active');
+  if(active)active.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+async function mountWatchPlayer(startAt){
+  document.body.classList.add('watch-mode');
+  watchBootAt=startAt;
+  activeChapterKey='';
+  const host=$('#yt-player');
+  if(!host)return;
+  try{
+    const YT=await loadYouTubeAPI();
+    ytPlayer=new YT.Player('yt-player',{
+      videoId:COURSE_VIDEO_ID,
+      width:'100%',
+      height:'100%',
+      playerVars:{
+        autoplay:1,
+        mute:1,
+        controls:0,
+        disablekb:1,
+        fs:0,
+        modestbranding:1,
+        rel:0,
+        playsinline:1,
+        iv_load_policy:3,
+        cc_load_policy:0,
+        start:Math.max(0,Math.floor(startAt||0)),
+        origin:location.origin
+      },
+      events:{
+        onReady:e=>{
+          try{e.target.mute();e.target.seekTo(watchBootAt,true);e.target.playVideo();}catch{}
+          syncWatchFromTime(watchBootAt);
+          clearInterval(watchPoll);
+          watchPoll=setInterval(()=>{
+            try{
+              const t=ytPlayer?.getCurrentTime?.();
+              if(typeof t==='number')syncWatchFromTime(t);
+              const st=ytPlayer?.getPlayerState?.();
+              // 2=paused — keep playing; class/bookmarks own transport
+              if(st===2)ytPlayer.playVideo();
+            }catch{}
+          },350);
+        },
+        onStateChange:e=>{
+          if(e.data===2){try{e.target.playVideo();}catch{}}
+          if(e.data===0){try{ /* ended */ }catch{}}
+        }
+      }
+    });
+  }catch(err){
+    console.error(err);
+    host.innerHTML=`<iframe id="lesson-video" src="https://www.youtube.com/embed/${COURSE_VIDEO_ID}?start=${Math.floor(watchBootAt)}&autoplay=1&mute=1&controls=0&disablekb=1&fs=0&modestbranding=1&rel=0&playsinline=1" title="Code Class walkthrough" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    syncWatchFromTime(watchBootAt);
+  }
 }
 function openProject(){modalShell('Your next big thing',`<form id="project-form" class="form-modal"><span class="eyebrow">YOUR OWN LITTLE CORNER OF POSSIBILITY</span><h1 id="modal-title">Your next big thing.</h1><p>Give your idea a name. You can figure out the rest as you go.</p><label>Project name<input name="project" maxlength="60" required value="${escape(state.project)}" placeholder="My first app"></label><label>What do you want to build?<textarea name="idea" maxlength="2000" placeholder="An app that helps people...">${escape(state.idea)}</textarea></label><div class="project-summary">${icon('layers')}<span>Built with Cursor, Expo & Firebase<br><small>Saved to your Code Class account.</small></span></div><button class="button primary full-width" type="submit">Save my project ${icon('check')}</button></form>`);}
 function openProfile(){modalShell('Make yourself at home',`<form id="profile-form" class="form-modal"><span class="eyebrow">HEY THERE, BUILDER</span><h1 id="modal-title">Make yourself at home.</h1><p>What should we call you? This personalizes your workspace and course achievement.</p><label>Your name<input name="name" maxlength="60" required value="${escape(state.name)}" placeholder="Your name" autocomplete="name"></label>${roleField(student?.role)}<label>Email<input type="email" value="${escape(student?.email||'')}" readonly></label><p class="form-footnote">Your profile, notes, and progress are saved to your Code Class account.</p><button class="button primary full-width" type="submit">Save my profile ${icon('check')}</button><div class="auth-switch"><button type="button" class="text-link" data-action="sign-out">Sign out</button></div></form>`);}
@@ -165,13 +368,31 @@ async function copyLesson(id,type,part){
 }
 function exportNotes(){const content=`# Code Class — ${state.project}\n\nBuilder: ${state.name||'You'}\nProgress: ${state.done.length}/12 lessons\nProject idea: ${state.idea}\n\n## Project notebook\n${state.notes.project||'No project notes yet.'}\n\n`+lessons.map(l=>`## Lesson ${l.id}: ${l.title}${state.done.includes(l.id)?' (completed)':''}\n${state.notes[l.id]||'No notes yet.'}`).join('\n\n');const url=URL.createObjectURL(new Blob([content],{type:'text/markdown;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='code-class-notes.md';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Your notes are ready to keep.');}
 document.addEventListener('click',e=>{
+  const watchPrev=e.target.closest('[data-watch-prev]');
+  const watchNext=e.target.closest('[data-watch-next]');
+  if(watchPrev||watchNext){
+    e.preventDefault();
+    const idx=Math.max(0,CHAPTERS.findIndex(c=>c.key===activeChapterKey));
+    const next=CHAPTERS[Math.max(0,Math.min(CHAPTERS.length-1,idx+(watchNext?1:-1)))];
+    if(next)seekClassVideo(next.at);
+    return;
+  }
+  const soundBtn=e.target.closest('[data-watch-sound]');
+  if(soundBtn){
+    e.preventDefault();
+    try{
+      if(ytPlayer?.isMuted?.()){ytPlayer.unMute();ytPlayer.setVolume(100);soundBtn.textContent='Sound off';}
+      else if(ytPlayer){ytPlayer.mute();soundBtn.textContent='Sound on';}
+    }catch{}
+    return;
+  }
   const seek=e.target.closest('[data-video-at]');
-  if(seek){e.preventDefault();seekLessonVideo(seek.dataset.videoAt,true);return;}
+  if(seek){e.preventDefault();seekClassVideo(seek.dataset.videoAt);return;}
   const b=e.target.closest('[data-action],[data-lesson],[data-filter],[data-copy-lesson],[data-complete]');if(!b)return;
   if(b.dataset.lesson){const id=Number(b.dataset.lesson);requireStudent(()=>openLesson(id));return;}
   if(b.dataset.filter){filter=b.dataset.filter;render();return;}
   if(b.dataset.copyLesson){copyLesson(b.dataset.copyLesson,b.dataset.copyType,b.dataset.copyPart);return;}
-  if(b.dataset.complete){const id=Number(b.dataset.complete),l=lessons[id-1];if(!l.checks.every((_,i)=>state.checks[id]?.[i]))return;const isNew=!state.done.includes(id);if(isNew)state.done.push(id);if(state.done.length===12&&!state.completedAt)state.completedAt=new Date().toISOString();save();render();if(state.done.length===12&&isNew)certificate();else if(id<12){const nextStep=modules.findIndex(m=>m.lessons.includes(id+1));openLesson(id+1);toast(isNew?'Lesson marked complete. '+(nextStep!==modules.findIndex(m=>m.lessons.includes(id))?'Step '+(nextStep+1)+' is next!':'Next lesson is ready.'):'Let’s keep building.');}else{$('#modal').close();toast('Lesson complete! Finish any remaining lessons to complete the course.');}return;}
+  if(b.dataset.complete){const id=Number(b.dataset.complete),l=lessons[id-1];if(!l.checks.every((_,i)=>state.checks[id]?.[i]))return;const isNew=!state.done.includes(id);if(isNew)state.done.push(id);if(state.done.length===12&&!state.completedAt)state.completedAt=new Date().toISOString();save();if($('#modal').open)$('#modal').close();if(state.done.length===12&&isNew){render();certificate();}else if(id<12){const nextStep=modules.findIndex(m=>m.lessons.includes(id+1));openLesson(id+1);toast(isNew?'Lesson marked complete. '+(nextStep!==modules.findIndex(m=>m.lessons.includes(id))?'Step '+(nextStep+1)+' is next!':'Next lesson is ready.'):'Let’s keep building.');}else{render();toast('Lesson complete! Finish any remaining lessons to complete the course.');}return;}
   const actions={project:openProject,profile:openProfile,help:openHelp,search:openSearch,close:()=>$('#modal').close(),menu:()=>{const open=document.body.classList.toggle('nav-open');$('[data-action=menu]').setAttribute('aria-expanded',String(open));},'export-notes':exportNotes,certificate,print:()=>window.print(),'auth-signup':()=>openAuth('signup'),'auth-complete':()=>openAuth('complete'),'auth-signin':()=>openAuth('signin'),'auth-reset':()=>openAuth('reset'),'sign-out':signOutAndReset};
   const run=actions[b.dataset.action];if(!run)return;if(['project','profile','certificate','export-notes'].includes(b.dataset.action))requireStudent(run);else run();
 });
