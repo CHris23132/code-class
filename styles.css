@@ -307,6 +307,12 @@ body.watch-mode main{padding:0;max-width:none;margin:0;height:100dvh;overflow:hi
 .watch-player-shell{position:relative;flex:none;width:min(100%,calc((100dvh - 140px) * 16 / 9));aspect-ratio:16/9;height:auto;border-radius:10px;overflow:hidden;background:#000;margin-inline:auto;align-self:center}
 #yt-player,.watch-player,.watch-player iframe,#lesson-video{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;transform:none!important}
 .watch-player-mask{position:absolute;inset:0;z-index:2;cursor:default;background:transparent}
+.watch-play-gate{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;border:0;border-radius:inherit;background:rgba(7,24,39,.62);color:#fff;cursor:pointer;padding:24px}
+.watch-play-gate:hover{background:rgba(7,24,39,.72)}
+.watch-play-icon{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:var(--brand-cyan);color:var(--navy);font-size:28px;padding-left:4px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.watch-play-gate>span:last-child{display:flex;flex-direction:column;align-items:center;gap:4px}
+.watch-play-gate strong{font-family:var(--heading);font-size:18px;letter-spacing:-.3px}
+.watch-play-gate small{font-size:12px;color:#c5d5df}
 .watch-rail{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:thin;flex:none}
 .watch-rail-item{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#c5d5df;cursor:pointer;min-width:78px}
 .watch-rail-item span{font-size:9px;font-variant-numeric:tabular-nums;color:#7a93a3}
