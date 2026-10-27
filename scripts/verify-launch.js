@@ -28,14 +28,14 @@ for (const page of pages) {
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
     if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on course CTA');
-    if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class link');
-    if (!/Start the free course now/i.test(visible)) problems.push('missing primary CTA "Start the free course now"');
-    if (!/Prefer face-to-face\? Book a free live class/i.test(visible)) problems.push('missing secondary live-class CTA');
-    if (!/button-secondary[^"]*" href="#booking"/i.test(html) && !/href="#booking"[^>]*button-secondary/i.test(html) && !visible.includes('Book a free live class')) {/* keep soft check */}
+    if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class CTA');
+    if (!/Book a free live class/i.test(visible)) problems.push('missing primary live-class CTA');
+    if (!/Start now with the video course/i.test(visible)) problems.push('missing video-course CTA copy');
     if (!html.includes('href="#booking"') || !html.includes('BookLiveClassClick')) problems.push('missing #booking live-class CTA with BookLiveClassClick');
+    if (!html.includes('future-founder-class.html') || !html.includes('StartCourseClick')) problems.push('missing video-course CTA with StartCourseClick');
     const courseCtas = [...visible.matchAll(/href="(future-founder-class\.html)"[^>]*>([^<]*)/g)];
     if (courseCtas.length < 2) problems.push(`found ${courseCtas.length} course CTAs, expected header/hero/how/sticky`);
-    if (!/class="sticky-cta"/.test(html)) problems.push('missing the sticky mobile CTA bar');
+    if (!/class="[^"]*\bsticky-cta\b/.test(html)) problems.push('missing the sticky mobile CTA bar');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
     if (!/<section[^>]*id="booking"/.test(html)) problems.push('missing the #booking section');
     if (!/<section[^>]*id="build"/.test(html)) problems.push('missing the #build section');
