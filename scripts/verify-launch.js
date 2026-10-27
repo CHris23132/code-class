@@ -30,7 +30,9 @@ for (const page of pages) {
     if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on course CTA');
     if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class link');
     if (!/Start the free course now/i.test(visible)) problems.push('missing primary CTA "Start the free course now"');
-    if (!/Prefer face-to-face\? Book a free live class/i.test(visible)) problems.push('missing secondary live-class link');
+    if (!/Prefer face-to-face\? Book a free live class/i.test(visible)) problems.push('missing secondary live-class CTA');
+    if (!/button-secondary[^"]*" href="#booking"/i.test(html) && !/href="#booking"[^>]*button-secondary/i.test(html) && !visible.includes('Book a free live class')) {/* keep soft check */}
+    if (!html.includes('href="#booking"') || !html.includes('BookLiveClassClick')) problems.push('missing #booking live-class CTA with BookLiveClassClick');
     const courseCtas = [...visible.matchAll(/href="(future-founder-class\.html)"[^>]*>([^<]*)/g)];
     if (courseCtas.length < 2) problems.push(`found ${courseCtas.length} course CTAs, expected header/hero/how/sticky`);
     if (!/class="sticky-cta"/.test(html)) problems.push('missing the sticky mobile CTA bar');

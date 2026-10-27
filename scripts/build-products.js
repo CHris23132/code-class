@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=9">
+  <link rel="stylesheet" href="product.css?v=10">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -791,8 +791,8 @@ ${fc.altHeadlines.map(([angle, text]) => `          <!-- ALT H1 (${angle}): ${te
           <p class="lead">A free video course that walks you through building a real app with a real database, on your phone. Start the moment you’re inspired — no waiting for a class date.</p>
           <div class="cta-group cta-two-door">
             <a class="button button-large" href="future-founder-class.html" data-track="StartCourseClick">Start the free course now ${icon('arrow')}</a>
-            <p class="cta-meta">Free to start · 12 lessons · Learn at your own pace.</p>
-            <a class="cta-secondary" href="#booking" data-track="BookLiveClassClick">Prefer face-to-face? Book a free live class →</a>
+            <a class="button button-large button-secondary" href="#booking" data-track="BookLiveClassClick">Prefer face-to-face? Book a free live class ${icon('arrow')}</a>
+            <p class="cta-meta">Free to start · 12 lessons · Learn at your own pace. Live class: weekends, ${fc.minutes} min.</p>
           </div>
           <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Built &amp; taught by <b>Christopher Walsh</b></span></p>
           <ul class="proof-strip" aria-label="Christopher’s track record">
