@@ -141,9 +141,30 @@ const icon = (name, cls='') => `<svg class="icon ${cls}" viewBox="0 0 256 256" f
 const escape = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const accessRecord=(source='signup')=>({source,unlockedAt:new Date().toISOString()});
 const unlocked=()=>Boolean(student?.unlocked);
+const META_PIXEL_IDS=['592481416326540','711127870519369'];
+function beaconMetaCustom(name){
+  const stamp=Date.now();
+  for(const id of META_PIXEL_IDS){
+    const url=`https://www.facebook.com/tr?id=${encodeURIComponent(id)}&ev=${encodeURIComponent(name)}&noscript=1&_=${stamp}`;
+    try{if(typeof fetch==='function')fetch(url,{mode:'no-cors',keepalive:true,credentials:'include'}).catch(()=>{});}catch{}
+    try{new Image().src=url;}catch{}
+  }
+}
+function trackMetaCustom(name){
+  const event=String(name||'').trim();
+  if(!event)return;
+  try{
+    if(typeof fbq==='function'){
+      fbq('trackCustom',event);
+      for(const id of META_PIXEL_IDS){try{fbq('trackSingleCustom',id,event);}catch{}}
+    }
+  }catch(err){console.error(err);}
+  beaconMetaCustom(event);
+}
 function trackSignupConversion(){
-  if(typeof fbq!=='function')return;
-  try{fbq('track','CompleteRegistration');fbq('trackCustom','CourseSignup');fbq('trackCustom','CodeClassSignup');}catch(err){console.error(err);}
+  try{if(typeof fbq==='function')fbq('track','CompleteRegistration');}catch(err){console.error(err);}
+  trackMetaCustom('CourseSignup');
+  trackMetaCustom('CodeClassSignup');
 }
 async function ensureUnlocked(uid,data){
   if(data?.access?.unlockedAt)return data.access;

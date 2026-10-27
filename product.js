@@ -1,4 +1,57 @@
 const isUrl = value => /^https?:\/\//i.test(value?.trim() || '');
+const META_PIXEL_IDS = ['592481416326540', '711127870519369'];
+const TRACK_NAV_DELAY_MS = 350;
+
+/** Fire a Meta custom event via fbq + keepalive beacon so it survives navigation. */
+function trackMetaCustom(name) {
+  const event = String(name || '').trim();
+  if (!event) return;
+  try {
+    if (typeof fbq === 'function') {
+      fbq('trackCustom', event);
+      for (const id of META_PIXEL_IDS) {
+        try { fbq('trackSingleCustom', id, event); } catch {}
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  const stamp = Date.now();
+  for (const id of META_PIXEL_IDS) {
+    const url = `https://www.facebook.com/tr?id=${encodeURIComponent(id)}&ev=${encodeURIComponent(event)}&noscript=1&_=${stamp}`;
+    try {
+      if (typeof fetch === 'function') fetch(url, { mode: 'no-cors', keepalive: true, credentials: 'include' }).catch(() => {});
+    } catch {}
+    try {
+      const img = new Image();
+      img.src = url;
+    } catch {}
+  }
+}
+
+// Bind tracking first so a later throw never drops StartCourseClick / BookLiveClassClick.
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const el = event.target.closest?.('[data-track]');
+  if (!el) return;
+  const name = el.dataset.track?.trim();
+  if (!name) return;
+
+  trackMetaCustom(name);
+
+  const href = el.getAttribute('href');
+  if (!href || href.startsWith('#') || el.getAttribute('target') === '_blank' || el.hasAttribute('download')) return;
+
+  // Hold navigation so the pixel request can leave (trackCustom was aborted on unload before).
+  event.preventDefault();
+  const go = () => { window.location.assign(el.href); };
+  if ('requestAnimationFrame' in window) {
+    requestAnimationFrame(() => setTimeout(go, TRACK_NAV_DELAY_MS));
+  } else {
+    setTimeout(go, TRACK_NAV_DELAY_MS);
+  }
+}, true);
 
 // data-enroll uses meta checkout-url; data-enroll="name" uses meta checkout-url-name.
 document.querySelectorAll('[data-enroll]').forEach(a => {
@@ -30,9 +83,13 @@ function nextSession({ slots, timeZone }) {
 }
 
 document.querySelectorAll('[data-schedule]').forEach(line => {
-  const schedule = JSON.parse(line.dataset.schedule);
-  const next = nextSession(schedule);
-  if (next) line.textContent = `${schedule.days} — next ${schedule.label || 'session'} ${next}`;
+  try {
+    const schedule = JSON.parse(line.dataset.schedule);
+    const next = nextSession(schedule);
+    if (next) line.textContent = `${schedule.days} — next ${schedule.label || 'session'} ${next}`;
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 function embedUrl(raw) {
@@ -99,24 +156,16 @@ if (carousel) {
   start();
 }
 
-document.querySelectorAll('[data-track]').forEach(el => {
-  el.addEventListener('click', () => {
-    const name = el.dataset.track?.trim();
-    if (!name || typeof fbq !== 'function') return;
-    try { fbq('trackCustom', name); } catch (err) { console.error(err); }
-  });
-});
-
 const sticky = document.querySelector('.sticky-cta');
 if (sticky) {
-  const stickyLink = sticky.querySelector('a');
+  const stickyLinks = [...sticky.querySelectorAll('a')];
   const visible = new Set();
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target);
     const show = visible.size === 0 && window.scrollY > 200;
     sticky.classList.toggle('show', show);
     sticky.setAttribute('aria-hidden', String(!show));
-    stickyLink.tabIndex = show ? 0 : -1;
+    stickyLinks.forEach(link => { link.tabIndex = show ? 0 : -1; });
   });
   [document.querySelector('.hero .cta-group, .lp-hero .cta-group'), document.getElementById('offer'), document.getElementById('how'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
 }

@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=11">
+  <link rel="stylesheet" href="product.css?v=12">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -356,7 +356,7 @@ ${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-car
     <a class="button" href="${start}" tabindex="-1">${cta}</a>
   </div>
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -558,7 +558,7 @@ ${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-car
     <a class="button" href="#offer" data-enroll tabindex="-1">${cta}</a>
   </div>
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -652,7 +652,7 @@ ${sections.map(([h, body]) => `      <h2>${h}</h2>
 
   ${footer(false)}
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -733,7 +733,7 @@ ${program.phases.map(([title, minutes], i) => `            <li><b>Module ${i + 1
 
   ${footer(false)}
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -769,11 +769,11 @@ const freeFaq = [
 function freeClassPage() {
   const schedule = attr(JSON.stringify({ slots: fc.slots, timeZone: fc.timeZone, days: `Every ${fc.days.join(' & ')}`, label: 'class' }));
   const sessionLine = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">Every ${fc.days.join(' &amp; ')} — ${slotList.map(([d, t]) => `${d.slice(0, 3)} ${t.join(' &amp; ')}`).join(', ')} ET</p>`;
-  // Live class is the primary (lime) door; video course is the equal-size secondary door.
+  // Video course is the dominant lime primary; live class is the quieter secondary.
   const dualCta = (size = 'button-large', meta = true) => `<div class="cta-group cta-two-door">
-            <a class="button ${size}" href="#booking" data-track="BookLiveClassClick">Book a free live class ${icon('arrow')}</a>
-            <a class="button ${size} button-course" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
-            ${meta ? `<p class="cta-meta">Live: weekends, ${fc.minutes} min · Video: free · 12 lessons · start anytime</p>` : ''}
+            <a class="button ${size}" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
+            <a class="button ${size} button-secondary" href="#booking" data-track="BookLiveClassClick">Book a free live class ${icon('arrow')}</a>
+            ${meta ? `<p class="cta-meta">Video: free · 12 lessons · start anytime · Live: weekends, ${fc.minutes} min</p>` : ''}
           </div>`;
   return `${head({ track: "fbq('track', 'ViewContent');", title: 'Free Live Class + Video Course | Code Class', description: 'Book a free live class on weekends, or start now with the free video course — build a real app with a real database, on your phone.', ogTitle: fc.headline, ogDescription: 'Book a free live class, or start now with the video course. Free to start either way.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
 <body class="free-class-page two-door">
@@ -783,8 +783,8 @@ function freeClassPage() {
     <div class="wrap header-inner">
       ${logo('#top')}
       <div class="header-cta-pair">
-        <a class="button button-small" href="#booking" data-track="BookLiveClassClick">Book live class</a>
-        <a class="button button-small button-course" href="future-founder-class.html" data-track="StartCourseClick">Video course</a>
+        <a class="button button-small" href="future-founder-class.html" data-track="StartCourseClick">Video course</a>
+        <a class="button button-small button-secondary" href="#booking" data-track="BookLiveClassClick">Book live class</a>
       </div>
     </div>
   </header>
@@ -882,7 +882,7 @@ ${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `    
     <section class="section booking" id="booking">
       <div class="wrap">
         <div class="section-head">
-          <p class="lp-repeat">Primary path — face-to-face</p>
+          <p class="lp-repeat">Live with me — weekends</p>
           <h2>Book a free live class</h2>
           <p class="booking-flow">Pick your Saturday or Sunday slot below → free, no card required → get your Google Meet link instantly.</p>
           ${sessionLine('')}
@@ -893,8 +893,8 @@ ${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `    
         <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
         <p class="fine-print">Small by design: max ${fc.maxSeats} seats per session. Saturdays &amp; Sundays · Eastern Time.</p>
         <div class="booking-alt">
-          <p>Can’t make a weekend slot?</p>
-          <a class="button button-large button-course" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
+          <p>Prefer to start on your own?</p>
+          <a class="button button-large" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
         </div>
       </div>
     </section>
@@ -903,11 +903,11 @@ ${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `    
   ${freeFooter}
 
   <div class="sticky-cta sticky-cta-pair" aria-hidden="true">
-    <a class="button" href="#booking" data-track="BookLiveClassClick" tabindex="-1">Book live class</a>
-    <a class="button button-course" href="future-founder-class.html" data-track="StartCourseClick" tabindex="-1">Video course</a>
+    <a class="button" href="future-founder-class.html" data-track="StartCourseClick" tabindex="-1">Video course</a>
+    <a class="button button-secondary" href="#booking" data-track="BookLiveClassClick" tabindex="-1">Book live class</a>
   </div>
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -960,7 +960,7 @@ function thanksFreeClassPage() {
 
   ${freeFooter}
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -1112,7 +1112,7 @@ ${packagesFaq.map(([q, a]) => `        <details>
 
   ${packagesFooter}
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;
@@ -1229,7 +1229,7 @@ function classPrepPage() {
     </div>
   </footer>
 
-  <script src="product.js" defer></script>
+  <script src="product.js?v=12" defer></script>
 </body>
 </html>
 `;

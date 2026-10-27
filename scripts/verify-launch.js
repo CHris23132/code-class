@@ -29,8 +29,14 @@ for (const page of pages) {
     if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
     if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on course CTA');
     if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class CTA');
-    if (!/Book a free live class/i.test(visible)) problems.push('missing primary live-class CTA');
-    if (!/Start now with the video course/i.test(visible)) problems.push('missing video-course CTA copy');
+    if (!/Book a free live class/i.test(visible)) problems.push('missing live-class CTA');
+    if (!/Start now with the video course/i.test(visible)) problems.push('missing primary video-course CTA copy');
+    if (!/class="button[^"]*\bbutton-secondary\b[^"]*"[^>]*data-track="BookLiveClassClick"/.test(html)) {
+      problems.push('live-class CTA should use quieter button-secondary styling');
+    }
+    if (!/data-track="StartCourseClick"[^>]*class="button|class="button(?![^"]*button-secondary)[^"]*"[^>]*data-track="StartCourseClick"/.test(html)) {
+      problems.push('course CTA should be the lime primary (not button-secondary)');
+    }
     if (!html.includes('href="#booking"') || !html.includes('BookLiveClassClick')) problems.push('missing #booking live-class CTA with BookLiveClassClick');
     if (!html.includes('future-founder-class.html') || !html.includes('StartCourseClick')) problems.push('missing video-course CTA with StartCourseClick');
     const courseCtas = [...visible.matchAll(/href="(future-founder-class\.html)"[^>]*>([^<]*)/g)];
