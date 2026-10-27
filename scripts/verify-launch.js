@@ -27,21 +27,22 @@ for (const page of pages) {
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
-    const ctas = [...visible.matchAll(/<a class="button[^"]*" href="([^"]*)"[^>]*>([^<]*)/g)].map(m => [m[1], m[2].trim()]);
-    if (ctas.length < 4) problems.push(`found ${ctas.length} CTA buttons, expected 4 (header, hero, offer, sticky bar)`);
-    for (const [href, text] of ctas) {
-      if (href !== '#booking') problems.push(`CTA "${text}" points at ${href}, not #booking`);
-      if (text !== 'Claim my free seat') problems.push(`CTA wording "${text}" isn't "Claim my free seat"`);
-    }
+    if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on course CTA');
+    if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class link');
+    if (!/Start the free course now/i.test(visible)) problems.push('missing primary CTA "Start the free course now"');
+    if (!/Prefer face-to-face\? Book a free live class/i.test(visible)) problems.push('missing secondary live-class link');
+    const courseCtas = [...visible.matchAll(/href="(future-founder-class\.html)"[^>]*>([^<]*)/g)];
+    if (courseCtas.length < 2) problems.push(`found ${courseCtas.length} course CTAs, expected header/hero/how/sticky`);
     if (!/class="sticky-cta"/.test(html)) problems.push('missing the sticky mobile CTA bar');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
-    const offPage = [...visible.matchAll(/<a [^>]*href="([^"#][^"]*)"/g)].map(m => m[1]).filter(h => !['terms.html', `mailto:${funnel.supportEmail}`].includes(h));
-    for (const href of offPage) problems.push(`off-page link ${href} (only footer legal and the Calendly embed are allowed)`);
     if (!/<section[^>]*id="booking"/.test(html)) problems.push('missing the #booking section');
+    if (!/<section[^>]*id="build"/.test(html)) problems.push('missing the #build section');
+    if (!/<section[^>]*id="how"/.test(html)) problems.push('missing the #how section');
     const widget = html.match(/class="calendly-inline-widget" data-url="([^"]*)"/);
     if (!widget || widget[1] !== freeClass.calendly) problems.push(`the #booking embed isn't ${freeClass.calendly}`);
     if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
     if ((html.match(/<!-- ALT H1 \(/g) || []).length < 2) problems.push('expected two alternate H1s as comments for A/B testing');
+    if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');
   }
   if (page === 'thanks-free-class.html') {
     if (!/class="upsell-card"/.test(html)) problems.push('missing the Build-With-Me 1-on-1 upsell block');

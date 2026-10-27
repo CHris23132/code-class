@@ -99,6 +99,14 @@ if (carousel) {
   start();
 }
 
+document.querySelectorAll('[data-track]').forEach(el => {
+  el.addEventListener('click', () => {
+    const name = el.dataset.track?.trim();
+    if (!name || typeof fbq !== 'function') return;
+    try { fbq('trackCustom', name); } catch (err) { console.error(err); }
+  });
+});
+
 const sticky = document.querySelector('.sticky-cta');
 if (sticky) {
   const stickyLink = sticky.querySelector('a');
@@ -110,5 +118,5 @@ if (sticky) {
     sticky.setAttribute('aria-hidden', String(!show));
     stickyLink.tabIndex = show ? 0 : -1;
   });
-  [document.querySelector('.hero .cta-group, .lp-hero .cta-group'), document.getElementById('offer'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
+  [document.querySelector('.hero .cta-group, .lp-hero .cta-group'), document.getElementById('offer'), document.getElementById('how'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
 }

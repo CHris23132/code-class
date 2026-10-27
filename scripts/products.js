@@ -7,10 +7,10 @@ export const freeClass = {
   maxSeats: 20,
   minutes: 45,
   // A/B test: `headline` is live; `altHeadlines` are written into the page as comments for the next test.
-  headline: 'Build Your First App — Live With Me, Free, in 45 Minutes',
+  headline: 'Build a Real App — Start Free, Learn at Your Pace',
   altHeadlines: [
-    ['outcome', 'Leave With a Real App on Your Phone — Built Live, Free, in 45 Minutes'],
-    ['mechanism', 'Stop Watching Coding Videos. Build Your First App Face-to-Face With Me — Free']
+    ['outcome', 'A Working App on Your Phone — Free Video Course, Start Anytime'],
+    ['mechanism', 'Stop Waiting for a Class Date. Start the Free Course the Moment You’re Inspired']
   ],
   // Approved proof markers (the only numbers allowed in public copy besides the class details).
   proof: ['40+ apps shipped', '25 five-star reviews', 'CTO experience', 'Apps serving millions of users'],

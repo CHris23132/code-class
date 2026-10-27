@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=8">
+  <link rel="stylesheet" href="product.css?v=9">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -769,14 +769,14 @@ const freeFaq = [
 function freeClassPage() {
   const schedule = attr(JSON.stringify({ slots: fc.slots, timeZone: fc.timeZone, days: `Every ${fc.days.join(' & ')}`, label: 'class' }));
   const sessionLine = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">Every ${fc.days.join(' &amp; ')} — ${slotList.map(([d, t]) => `${d.slice(0, 3)} ${t.join(' &amp; ')}`).join(', ')} ET</p>`;
-  return `${head({ track: "fbq('track', 'ViewContent');", title: 'Free Live Class: Build Your First App in 45 Minutes | Code Class', description: `A free ${fc.minutes}-minute live class: build your first app face-to-face with Christopher Walsh on Google Meet. A real app with a real database, on your phone. No experience needed.`, ogTitle: 'Build your first app — live with me, free, in 45 minutes', ogDescription: 'No experience needed. A real app with a real database, on your phone by the end of the call. Free live class on weekends.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
-<body class="free-class-page">
+  return `${head({ track: "fbq('track', 'ViewContent');", title: 'Free App-Building Course | Code Class', description: 'A free video course that walks you through building a real app with a real database, on your phone. Start anytime — or book a free live class on weekends.', ogTitle: fc.headline, ogDescription: 'Free to start · 12 lessons · Learn at your own pace. Or book a free live class if you prefer face-to-face.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
+<body class="free-class-page two-door">
   ${sprite}
 
   <header class="site-header">
     <div class="wrap header-inner">
       ${logo('#top')}
-      <a class="button button-small" href="#booking">Claim my free seat</a>
+      <a class="button button-small" href="future-founder-class.html" data-track="StartCourseClick">Start free course</a>
     </div>
   </header>
 
@@ -784,86 +784,57 @@ function freeClassPage() {
     <section class="lp-hero">
       <div class="wrap lp-hero-grid">
         <div class="lp-hero-copy">
-          <span class="eyebrow">Free live class — Saturdays &amp; Sundays</span>
+          <span class="eyebrow">Free video course · start anytime</span>
           <!-- HEADLINE (A/B test): the live H1 lives in freeClass.headline in scripts/products.js. -->
           <h1>${fc.headline}</h1>
 ${fc.altHeadlines.map(([angle, text]) => `          <!-- ALT H1 (${angle}): ${text} -->`).join('\n')}
-          <p class="lead">No experience needed. I walk you through it face-to-face on Google Meet — you leave with a real app, with a real database, on your phone.</p>
-          <div class="cta-group">
-            <a class="button button-large" href="#booking">${claim}</a>
-            <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Live with <b>Christopher Walsh</b> · ${fc.minutes} min · Free</span></p>
+          <p class="lead">A free video course that walks you through building a real app with a real database, on your phone. Start the moment you’re inspired — no waiting for a class date.</p>
+          <div class="cta-group cta-two-door">
+            <a class="button button-large" href="future-founder-class.html" data-track="StartCourseClick">Start the free course now ${icon('arrow')}</a>
+            <p class="cta-meta">Free to start · 12 lessons · Learn at your own pace.</p>
+            <a class="cta-secondary" href="#booking" data-track="BookLiveClassClick">Prefer face-to-face? Book a free live class →</a>
           </div>
+          <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Built &amp; taught by <b>Christopher Walsh</b></span></p>
           <ul class="proof-strip" aria-label="Christopher’s track record">
 ${fc.proof.map(p => `            <li>${icon('check')}${p}</li>`).join('\n')}
           </ul>
         </div>
         <figure class="lp-photo">
           <img src="assets/free-class/christopher.webp" alt="Christopher Walsh, your host" width="560" height="552" fetchpriority="high">
-          <figcaption><b>Christopher Walsh</b><span>Your host · live on Google Meet</span></figcaption>
+          <figcaption><b>Christopher Walsh</b><span>Course host · live class weekends</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="section lp-problem">
-      <div class="wrap narrow">
-        <span class="eyebrow">Why it hasn’t worked yet</span>
-        <h2>You don’t need more information. You need someone building with you.</h2>
-        <div class="lp-prose">
-          <p>Courses, PDFs, communities — they all hand you information and leave you alone with it.</p>
-          <p>So you watch hours of videos, nod along, and still have no app.</p>
-          <p>The moment something breaks, there’s nobody to ask. That’s where most people quit.</p>
-          <p><b>Information was never the problem. Nobody builds <em>with</em> you.</b></p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section lp-mechanism">
+    <section class="section lp-build" id="build">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">Why this works</span>
-          <h2>Live, guided, face-to-face. You build it — I’m right there.</h2>
-          <p class="lead">The class is the method: you build while I watch, fix, and guide in real time.</p>
+          <span class="eyebrow">What you’ll build</span>
+          <h2>A real app with accounts, data, and a phone preview.</h2>
+          <p class="lead">Not a toy demo — a working project you can keep growing after the course.</p>
         </div>
         <ul class="lp-cards">
-          <li><h3>I see your screen</h3><p>Stuck? Share your screen and I see exactly what you see — no guessing from a comment thread.</p></li>
-          <li><h3>Fixes in real time</h3><p>We fix it together on the spot, before it turns into a reason to quit.</p></li>
-          <li><h3>A working app, not homework</h3><p>The class ends with your app running on your phone — not a to-do list.</p></li>
+          <li><h3>Screens you can tap through</h3><p>Design and build the main views of your app, then preview them on the web and on your phone.</p></li>
+          <li><h3>Real sign-in and saved data</h3><p>Connect authentication and a cloud database so people can create accounts and keep their stuff.</p></li>
+          <li><h3>Posts, profiles, and more</h3><p>Wire up the features that make an app feel alive — then prepare a mobile build when you’re ready.</p></li>
         </ul>
-        <p class="lp-aha">That’s why the course didn’t work for you: it couldn’t see your screen.</p>
       </div>
     </section>
 
-    <section class="section curriculum lp-steps">
+    <section class="section curriculum lp-steps" id="how">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">The ${fc.minutes} minutes</span>
-          <h2>What happens in the class</h2>
-          <p class="lead">Three steps, from “never built an app” to an app on your phone.</p>
+          <span class="eyebrow">How the course works</span>
+          <h2>Watch, copy the prompt, build, check it off.</h2>
+          <p class="lead">Twelve short lessons. Prompts ready to paste. Progress that saves to your free account.</p>
         </div>
         <ol class="phases three">
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Join the Google Meet</h3><p>Click the link in your confirmation email. Laptop open, phone nearby.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Build your first app screen, live</h3><p>I walk you through it step by step — database, buttons, the works.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Leave with a working app</h3><p>It’s running on your phone — plus an invite to keep building 1-on-1.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 1</span></div><h3>Create your free account</h3><p>Open the course software, sign up, and start Lesson 1 the same day.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 2</span></div><h3>Follow the video + prompts</h3><p>Each lesson pairs a walkthrough with copy-paste prompts and a checklist.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Step 3</span></div><h3>Finish with a working app</h3><p>By Lesson 12 you’ve taken an idea through to a tested build milestone.</p></li>
         </ol>
-      </div>
-    </section>
-
-    <section class="section offer" id="offer">
-      <div class="wrap">
-        <div class="offer-card single">
-          <div class="offer-body">
-            <span class="eyebrow">Everything in your free seat</span>
-            <h2>Here’s what you get</h2>
-            <ul class="included lp-stack">
-${fc.stack.map(([item, detail, value]) => `              <li>${icon('check')}<span><b>${item}</b><small>${detail}</small></span>${value ? `<s class="lp-value">${value}</s>` : '<!-- CHRISTOPHER: confirm a value for this item, or leave it without one -->'}</li>`).join('\n')}
-            </ul>
-            <div class="price lp-price">
-              <span class="total">Today</span>
-              <span class="today"><b>$0</b></span>
-            </div>
-            <p class="lp-free-note">Free — no card required. You’re only giving ${fc.minutes} minutes and showing up.</p>
-            <a class="button button-large full" href="#booking">${claim}</a>
-          </div>
+        <div class="cta-group center" style="margin-top:28px">
+          <a class="button button-large" href="future-founder-class.html" data-track="StartCourseClick">Start the free course now ${icon('arrow')}</a>
         </div>
       </div>
     </section>
@@ -871,9 +842,9 @@ ${fc.stack.map(([item, detail, value]) => `              <li>${icon('check')}<sp
     <section class="section lp-story">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">Why I teach this live</span>
-          <h2>I learned by building — not by watching.</h2>
-          <p class="lead">No money and no job, to a career in software. Every step came from building real apps.</p>
+          <span class="eyebrow">Why I teach this</span>
+          <h2>I learned by building — not by watching alone.</h2>
+          <p class="lead">The free course gets you moving. The weekend live class is there if you want face-to-face help.</p>
         </div>
         <ol class="story-strip">
 ${story.map(([kicker, title, text], i) => `          <li><img src="assets/free-class/story-${i + 1}.webp" alt="${attr(`${kicker}: ${title} ${text}`)}" width="540" height="960" loading="lazy" decoding="async"></li>`).join('\n')}
@@ -881,22 +852,22 @@ ${story.map(([kicker, title, text], i) => `          <li><img src="assets/free-c
       </div>
     </section>
 
-    <section class="section lp-scarcity">
-      <div class="wrap narrow">
-        <span class="eyebrow">Small by design</span>
-        <h2>Max ${fc.maxSeats} seats per session. Weekends only.</h2>
-        <p class="lead">So I can actually see your screen and help you. Four classes each weekend:</p>
-        <ul class="lp-slots">
-${slotList.map(([d, t]) => `          <li><b>${d}</b><span>${t.join(' &amp; ')} ET</span></li>`).join('\n')}
-        </ul>
-        ${sessionLine('center')}
-      </div>
-    </section>
-
     <section class="section faq">
       <div class="wrap narrow">
         <h2>Questions, answered.</h2>
-${freeFaq.map(([q, a]) => `        <details>
+        <details>
+          <summary>I’ve never written code — is the free course for me?</summary>
+          <p>Yes. It’s built for beginners: copy the prompt, follow the checklist, and move one lesson at a time.</p>
+        </details>
+        <details>
+          <summary>What’s the difference between the course and the live class?</summary>
+          <p>The free course is on-demand video + software you can start anytime. The live class is a ${fc.minutes}-minute Google Meet on weekends if you prefer face-to-face guidance.</p>
+        </details>
+        <details>
+          <summary>Is it really free?</summary>
+          <p>Yes — create a free account to open all 12 lessons. No card required to start. Optional paid 1-on-1 Build-With-Me packages exist if you want to build your own app with me later.</p>
+        </details>
+${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `        <details>
           <summary>${q}</summary>
           <p>${a}</p>
         </details>`).join('\n')}
@@ -906,15 +877,16 @@ ${freeFaq.map(([q, a]) => `        <details>
     <section class="section booking" id="booking">
       <div class="wrap">
         <div class="section-head">
-          <p class="lp-repeat">${fc.headline}</p>
-          <h2>Claim your free seat</h2>
+          <p class="lp-repeat">Prefer face-to-face?</p>
+          <h2>Book a free live class</h2>
           <p class="booking-flow">Pick your Saturday or Sunday slot below → free, no card required → get your Google Meet link instantly.</p>
+          ${sessionLine('')}
         </div>
         <div class="booking-card">
           <div class="calendly-inline-widget" data-url="${attr(fc.calendly)}" style="min-width:320px;height:720px;"></div>
         </div>
         <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <p class="fine-print">Small by design: max ${fc.maxSeats} seats per session.</p>
+        <p class="fine-print">Small by design: max ${fc.maxSeats} seats per session. Saturdays &amp; Sundays · Eastern Time.</p>
       </div>
     </section>
   </main>
@@ -922,8 +894,8 @@ ${freeFaq.map(([q, a]) => `        <details>
   ${freeFooter}
 
   <div class="sticky-cta" aria-hidden="true">
-    <span><b>Free live class</b> · ${fc.minutes} min</span>
-    <a class="button" href="#booking" tabindex="-1">Claim my free seat</a>
+    <span><b>Free course</b> · 12 lessons</span>
+    <a class="button" href="future-founder-class.html" data-track="StartCourseClick" tabindex="-1">Start free course</a>
   </div>
 
   <script src="product.js" defer></script>
