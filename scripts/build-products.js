@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=12">
+  <link rel="stylesheet" href="product.css?v=13">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -356,7 +356,7 @@ ${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-car
     <a class="button" href="${start}" tabindex="-1">${cta}</a>
   </div>
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -558,7 +558,7 @@ ${products.filter(o => o.slug !== p.slug).map(o => `          <a class="mini-car
     <a class="button" href="#offer" data-enroll tabindex="-1">${cta}</a>
   </div>
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -652,7 +652,7 @@ ${sections.map(([h, body]) => `      <h2>${h}</h2>
 
   ${footer(false)}
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -733,7 +733,7 @@ ${program.phases.map(([title, minutes], i) => `            <li><b>Module ${i + 1
 
   ${footer(false)}
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -907,7 +907,7 @@ ${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `    
     <a class="button button-secondary" href="#booking" data-track="BookLiveClassClick" tabindex="-1">Book live class</a>
   </div>
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -960,7 +960,7 @@ function thanksFreeClassPage() {
 
   ${freeFooter}
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -1112,7 +1112,7 @@ ${packagesFaq.map(([q, a]) => `        <details>
 
   ${packagesFooter}
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;
@@ -1229,7 +1229,7 @@ function classPrepPage() {
     </div>
   </footer>
 
-  <script src="product.js?v=12" defer></script>
+  <script src="product.js?v=13" defer></script>
 </body>
 </html>
 `;

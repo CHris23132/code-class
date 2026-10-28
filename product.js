@@ -1,35 +1,81 @@
 const isUrl = value => /^https?:\/\//i.test(value?.trim() || '');
-const META_PIXEL_IDS = ['592481416326540', '711127870519369'];
-const TRACK_NAV_DELAY_MS = 350;
+/** Ads pixel that must receive conversions. */
+const META_ADS_PIXEL = '711127870519369';
+const META_PIXEL_IDS = ['592481416326540', META_ADS_PIXEL];
+const TRACK_NAV_DELAY_MS = 400;
 
-/** Fire a Meta custom event via fbq + keepalive beacon so it survives navigation. */
+/**
+ * Pixel 711127870519369 silently drops these exact custom names (fbq never
+ * sends a network request for them; confirmed Oct 28 2026). They still reach
+ * pixel 592. Use working aliases + standard events for the ads pixel.
+ */
+const BLOCKED_ON_ADS_PIXEL = new Set([
+  'StartCourseClick',
+  'BookLiveClassClick',
+  'CourseSignup',
+  'CodeClassSignup',
+  'WorkshopBooked'
+]);
+
+const CUSTOM_ALIAS = {
+  StartCourseClick: 'StartCourse',
+  BookLiveClassClick: 'BookLiveClass',
+  CourseSignup: 'CourseReg',
+  CodeClassSignup: 'CourseReg'
+};
+
+const STANDARD_FALLBACK = {
+  StartCourseClick: 'Lead',
+  BookLiveClassClick: 'Schedule',
+  CourseSignup: 'CompleteRegistration',
+  CodeClassSignup: 'CompleteRegistration'
+};
+
+function fbqReady() {
+  return typeof fbq === 'function';
+}
+
+function trackMetaStandard(name) {
+  const event = String(name || '').trim();
+  if (!event || !fbqReady()) return;
+  try {
+    fbq('track', event);
+    fbq('trackSingle', META_ADS_PIXEL, event);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function trackMetaCustom(name) {
   const event = String(name || '').trim();
-  if (!event) return;
+  if (!event || !fbqReady()) return;
   try {
-    if (typeof fbq === 'function') {
-      fbq('trackCustom', event);
-      for (const id of META_PIXEL_IDS) {
-        try { fbq('trackSingleCustom', id, event); } catch {}
-      }
+    fbq('trackCustom', event);
+    for (const id of META_PIXEL_IDS) {
+      try { fbq('trackSingleCustom', id, event); } catch {}
     }
   } catch (err) {
     console.error(err);
   }
-  const stamp = Date.now();
-  for (const id of META_PIXEL_IDS) {
-    const url = `https://www.facebook.com/tr?id=${encodeURIComponent(id)}&ev=${encodeURIComponent(event)}&noscript=1&_=${stamp}`;
-    try {
-      if (typeof fetch === 'function') fetch(url, { mode: 'no-cors', keepalive: true, credentials: 'include' }).catch(() => {});
-    } catch {}
-    try {
-      const img = new Image();
-      img.src = url;
-    } catch {}
+}
+
+/** Fire the lander CTA conversion so pixel 711 always gets a usable event. */
+function trackCta(name) {
+  const event = String(name || '').trim();
+  if (!event) return;
+
+  // Always attempt the requested custom name (reaches pixel 592; 711 may drop it).
+  trackMetaCustom(event);
+
+  if (BLOCKED_ON_ADS_PIXEL.has(event)) {
+    const alias = CUSTOM_ALIAS[event];
+    if (alias) trackMetaCustom(alias);
+    const standard = STANDARD_FALLBACK[event];
+    if (standard) trackMetaStandard(standard);
   }
 }
 
-// Bind tracking first so a later throw never drops StartCourseClick / BookLiveClassClick.
+// Bind tracking first so a later throw never drops CTA events.
 document.addEventListener('click', event => {
   if (event.defaultPrevented || event.button !== 0) return;
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -38,12 +84,12 @@ document.addEventListener('click', event => {
   const name = el.dataset.track?.trim();
   if (!name) return;
 
-  trackMetaCustom(name);
+  trackCta(name);
 
   const href = el.getAttribute('href');
   if (!href || href.startsWith('#') || el.getAttribute('target') === '_blank' || el.hasAttribute('download')) return;
 
-  // Hold navigation so the pixel request can leave (trackCustom was aborted on unload before).
+  // Hold navigation so fbq can flush before unload.
   event.preventDefault();
   const go = () => { window.location.assign(el.href); };
   if ('requestAnimationFrame' in window) {
