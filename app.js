@@ -143,7 +143,7 @@ const accessRecord=(source='signup')=>({source,unlockedAt:new Date().toISOString
 const unlocked=()=>Boolean(student?.unlocked);
 const META_ADS_PIXEL='711127870519369';
 const META_PIXEL_IDS=['592481416326540',META_ADS_PIXEL];
-// Pixel 711 drops CourseSignup/CodeClassSignup (fbq sends no network request). CourseReg reaches 711.
+// Pixel 711 drops CourseSignup via trackCustom; CompleteRegistration is the working conversion.
 function trackMetaCustom(name){
   const event=String(name||'').trim();
   if(!event||typeof fbq!=='function')return;
@@ -159,8 +159,7 @@ function trackSignupConversion(){
       fbq('trackSingle',META_ADS_PIXEL,'CompleteRegistration');
     }
   }catch(err){console.error(err);}
-  trackMetaCustom('CourseSignup'); // reaches pixel 592 only; 711 blocklists this name
-  trackMetaCustom('CourseReg'); // working alias for pixel 711
+  trackMetaCustom('CourseSignup'); // may only reach pixel 592
 }
 async function ensureUnlocked(uid,data){
   if(data?.access?.unlockedAt)return data.access;

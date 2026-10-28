@@ -5,25 +5,11 @@ const META_PIXEL_IDS = ['592481416326540', META_ADS_PIXEL];
 const TRACK_NAV_DELAY_MS = 400;
 
 /**
- * Pixel 711127870519369 silently drops these exact custom names (fbq never
- * sends a network request for them; confirmed Oct 28 2026). They still reach
- * pixel 592. Use working aliases + standard events for the ads pixel.
+ * Pixel 711127870519369 drops many trackCustom names (fbq sends no network
+ * request). Confirmed Oct 28 2026 for StartCourseClick, BookLiveClassClick,
+ * CourseSignup, and other customs after first use. Standard events still reach
+ * 711 — that is the durable conversion path for ads.
  */
-const BLOCKED_ON_ADS_PIXEL = new Set([
-  'StartCourseClick',
-  'BookLiveClassClick',
-  'CourseSignup',
-  'CodeClassSignup',
-  'WorkshopBooked'
-]);
-
-const CUSTOM_ALIAS = {
-  StartCourseClick: 'StartCourse',
-  BookLiveClassClick: 'BookLiveClass',
-  CourseSignup: 'CourseReg',
-  CodeClassSignup: 'CourseReg'
-};
-
 const STANDARD_FALLBACK = {
   StartCourseClick: 'Lead',
   BookLiveClassClick: 'Schedule',
@@ -64,15 +50,12 @@ function trackCta(name) {
   const event = String(name || '').trim();
   if (!event) return;
 
-  // Always attempt the requested custom name (reaches pixel 592; 711 may drop it).
+  // Requested custom name (may only reach pixel 592).
   trackMetaCustom(event);
 
-  if (BLOCKED_ON_ADS_PIXEL.has(event)) {
-    const alias = CUSTOM_ALIAS[event];
-    if (alias) trackMetaCustom(alias);
-    const standard = STANDARD_FALLBACK[event];
-    if (standard) trackMetaStandard(standard);
-  }
+  // Durable conversion for ads pixel 711.
+  const standard = STANDARD_FALLBACK[event];
+  if (standard) trackMetaStandard(standard);
 }
 
 // Bind tracking first so a later throw never drops CTA events.
