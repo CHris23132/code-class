@@ -269,6 +269,18 @@ input:focus,textarea:focus{outline-color:var(--brand-cyan-hover)}
 .lock-card #access-code{letter-spacing:1px;text-transform:uppercase}
 .lock-card #access-code::placeholder{letter-spacing:0;text-transform:none}
 
+.class-tabs{display:flex;flex-wrap:wrap;gap:4px;width:fit-content;max-width:100%;padding:4px;margin:0 0 22px;background:var(--white);border:1px solid var(--border);border-radius:10px}
+.class-tabs a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:650;color:var(--text)}
+.class-tabs a .icon{width:15px;height:15px}
+.class-tabs a.is-active{background:var(--navy);color:var(--white)}
+.class-tabs a:hover:not(.is-active){background:var(--cyan-soft)}
+.sidebar nav .sidebar-class-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:auto;margin:0 0 6px;padding:4px;background:var(--navy-raised);border:0;border-radius:9px}
+.sidebar nav .sidebar-class-tabs a{justify-content:center;gap:0;padding:9px 6px;border-radius:7px;font-size:11px;font-weight:650;line-height:1.25;text-align:center;color:#c5d5df}
+.sidebar nav .sidebar-class-tabs a:hover{background:rgba(255,255,255,.06);color:var(--white)}
+.sidebar nav .sidebar-class-tabs a.active,.sidebar nav .sidebar-class-tabs a.active:hover{background:var(--brand-cyan);color:var(--navy)}
+.guide-live-note{display:flex;gap:10px;align-items:flex-start;margin:-6px 0 22px;padding:14px 16px;background:var(--cyan-soft);border:1px solid var(--border);border-radius:10px;font-size:13px;line-height:1.6;color:var(--text)}
+.guide-live-note .icon{width:18px;height:18px;color:var(--link);flex:none;margin-top:1px}
+dialog.lesson-modal .class-tabs{margin:16px 24px 0}
 /* Class walkthrough video in lesson modal */
 dialog.lesson-modal{width:min(720px,calc(100vw - 24px))}
 .lesson-video{margin:0 0 22px}
