@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=15">
+  <link rel="stylesheet" href="product.css?v=16">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -750,12 +750,12 @@ const freeFooter = `<footer class="site-footer">
     </div>
   </footer>`;
 
+// Slide 3 stays out of this page: the photo badge names an employer.
 const story = [
-  ['Where I started', 'No money. No job.', 'Just me, a laptop, and a dream of breaking into tech.'],
-  ['Then it clicked', 'Top-rated on Fiverr.', 'Earned enough to take my first real vacation.'],
-  ['Then a startup noticed', 'Flown to San Francisco.', 'My first tech conference. Real investor meetings.'],
-  ['Software paid for this', 'My dream car.', 'Not rented. Not a prop. Mine — bought with software money.'],
-  ['And then', 'Big tech job. She said yes.', 'Full-time at a big tech company, engaged to the love of my life.']
+  [1, 'Where I started', 'No money. No job.', 'Just me, a laptop, and a dream of breaking into tech.'],
+  [2, 'Then it clicked', 'Top-rated on Fiverr.', 'Earned enough to take my first real vacation.'],
+  [4, 'Software paid for this', 'My dream car.', 'Not rented. Not a prop. Mine — bought with software money.'],
+  [5, 'And then', 'Big tech job. She said yes.', 'Full-time at a big tech company, engaged to the love of my life.']
 ];
 
 const freeFaq = [
@@ -767,25 +767,29 @@ const freeFaq = [
 ];
 
 function freeClassPage() {
-  const schedule = attr(JSON.stringify({ slots: fc.slots, timeZone: fc.timeZone, days: `Every ${fc.days.join(' & ')}`, label: 'class' }));
-  const sessionLine = cls => `<p class="session-line${cls ? ` ${cls}` : ''}" data-schedule="${schedule}">Every ${fc.days.join(' &amp; ')} — ${slotList.map(([d, t]) => `${d.slice(0, 3)} ${t.join(' &amp; ')}`).join(', ')} ET</p>`;
-  // Video course is the dominant lime primary; live class is the quieter secondary.
-  const dualCta = (size = 'button-large', meta = true) => `<div class="cta-group cta-two-door">
-            <a class="button ${size}" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
-            <a class="button ${size} button-secondary" href="#booking" data-track="BookLiveClassClick">Book a free live class ${icon('arrow')}</a>
-            ${meta ? `<p class="cta-meta">Video: free · 12 lessons · start anytime · Live: weekends, ${fc.minutes} min</p>` : ''}
+  const kitCta = `<button type="button" class="button button-large" data-kit-checkout data-track="KitCheckoutClick">Get the First App Kit — $27 ${icon('arrow')}</button>`;
+  const freeDoors = `<div class="free-doors">
+            <a class="button button-secondary" href="future-founder-class.html" data-track="StartCourseClick">Start the free video course</a>
+            <a class="button button-secondary" href="#booking" data-track="BookLiveClassClick">Book a free live class</a>
           </div>`;
-  return `${head({ track: "fbq('track', 'ViewContent');", title: 'Free Live Class + Video Course | Code Class', description: 'Book a free live class on weekends, or start now with the free video course — build a real app with a real database, on your phone.', ogTitle: fc.headline, ogDescription: 'Book a free live class, or start now with the video course. Free to start either way.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
-<body class="free-class-page two-door">
+  const kitForm = `<form id="kit-account" class="kit-account" data-mode="signup" hidden>
+            <label data-kit-name>Your name<input name="name" maxlength="60" autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+            <label>Password<input name="password" type="password" required minlength="6" autocomplete="new-password"></label>
+            <label data-kit-role>Role<select name="role"><option value="" selected disabled>Choose your role</option><option>Student</option><option>Founder</option><option>Educator</option><option>Developer</option><option>Designer</option><option>Other</option></select></label>
+            <button class="button button-large" type="submit">Create free account and continue</button>
+            <p class="kit-switch" data-kit-signup-note>Already have an account? <button type="button" id="kit-signin">Sign in</button></p>
+            <p class="kit-switch" data-kit-signin-note hidden>New here? <button type="button" id="kit-signup">Create a free account</button></p>
+          </form>
+          <p class="kit-status" id="kit-status" role="status" hidden></p>`;
+  return `${head({ track: "fbq('track', 'ViewContent');", title: 'First App Kit — $27 | Code Class', description: 'Build your first app tonight. Follow along with every prompt and the starter code included. The First App Kit is $27.', ogTitle: 'Build your first app tonight', ogDescription: 'Follow along. Every prompt is included. Starter code is included. The First App Kit is $27.', image: 'assets/social/free-class.jpg', type: 'website', extra: `  <link rel="canonical" href="${SITE}">\n  <meta property="og:url" content="${SITE}">\n  <link rel="preload" as="image" href="assets/free-class/christopher.webp">\n` })}
+<body class="free-class-page kit-lander">
   ${sprite}
 
   <header class="site-header">
     <div class="wrap header-inner">
       ${logo('#top')}
-      <div class="header-cta-pair">
-        <a class="button button-small" href="future-founder-class.html" data-track="StartCourseClick">Video course</a>
-        <a class="button button-small button-secondary" href="#booking" data-track="BookLiveClassClick">Book live class</a>
-      </div>
+      <button type="button" class="button button-small" data-kit-checkout data-track="KitCheckoutClick">Get the First App Kit — $27</button>
     </div>
   </header>
 
@@ -793,121 +797,162 @@ function freeClassPage() {
     <section class="lp-hero">
       <div class="wrap lp-hero-grid">
         <div class="lp-hero-copy">
-          <span class="eyebrow">Two ways to start — both free</span>
-          <!-- HEADLINE (A/B test): the live H1 lives in freeClass.headline in scripts/products.js. -->
-          <h1>${fc.headline}</h1>
-${fc.altHeadlines.map(([angle, text]) => `          <!-- ALT H1 (${angle}): ${text} -->`).join('\n')}
-          <p class="lead">Build a real app with a real database, on your phone. Book a free live class with me on the weekend — or start now with the video course the moment you’re inspired.</p>
-          ${dualCta('button-large', true)}
-          <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Built &amp; taught by <b>Christopher Walsh</b></span></p>
-          <ul class="proof-strip" aria-label="Christopher’s track record">
-${fc.proof.map(p => `            <li>${icon('check')}${p}</li>`).join('\n')}
-          </ul>
+          <span class="eyebrow">First App Kit</span>
+          <!-- HEADLINE: draft, waiting on Christopher’s approval before this page replaces the live lander. -->
+          <h1>Build your first app tonight.</h1>
+          <!-- ALT H1 (outcome): Your first finished app, built tonight. -->
+          <!-- ALT H1 (mechanism): Follow along, with every prompt and the starter code included. -->
+          <p class="lead">Follow along. Every prompt is included. Starter code is included. You finish with a real app on your phone.</p>
+          <div class="cta-group" id="kit">
+            ${kitCta}
+            ${kitForm}
+          </div>
+          <p class="kit-note">One payment of $27. The video lessons stay free. The kit is the prompts, starter code, templates, and checklists.</p>
+          ${freeDoors}
+          <p class="lp-host"><img src="assets/free-class/christopher.webp" alt="" width="40" height="40"><span>Taught by <b>Christopher Walsh</b></span></p>
         </div>
-        <figure class="lp-photo">
-          <img src="assets/free-class/christopher.webp" alt="Christopher Walsh, your host" width="560" height="552" fetchpriority="high">
-          <figcaption><b>Christopher Walsh</b><span>Live class host · video course</span></figcaption>
-        </figure>
       </div>
     </section>
 
-    <section class="section lp-build" id="build">
-      <div class="wrap">
+    <section class="section lp-story" id="story">
+      <div class="wrap narrow">
         <div class="section-head">
-          <span class="eyebrow">What you’ll build</span>
-          <h2>A real app with accounts, data, and a phone preview.</h2>
-          <p class="lead">Not a toy demo — a working project you can keep growing after you start.</p>
+          <span class="eyebrow">His story</span>
+          <h2>This skill changed his life. The kit is the first step.</h2>
+          <p class="lead">He started on a couch with no money and no job. The kit is that first step — building your first app. His story is the proof. Your result is your own finished app.</p>
         </div>
-        <ul class="lp-cards">
-          <li><h3>Screens you can tap through</h3><p>Design and build the main views of your app, then preview them on the web and on your phone.</p></li>
-          <li><h3>Real sign-in and saved data</h3><p>Connect authentication and a cloud database so people can create accounts and keep their stuff.</p></li>
-          <li><h3>Posts, profiles, and more</h3><p>Wire up the features that make an app feel alive — then prepare a mobile build when you’re ready.</p></li>
+        <ol class="story-strip">
+${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-class/story-${n}.webp" alt="${attr(`${kicker}: ${title} ${text}`)}" width="540" height="960" loading="lazy" decoding="async"></li>`).join('\n')}
+        </ol>
+        <div class="cta-group">${kitCta}</div>
+      </div>
+    </section>
+
+    <section class="section problem" id="problem">
+      <div class="wrap narrow">
+        <h2>Watching is not the same as shipping.</h2>
+        <ul class="pain-list">
+          <li><span class="pain-mark" aria-hidden="true">${icon('x')}</span><p><strong>Tutorial hell.</strong> You watch the video, close the tab, and still have no app.</p></li>
+          <li><span class="pain-mark" aria-hidden="true">${icon('x')}</span><p><strong>Another saved lesson.</strong> The list gets longer. Nothing ships.</p></li>
+          <li><span class="pain-mark" aria-hidden="true">${icon('x')}</span><p><strong>No finished app.</strong> You wanted something real on your phone, and the videos alone never got you there.</p></li>
         </ul>
-        <div style="margin-top:28px">${dualCta('button-large', false)}</div>
       </div>
     </section>
 
     <section class="section curriculum lp-steps" id="how">
-      <div class="wrap">
+      <div class="wrap narrow">
         <div class="section-head">
-          <span class="eyebrow">How it works</span>
-          <h2>Live with me — or start with the video course.</h2>
-          <p class="lead">Same goal either way: a real app on your phone. Pick the path that fits today.</p>
+          <span class="eyebrow">How the kit works</span>
+          <h2>Watch. Follow along. Paste. Finish tonight.</h2>
+          <p class="lead">The time delay is one sitting. The effort is following the steps. Everything you need is already in the kit.</p>
         </div>
-        <ol class="phases three">
-          <li class="phase"><div class="phase-top"><span class="phase-num">Live</span></div><h3>Book a free weekend class</h3><p>${fc.minutes} minutes on Google Meet. I guide you face-to-face while you build.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Video</span></div><h3>Start the 12-lesson course</h3><p>Watch, copy the prompt, build, check it off — progress saves to your free account.</p></li>
-          <li class="phase"><div class="phase-top"><span class="phase-num">Next</span></div><h3>Keep building</h3><p>When you’re ready for 1-on-1 help on your own idea, Build-With-Me is there.</p></li>
+        <ol class="phases">
+          <li class="phase"><div class="phase-top"><span class="phase-num">One</span></div><h3>Watch</h3><p>Open the lesson. The video course stays free.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Two</span></div><h3>Follow along</h3><p>Use the same steps beside the lesson, one at a time.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Three</span></div><h3>Paste the prompt</h3><p>Every build-along prompt is included. Paste it and build.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Four</span></div><h3>Use the starter code</h3><p>Templates and starter code are included, so you are not starting from a blank folder.</p></li>
+          <li class="phase"><div class="phase-top"><span class="phase-num">Five</span></div><h3>Finish on your phone</h3><p>Work through the checklist and leave with a real app on your phone tonight.</p></li>
         </ol>
-        <div style="margin-top:28px">${dualCta('button-large', false)}</div>
       </div>
     </section>
 
-    <section class="section lp-story">
-      <div class="wrap">
+    <section class="section lp-build" id="build">
+      <div class="wrap narrow">
         <div class="section-head">
-          <span class="eyebrow">Why I teach this</span>
-          <h2>I learned by building — not by watching alone.</h2>
-          <p class="lead">Start live with me, or start with the video course — both get you building for real.</p>
+          <span class="eyebrow">The offer</span>
+          <h2>Everything in the First App Kit.</h2>
+          <p class="lead">One decision. No bundle math, and no made-up total.</p>
         </div>
-        <ol class="story-strip">
-${story.map(([kicker, title, text], i) => `          <li><img src="assets/free-class/story-${i + 1}.webp" alt="${attr(`${kicker}: ${title} ${text}`)}" width="540" height="960" loading="lazy" decoding="async"></li>`).join('\n')}
-        </ol>
-        <div style="margin-top:28px">${dualCta('button-large', false)}</div>
+        <ul class="included offer-stack">
+          <li>${icon('check')}<span>The video course</span></li>
+          <li>${icon('check')}<span>All the build-along prompts</span></li>
+          <li>${icon('check')}<span>Starter code</span></li>
+          <li>${icon('check')}<span>Templates</span></li>
+          <li>${icon('check')}<span>Build checklists</span></li>
+          <li>${icon('check')}<span>Your free live class seat, included as a bonus</span></li>
+        </ul>
+        <p class="lead offer-anchor">A bootcamp takes months and costs far more. This is the first step, for $27.</p>
+        <div class="cta-group">${kitCta}</div>
       </div>
     </section>
 
-    <section class="section faq">
+    <section class="section" id="proof">
+      <div class="wrap narrow">
+        <div class="section-head">
+          <span class="eyebrow">Proof</span>
+          <h2>The teacher is the proof. There are no borrowed testimonials.</h2>
+        </div>
+        <ul class="included">
+          <li>${icon('check')}<span>CTO experience</span></li>
+          <li>${icon('check')}<span>Platforms serving millions of users</span></li>
+          <li>${icon('check')}<span>Top-rated seller on Fiverr</span></li>
+          <li>${icon('check')}<span>A dream car bought with software money</span></li>
+          <li>${icon('check')}<span>Full-time at a big tech company</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section problem" id="final">
+      <div class="wrap narrow">
+        <span class="eyebrow">The close</span>
+        <h2>$27 unlocks the first step.</h2>
+        <p class="lead">The kit is the skill and your first finished app. It is the same kind of first step that changed his life. It is the beginning of the path. It is not a job, and it is not a promise of income.</p>
+        <div class="cta-group">${kitCta}</div>
+        ${freeDoors}
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
       <div class="wrap narrow">
         <h2>Questions, answered.</h2>
         <details>
-          <summary>I’ve never written code — can I still start?</summary>
-          <p>Yes. Both the live class and the video course are built for beginners.</p>
+          <summary>I’ve never written code. Is this for me?</summary>
+          <p>Yes. No experience is required. You follow the lesson, paste the prompt, and use the starter code.</p>
         </details>
         <details>
-          <summary>What’s the difference between the live class and the video course?</summary>
-          <p>The live class is a ${fc.minutes}-minute Google Meet on weekends with me guiding you face-to-face. The video course is 12 on-demand lessons you can start anytime.</p>
+          <summary>I don’t have time.</summary>
+          <p>You can follow along tonight. The steps, prompts, starter code, templates, and checklists are included.</p>
         </details>
         <details>
-          <summary>Is it really free?</summary>
-          <p>Yes — no card required to book the live class or to open the video course. Optional paid 1-on-1 Build-With-Me packages exist if you want to build your own app with me later.</p>
+          <summary>Will this get me a job?</summary>
+          <p>No. It will not get you a job, and it will not pay you. It is the first step and a real skill: you build your first app. His story is his. Your outcome on this page is a finished app.</p>
         </details>
-${freeFaq.filter(([q]) => /slot|recording|catch/i.test(q)).map(([q, a]) => `        <details>
-          <summary>${q}</summary>
-          <p>${a}</p>
-        </details>`).join('\n')}
+        <details open>
+          <summary>What if it doesn’t work for me?</summary>
+          <p class="guarantee-placeholder"><strong>PLACEHOLDER — owner approval required.</strong> Christopher has not approved any guarantee. Nothing here promises to return the payment, promises a result, or reverses the risk until he writes the exact terms and says to publish them.</p>
+        </details>
       </div>
     </section>
 
     <section class="section booking" id="booking">
       <div class="wrap">
         <div class="section-head">
-          <p class="lp-repeat">Live with me — weekends</p>
-          <h2>Book a free live class</h2>
-          <p class="booking-flow">Pick your Saturday or Sunday slot below → free, no card required → get your Google Meet link instantly.</p>
-          ${sessionLine('')}
+          <span class="eyebrow">Free, if you are not ready to pay</span>
+          <h2>Book the free live class</h2>
+          <p class="booking-flow">The kit is the decision on this page. If you want the free class instead, pick a time below. Buying the kit does not cancel a class you book.</p>
         </div>
         <div class="booking-card">
           <div class="calendly-inline-widget" data-url="${attr(fc.calendly)}" style="min-width:320px;height:720px;"></div>
         </div>
         <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <p class="fine-print">Small by design: max ${fc.maxSeats} seats per session. Saturdays &amp; Sundays · Eastern Time.</p>
-        <div class="booking-alt">
-          <p>Prefer to start on your own?</p>
-          <a class="button button-large" href="future-founder-class.html" data-track="StartCourseClick">Start now with the video course ${icon('arrow')}</a>
-        </div>
+        <p class="fine-print">Your confirmation still lands on the thank-you page. The kit offer is there again after you book.</p>
       </div>
     </section>
   </main>
 
-  ${freeFooter}
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© Code Class · Made for curious minds. Built for what’s next.</p>
+      <nav class="footer-links" aria-label="Legal"><a href="terms.html">Terms</a>${supportLink}</nav>
+    </div>
+  </footer>
 
-  <div class="sticky-cta sticky-cta-pair" aria-hidden="true">
-    <a class="button" href="future-founder-class.html" data-track="StartCourseClick" tabindex="-1">Video course</a>
-    <a class="button button-secondary" href="#booking" data-track="BookLiveClassClick" tabindex="-1">Book live class</a>
+  <div class="sticky-cta" aria-hidden="true">
+    <button type="button" class="button" data-kit-checkout data-track="KitCheckoutClick" tabindex="-1">Get the First App Kit — $27</button>
   </div>
 
-  <script src="product.js?v=14" defer></script>
+  <script src="product.js?v=15" defer></script>
+  <script type="module" src="kit-checkout.js?v=2"></script>
 </body>
 </html>
 `;
@@ -1259,11 +1304,14 @@ function classPrepPage() {
 `;
 }
 
-for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
-await writeFile('index.html', freeClassPage());
-await writeFile('thanks-free-class.html', thanksFreeClassPage());
-await writeFile('packages.html', packagesPage());
-await writeFile('class-prep.html', classPrepPage());
+const only = process.argv.slice(2);
+const want = name => !only.length || only.includes(name);
+if (want('products')) for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
+if (want('index.html')) await writeFile('index.html', freeClassPage());
+if (want('thanks-free-class.html')) await writeFile('thanks-free-class.html', thanksFreeClassPage());
+if (want('packages.html')) await writeFile('packages.html', packagesPage());
+if (want('class-prep.html')) await writeFile('class-prep.html', classPrepPage());
+if (!only.length) {
 await mkdir('class-prep', { recursive: true });
 await writeFile('class-prep/index.html', `<!doctype html>
 <html lang="en">
@@ -1284,4 +1332,5 @@ await writeFile('courses.html', galleryPage());
 await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
-console.log(`Generated ${products.length} product pages, index.html (the free class), packages.html, class-prep.html (+ /class-prep/), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+}
+console.log(only.length ? `Generated ${only.join(', ')}.` : `Generated ${products.length} product pages, index.html (the free class), packages.html, class-prep.html (+ /class-prep/), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);

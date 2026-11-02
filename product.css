@@ -515,6 +515,26 @@ details p{padding:0 2px 20px;color:var(--text)}
 .kit-switch{font-size:14px;color:#c8d5dd}
 .kit-switch button{background:none;border:0;padding:0;color:var(--lime);font:inherit;font-weight:700;cursor:pointer}
 .kit-status{font-size:14px;color:#fff}
+.kit-lander .lp-hero-grid{max-width:760px}
+.kit-lander .narrow{width:min(760px,100% - 40px)}
+.kit-lander .cta-group{display:grid;gap:12px;justify-items:stretch}
+.kit-lander .cta-group .button-large{width:100%}
+.kit-lander .kit-note,.kit-lander .offer-anchor{margin-top:14px;color:var(--text)}
+.kit-lander .free-doors{display:grid;gap:10px;margin-top:14px}
+.kit-lander .free-doors .button{width:100%}
+.kit-lander .offer-stack{margin:8px 0 18px}
+.kit-lander .guarantee-placeholder{margin:0;padding:12px 14px;border:2px dashed #b45309;border-radius:12px;background:#fff7ed;color:#7c2d12}
+.kit-lander .lp-story .cta-group,.kit-lander .lp-build .cta-group,.kit-lander #final .cta-group{margin-top:22px}
+.kit-lander #final .eyebrow{color:var(--lime)}
+.kit-lander #final .lead{color:#c8d5dd}
+.kit-lander .kit-account{margin-top:4px}
+.kit-lander .kit-account label{color:var(--slate)}
+.kit-lander .kit-account input,.kit-lander .kit-account select{border:1px solid var(--border);background:#fff}
+.kit-lander .kit-status{color:var(--navy)}
+.kit-lander .kit-switch{color:var(--text)}
+.kit-lander .kit-switch button{color:var(--link)}
+.kit-lander .sticky-cta{justify-content:center}
+.kit-lander .sticky-cta .button{width:100%;max-width:420px}
 @media(min-width:720px){.upsell-card{padding:34px 36px}.upsell-sessions{grid-template-columns:1fr 1fr}.upsell-card .button{width:auto}.upsell-card .kit-account .button{width:100%}}
 .button[aria-disabled="true"]{background:#e3e8ea;color:var(--muted);box-shadow:none;cursor:default}
 .button[aria-disabled="true"]:hover{transform:none}

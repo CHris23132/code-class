@@ -27,20 +27,26 @@ for (const page of pages) {
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
-    if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on course CTA');
+    if (!html.includes("fbq('track', 'PageView')")) problems.push("missing PageView");
+    if (!html.includes('data-track="KitCheckoutClick"')) problems.push('missing the First App Kit checkout CTA');
+    if (!html.includes('Get the First App Kit — $27')) problems.push('missing the $27 kit CTA copy');
+    if (!/class="button(?![^"]*button-secondary)[^"]*"[^>]*data-track="KitCheckoutClick"|data-track="KitCheckoutClick"[^>]*class="button(?![^"]*button-secondary)/.test(html)) {
+      problems.push('kit CTA should be the lime primary');
+    }
+    if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on the free course door');
     if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class CTA');
     if (!/Book a free live class/i.test(visible)) problems.push('missing live-class CTA');
-    if (!/Start now with the video course/i.test(visible)) problems.push('missing primary video-course CTA copy');
+    if (!/Start the free video course/i.test(visible)) problems.push('missing the free video-course door');
     if (!/class="button[^"]*\bbutton-secondary\b[^"]*"[^>]*data-track="BookLiveClassClick"/.test(html)) {
       problems.push('live-class CTA should use quieter button-secondary styling');
     }
-    if (!/data-track="StartCourseClick"[^>]*class="button|class="button(?![^"]*button-secondary)[^"]*"[^>]*data-track="StartCourseClick"/.test(html)) {
-      problems.push('course CTA should be the lime primary (not button-secondary)');
+    if (!/class="button[^"]*\bbutton-secondary\b[^"]*"[^>]*data-track="StartCourseClick"/.test(html)) {
+      problems.push('free course door should use quieter button-secondary styling');
     }
     if (!html.includes('href="#booking"') || !html.includes('BookLiveClassClick')) problems.push('missing #booking live-class CTA with BookLiveClassClick');
-    if (!html.includes('future-founder-class.html') || !html.includes('StartCourseClick')) problems.push('missing video-course CTA with StartCourseClick');
-    const courseCtas = [...visible.matchAll(/href="(future-founder-class\.html)"[^>]*>([^<]*)/g)];
-    if (courseCtas.length < 2) problems.push(`found ${courseCtas.length} course CTAs, expected header/hero/how/sticky`);
+    if (!html.includes('future-founder-class.html') || !html.includes('StartCourseClick')) problems.push('missing video-course door with StartCourseClick');
+    if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
+    if (/40\+|five-star|review count/i.test(visible)) problems.push('shows a banned proof number');
     if (!/class="[^"]*\bsticky-cta\b/.test(html)) problems.push('missing the sticky mobile CTA bar');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
     if (!/<section[^>]*id="booking"/.test(html)) problems.push('missing the #booking section');

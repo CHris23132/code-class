@@ -17,6 +17,11 @@ const STANDARD_FALLBACK = {
   CodeClassSignup: 'CompleteRegistration'
 };
 
+// Standard events only. Pixel 711 drops custom names, so the kit click must not add one.
+const STANDARD_ONLY = {
+  KitCheckoutClick: 'Lead'
+};
+
 function fbqReady() {
   return typeof fbq === 'function';
 }
@@ -49,6 +54,12 @@ function trackMetaCustom(name) {
 function trackCta(name) {
   const event = String(name || '').trim();
   if (!event) return;
+
+  const standardOnly = STANDARD_ONLY[event];
+  if (standardOnly) {
+    trackMetaStandard(standardOnly);
+    return;
+  }
 
   // Requested custom name (may only reach pixel 592).
   trackMetaCustom(event);
@@ -187,7 +198,7 @@ if (carousel) {
 
 const sticky = document.querySelector('.sticky-cta');
 if (sticky) {
-  const stickyLinks = [...sticky.querySelectorAll('a')];
+  const stickyLinks = [...sticky.querySelectorAll('a, button')];
   const visible = new Set();
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target);

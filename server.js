@@ -7,7 +7,7 @@ const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascrip
 http.createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    const allowed = ['/styles.css','/app.js','/course.js','/firebase.js','/vendor/firebase.js','/product.css','/product.js','/catalog.js'];
+    const allowed = ['/styles.css','/app.js','/course.js','/firebase.js','/vendor/firebase.js','/product.css','/product.js','/catalog.js','/kit-checkout.js'];
     let requestPath = pathname === '/' ? '/index.html' : pathname;
     if (requestPath === '/class-prep' || requestPath === '/class-prep/') requestPath = '/class-prep.html';
     if (!allowed.includes(requestPath) && !/^\/[a-z0-9-]+\.html$/.test(requestPath) && !/^\/class-prep\/index\.html$/.test(requestPath) && !/^\/assets\/(?:[a-zA-Z0-9_-]+\/)?[a-zA-Z0-9_.-]+$/.test(requestPath)) throw new Error('Not found');

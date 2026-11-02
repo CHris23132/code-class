@@ -28,10 +28,21 @@ function accountMessage(error) {
   })[error?.code] || error?.message || 'Checkout could not start.';
 }
 
+const buyButtons = () => [...new Set([...document.querySelectorAll('[data-kit-checkout], #kit-buy')])];
+
+function trackRegistration() {
+  if (typeof fbq !== 'function') return;
+  try {
+    fbq('track', 'CompleteRegistration');
+    fbq('trackSingle', '711127870519369', 'CompleteRegistration');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function openCheckout() {
-  const button = $('kit-buy');
   const submit = $('kit-account')?.querySelector('[type=submit]');
-  if (button) button.disabled = true;
+  for (const button of buyButtons()) button.disabled = true;
   if (submit) submit.disabled = true;
   status('Opening checkout…');
   try {
@@ -39,7 +50,7 @@ async function openCheckout() {
     location.assign(url);
   } catch (error) {
     status(accountMessage(error));
-    if (button) button.disabled = false;
+    for (const button of buyButtons()) button.disabled = false;
     if (submit) submit.disabled = false;
   }
 }
@@ -58,11 +69,13 @@ function showAccount(mode) {
   form.querySelector('[data-kit-signup-note]').hidden = !signup;
   form.querySelector('[data-kit-signin-note]').hidden = signup;
   form.querySelector('[type=submit]').textContent = signup ? 'Create free account and continue' : 'Sign in and continue';
-  $('kit-buy').hidden = true;
   status('');
+  document.getElementById('kit')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-$('kit-buy')?.addEventListener('click', () => {
+document.addEventListener('click', event => {
+  const buy = event.target.closest?.('[data-kit-checkout], #kit-buy');
+  if (!buy) return;
   if (user) openCheckout();
   else showAccount('signup');
 });
@@ -85,7 +98,9 @@ $('kit-account')?.addEventListener('submit', async event => {
   }
   status(mode === 'signup' ? 'Creating your free account…' : 'Signing in…');
   try {
-    user = mode === 'signup' ? await signUp({ name, email, password }) : await signIn(email, password);
+    const created = mode === 'signup';
+    user = created ? await signUp({ name, email, password }) : await signIn(email, password);
+    if (created) trackRegistration();
     const existing = await loadStudent(user.uid);
     if (!existing) {
       await createStudent(user, { name: name || user.displayName || 'Student', role: role || 'Student' }, {
