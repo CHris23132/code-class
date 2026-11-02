@@ -22,7 +22,8 @@ for (const page of pages) {
   if (!html) { report(page, ['page is missing']); continue; }
   const visible = html.replace(/<!--[\s\S]*?-->/g, '');
   for (const id of funnel.metaPixels) if (!html.includes(`fbq('init', '${id}')`)) problems.push(`missing fbq('init', '${id}') for Meta Pixel ${id}`);
-  const bannedHere = page === 'future-founder.html' ? banned.filter(s => s !== 'refund' && s !== 'Refund') : banned;
+  const refundOk = page === 'future-founder.html' || page === 'index.html' || page === 'thanks-free-class.html';
+  const bannedHere = refundOk ? banned.filter(s => s !== 'refund' && s !== 'Refund') : banned;
   if (page !== 'terms.html') for (const s of bannedHere.filter(s => visible.includes(s))) problems.push(`contains old workshop/paid string "${s}"`);
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
@@ -33,27 +34,17 @@ for (const page of pages) {
     if (!/class="button(?![^"]*button-secondary)[^"]*"[^>]*data-track="KitCheckoutClick"|data-track="KitCheckoutClick"[^>]*class="button(?![^"]*button-secondary)/.test(html)) {
       problems.push('kit CTA should be the lime primary');
     }
-    if (!html.includes('data-track="StartCourseClick"')) problems.push('missing StartCourseClick track on the free course door');
-    if (!html.includes('data-track="BookLiveClassClick"')) problems.push('missing BookLiveClassClick track on live-class CTA');
-    if (!/Book a free live class/i.test(visible)) problems.push('missing live-class CTA');
-    if (!/Start the free video course/i.test(visible)) problems.push('missing the free video-course door');
-    if (!/class="button[^"]*\bbutton-secondary\b[^"]*"[^>]*data-track="BookLiveClassClick"/.test(html)) {
-      problems.push('live-class CTA should use quieter button-secondary styling');
-    }
-    if (!/class="button[^"]*\bbutton-secondary\b[^"]*"[^>]*data-track="StartCourseClick"/.test(html)) {
-      problems.push('free course door should use quieter button-secondary styling');
-    }
-    if (!html.includes('href="#booking"') || !html.includes('BookLiveClassClick')) problems.push('missing #booking live-class CTA with BookLiveClassClick');
-    if (!html.includes('future-founder-class.html') || !html.includes('StartCourseClick')) problems.push('missing video-course door with StartCourseClick');
+    if (html.includes('data-track="StartCourseClick"') || html.includes('data-track="BookLiveClassClick"')) problems.push('lander still has a free-course or free-class click');
+    if (/future-founder-class\.html|calendly\.com|#booking/.test(html)) problems.push('lander still links to the free course or the free class booking');
+    if (/Book a free live class|Start the free video course/i.test(visible)) problems.push('lander still shows a free door CTA');
     if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
     if (/40\+|five-star|review count/i.test(visible)) problems.push('shows a banned proof number');
     if (!/class="[^"]*\bsticky-cta\b/.test(html)) problems.push('missing the sticky mobile CTA bar');
     if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
-    if (!/<section[^>]*id="booking"/.test(html)) problems.push('missing the #booking section');
+    if (/<section[^>]*id="booking"/.test(html)) problems.push('free-class booking section is still on the lander');
     if (!/<section[^>]*id="build"/.test(html)) problems.push('missing the #build section');
     if (!/<section[^>]*id="how"/.test(html)) problems.push('missing the #how section');
-    const widget = html.match(/class="calendly-inline-widget" data-url="([^"]*)"/);
-    if (!widget || widget[1] !== freeClass.calendly) problems.push(`the #booking embed isn't ${freeClass.calendly}`);
+    if (/calendly-inline-widget/.test(html)) problems.push('Calendly widget is still on the lander');
     if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
     if ((html.match(/<!-- ALT H1 \(/g) || []).length < 2) problems.push('expected two alternate H1s as comments for A/B testing');
     if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');

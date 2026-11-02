@@ -554,6 +554,10 @@ details p{padding:0 2px 20px;color:var(--text)}
 .kit-lander .free-doors{display:grid;gap:10px;margin-top:14px}
 .kit-lander .free-doors .button{width:100%}
 .kit-lander .offer-stack{margin:8px 0 18px}
+.kit-terms{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--text)}
+.kit-terms a{color:var(--link);font-weight:700}
+.upsell-card .kit-terms,.kit-lander #final .kit-terms{color:#d5e2ea}
+.upsell-card .kit-terms a,.kit-lander #final .kit-terms a{color:var(--lime)}
 .kit-lander .guarantee{margin:0;padding:12px 14px;border-radius:12px;background:var(--cyan-soft);color:var(--navy);font-weight:600}
 .kit-lander .lp-story .cta-group,.kit-lander .lp-build .cta-group,.kit-lander #final .cta-group{margin-top:22px}
 .kit-lander #final .eyebrow{color:var(--lime)}

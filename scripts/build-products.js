@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=18">
+  <link rel="stylesheet" href="product.css?v=19">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -766,12 +766,12 @@ const freeFaq = [
   ['Will there be a recording?', 'Yes. You get the session recording so you can rebuild your app anytime.']
 ];
 
+const kitGuarantee = `<p class="kit-terms"><strong>7-day money-back guarantee, no questions asked.</strong> If you are not happy within 7 days of purchase, you get your $27 back. Email <a href="mailto:play3dinc@gmail.com">play3dinc@gmail.com</a> to request the refund. Refunds are contact-to-claim and handled manually.</p>`;
+const kitSupport = `<p class="kit-terms"><strong>Email support for 14 days from purchase,</strong> for kit and build questions only: getting set up, a prompt not working, or starter-code issues. Replies within 2 weekdays. Support does not cover building your own custom app. That is what the 1-on-1 packages are for.</p>`;
+const kitAssurance = `${kitGuarantee}${kitSupport}`;
+
 function freeClassPage() {
   const kitCta = `<button type="button" class="button button-large" data-kit-checkout data-track="KitCheckoutClick">Get the First App Kit — $27 ${icon('arrow')}</button>`;
-  const freeDoors = `<div class="free-doors">
-            <a class="button button-secondary" href="future-founder-class.html" data-track="StartCourseClick">Start the free video course</a>
-            <a class="button button-secondary" href="#booking" data-track="BookLiveClassClick">Book a free live class</a>
-          </div>`;
   const kitForm = `<form id="kit-account" class="kit-account" data-mode="signup">
             <label data-kit-name>Name<input name="name" maxlength="60" autocomplete="name" placeholder="Your name"></label>
             <label>Email<input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@email.com"></label>
@@ -822,8 +822,7 @@ function freeClassPage() {
             <li>${icon('check')}<span>Free live class</span></li>
           </ul>
           ${kitForm}
-          <p class="order-note">The video lessons stay free. This payment is the prompts, starter code, templates, and checklists.</p>
-          ${freeDoors}
+          <p class="order-note">The video lessons stay free. This payment is the prompts, starter code, templates, and checklists. A free live class seat is included with the kit.</p>
         </aside>
       </div>
     </section>
@@ -886,6 +885,7 @@ ${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-c
           <li>${icon('check')}<span>Your free live class seat, included as a bonus</span></li>
         </ul>
         <p class="lead offer-anchor">A bootcamp takes months and costs far more. This is the first step, for $27.</p>
+        ${kitAssurance}
         <div class="cta-group">${kitCta}</div>
       </div>
     </section>
@@ -911,8 +911,8 @@ ${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-c
         <span class="eyebrow">The close</span>
         <h2>$27 unlocks the first step.</h2>
         <p class="lead">The kit is the skill and your first finished app. It is the same kind of first step that changed his life. It is the beginning of the path. It is not a job, and it is not a promise of income.</p>
+        ${kitAssurance}
         <div class="cta-group">${kitCta}</div>
-        ${freeDoors}
       </div>
     </section>
 
@@ -933,23 +933,12 @@ ${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-c
         </details>
         <details open>
           <summary>What if it doesn’t work for me?</summary>
-          <p class="guarantee"><strong>I guarantee this will work if you follow the steps.</strong> Watch the lesson, follow along, paste the prompts, use the starter code, and complete the checklists. Do that, and you finish with a real app on your phone. This is not a job, and it is not a promise of income.</p>
+          ${kitGuarantee}
         </details>
-      </div>
-    </section>
-
-    <section class="section booking" id="booking">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">Free, if you are not ready to pay</span>
-          <h2>Book the free live class</h2>
-          <p class="booking-flow">The kit is the decision on this page. If you want the free class instead, pick a time below. Buying the kit does not cancel a class you book.</p>
-        </div>
-        <div class="booking-card">
-          <div class="calendly-inline-widget" data-url="${attr(fc.calendly)}" style="min-width:320px;height:720px;"></div>
-        </div>
-        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <p class="fine-print">Your confirmation still lands on the thank-you page. The kit offer is there again after you book.</p>
+        <details open>
+          <summary>What support do I get?</summary>
+          ${kitSupport}
+        </details>
       </div>
     </section>
   </main>
@@ -1005,6 +994,7 @@ function thanksFreeClassPage() {
             <li>${icon('check')}<span>Build checklists</span></li>
           </ul>
           <p>Buying the kit does not cancel your free class. The video lessons stay free.</p>
+          ${kitAssurance}
           <button type="button" class="button button-large" id="kit-buy">Get the First App Kit — $27</button>
           <form id="kit-account" class="kit-account" data-mode="signup" hidden>
             <label data-kit-name>Your name<input name="name" maxlength="60" autocomplete="name"></label>
