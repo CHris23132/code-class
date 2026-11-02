@@ -78,3 +78,29 @@ export function saveStudent(uid, data) {
 export function unlockStudent(uid, access) {
   return updateDoc(studentRef(uid), { access, updatedAt: serverTimestamp() });
 }
+
+const kitCheckoutUrl = 'https://us-central1-innovationlab-2a7bf.cloudfunctions.net/createClassCheckout';
+
+export async function startKitCheckout() {
+  const user = auth.currentUser;
+  if (!user || user.isAnonymous) {
+    const error = new Error('Sign in before paying.');
+    error.code = 'unauthenticated';
+    throw error;
+  }
+  const token = await user.getIdToken();
+  const response = await fetch(kitCheckoutUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ data: {} })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || payload.error) {
+    const error = new Error(payload.error?.message || 'Checkout could not start.');
+    error.code = String(payload.error?.status || response.status).toLowerCase();
+    throw error;
+  }
+  const url = payload.result?.url;
+  if (!url) throw new Error('Checkout did not return a link.');
+  return url;
+}

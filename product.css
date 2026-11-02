@@ -507,7 +507,15 @@ details p{padding:0 2px 20px;color:var(--text)}
 .upsell-sessions span{color:#c8d5dd;font-size:14px;line-height:1.5}
 .upsell-card .upsell-credit{color:var(--lime);font-weight:700}
 .upsell-card .button{width:100%}
-@media(min-width:720px){.upsell-card{padding:34px 36px}.upsell-sessions{grid-template-columns:1fr 1fr}.upsell-card .button{width:auto}}
+.upsell-card .included{color:#fff}
+.upsell-card .included b{color:#fff}
+.kit-account{display:grid;gap:10px;width:100%}
+.kit-account label{display:grid;gap:4px;font-size:13px;font-weight:700;color:#c8d5dd}
+.kit-account input,.kit-account select{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#fff;color:var(--navy)}
+.kit-switch{font-size:14px;color:#c8d5dd}
+.kit-switch button{background:none;border:0;padding:0;color:var(--lime);font:inherit;font-weight:700;cursor:pointer}
+.kit-status{font-size:14px;color:#fff}
+@media(min-width:720px){.upsell-card{padding:34px 36px}.upsell-sessions{grid-template-columns:1fr 1fr}.upsell-card .button{width:auto}.upsell-card .kit-account .button{width:100%}}
 .button[aria-disabled="true"]{background:#e3e8ea;color:var(--muted);box-shadow:none;cursor:default}
 .button[aria-disabled="true"]:hover{transform:none}
 .fine-print{text-align:center;font-size:13px;color:var(--muted);margin-top:24px}

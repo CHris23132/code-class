@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=14">
+  <link rel="stylesheet" href="product.css?v=15">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -935,7 +935,30 @@ function thanksFreeClassPage() {
         <p class="lead">Your seat is booked. Your Google Meet link and calendar invite are in your confirmation email.</p>
       </div>
       <div class="step-list">
-        <section class="upsell-card" aria-labelledby="upsell-title">
+        <section class="upsell-card" id="kit" aria-labelledby="kit-title">
+          <span class="eyebrow">First App Kit · $27 USD</span>
+          <h2 id="kit-title">Build it with the kit</h2>
+          <p>Your free class stays booked. The kit adds the build-along prompts, starter code, templates, and checklists that go with the free video course.</p>
+          <ul class="included">
+            <li>${icon('check')}<span>Build-along prompts</span></li>
+            <li>${icon('check')}<span>Starter code</span></li>
+            <li>${icon('check')}<span>Templates</span></li>
+            <li>${icon('check')}<span>Build checklists</span></li>
+          </ul>
+          <p>Buying the kit does not cancel your free class. The video lessons stay free.</p>
+          <button type="button" class="button button-large" id="kit-buy">Get the First App Kit — $27</button>
+          <form id="kit-account" class="kit-account" data-mode="signup" hidden>
+            <label data-kit-name>Your name<input name="name" maxlength="60" autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+            <label>Password<input name="password" type="password" required minlength="6" autocomplete="new-password"></label>
+            <label data-kit-role>Role<select name="role"><option value="" selected disabled>Choose your role</option><option>Student</option><option>Founder</option><option>Educator</option><option>Developer</option><option>Designer</option><option>Other</option></select></label>
+            <button class="button button-large" type="submit">Create free account and continue</button>
+            <p class="kit-switch" data-kit-signup-note>Already have an account? <button type="button" id="kit-signin">Sign in</button></p>
+            <p class="kit-switch" data-kit-signin-note hidden>New here? <button type="button" id="kit-signup">Create a free account</button></p>
+          </form>
+          <p class="kit-status" id="kit-status" role="status" hidden></p>
+        </section>
+        <section class="step-card" aria-labelledby="upsell-title">
           <span class="eyebrow">Build-With-Me 1-on-1</span>
           <h2 id="upsell-title">Want to keep going?</h2>
           <p>Bring your idea — a startup, a company tool, whatever — I lay out the plan and we start building it together, live, one-on-one.</p>
@@ -961,6 +984,7 @@ function thanksFreeClassPage() {
   ${freeFooter}
 
   <script src="product.js?v=14" defer></script>
+  <script type="module" src="kit-checkout.js?v=1"></script>
 </body>
 </html>
 `;
