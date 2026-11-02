@@ -554,7 +554,7 @@ details p{padding:0 2px 20px;color:var(--text)}
 .kit-lander .free-doors{display:grid;gap:10px;margin-top:14px}
 .kit-lander .free-doors .button{width:100%}
 .kit-lander .offer-stack{margin:8px 0 18px}
-.kit-lander .guarantee-placeholder{margin:0;padding:12px 14px;border:2px dashed #b45309;border-radius:12px;background:#fff7ed;color:#7c2d12}
+.kit-lander .guarantee{margin:0;padding:12px 14px;border-radius:12px;background:var(--cyan-soft);color:var(--navy);font-weight:600}
 .kit-lander .lp-story .cta-group,.kit-lander .lp-build .cta-group,.kit-lander #final .cta-group{margin-top:22px}
 .kit-lander #final .eyebrow{color:var(--lime)}
 .kit-lander #final .lead{color:#c8d5dd}

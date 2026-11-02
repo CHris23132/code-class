@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=17">
+  <link rel="stylesheet" href="product.css?v=18">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -933,7 +933,7 @@ ${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-c
         </details>
         <details open>
           <summary>What if it doesn’t work for me?</summary>
-          <p class="guarantee-placeholder"><strong>PLACEHOLDER — owner approval required.</strong> Christopher has not approved any guarantee. Nothing here promises to return the payment, promises a result, or reverses the risk until he writes the exact terms and says to publish them.</p>
+          <p class="guarantee"><strong>I guarantee this will work if you follow the steps.</strong> Watch the lesson, follow along, paste the prompts, use the starter code, and complete the checklists. Do that, and you finish with a real app on your phone. This is not a job, and it is not a promise of income.</p>
         </details>
       </div>
     </section>
