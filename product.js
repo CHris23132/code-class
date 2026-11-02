@@ -207,5 +207,5 @@ if (sticky) {
     sticky.setAttribute('aria-hidden', String(!show));
     stickyLinks.forEach(link => { link.tabIndex = show ? 0 : -1; });
   });
-  [document.querySelector('.hero .cta-group, .lp-hero .cta-group'), document.getElementById('offer'), document.getElementById('how'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
+  [document.querySelector('.hero .cta-group, .lp-hero .cta-group, .fold .cta-group'), document.getElementById('offer'), document.getElementById('how'), document.getElementById('booking'), document.getElementById('final'), document.querySelector('.more-courses')].filter(Boolean).forEach(el => observer.observe(el));
 }

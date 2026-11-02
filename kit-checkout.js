@@ -61,14 +61,18 @@ function showAccount(mode) {
   form.hidden = false;
   form.dataset.mode = mode;
   const signup = mode === 'signup';
-  form.querySelector('[data-kit-name]').hidden = !signup;
-  form.querySelector('[data-kit-role]').hidden = !signup;
-  form.querySelector('[name=name]').required = signup;
-  form.querySelector('[name=role]').required = signup;
+  const nameWrap = form.querySelector('[data-kit-name]');
+  const roleWrap = form.querySelector('[data-kit-role]');
+  const nameInput = form.querySelector('[name=name]');
+  const roleInput = form.querySelector('select[name=role]');
+  if (nameWrap) nameWrap.hidden = !signup;
+  if (roleWrap) roleWrap.hidden = !signup;
+  if (nameInput) nameInput.required = signup;
+  if (roleInput) roleInput.required = signup;
   form.querySelector('[name=password]').autocomplete = signup ? 'new-password' : 'current-password';
   form.querySelector('[data-kit-signup-note]').hidden = !signup;
   form.querySelector('[data-kit-signin-note]').hidden = signup;
-  form.querySelector('[type=submit]').textContent = signup ? 'Create free account and continue' : 'Sign in and continue';
+  form.querySelector('[type=submit]').textContent = signup ? 'Get the First App Kit — $27' : 'Sign in and get the kit';
   status('');
   document.getElementById('kit')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -90,7 +94,7 @@ $('kit-account')?.addEventListener('submit', async event => {
   const name = String(data.get('name') || '').trim();
   const email = String(data.get('email') || '').trim();
   const password = String(data.get('password') || '');
-  const role = String(data.get('role') || '');
+  const role = String(data.get('role') || 'Student');
   const mode = form.dataset.mode || 'signup';
   if (mode === 'signup' && (!name || !ROLES.includes(role))) {
     status('Add your name and choose a role.');
