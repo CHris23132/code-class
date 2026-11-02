@@ -54,7 +54,7 @@ const head = ({ title, description, ogTitle, ogDescription, image, type, extra =
 ${extra}  <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="product.css?v=19">
+  <link rel="stylesheet" href="product.css?v=20">
 ${pixel(track)}</head>`;
 
 const logo = href => `<a class="logo" href="${href}" aria-label="Code Class home"><img src="assets/favicon-portrait.png?v=2" alt="" width="30" height="30"><span class="logo-word">codeclass<span>.</span></span></a>`;
@@ -768,7 +768,7 @@ const freeFaq = [
 
 const kitGuarantee = `<p class="kit-terms"><strong>7-day money-back guarantee, no questions asked.</strong> If you are not happy within 7 days of purchase, you get your $27 back. Email <a href="mailto:play3dinc@gmail.com">play3dinc@gmail.com</a> to request the refund. Refunds are contact-to-claim and handled manually.</p>`;
 const kitSupport = `<p class="kit-terms"><strong>Email support for 14 days from purchase,</strong> for kit and build questions only: getting set up, a prompt not working, or starter-code issues. Replies within 2 weekdays. Support does not cover building your own custom app. That is what the 1-on-1 packages are for.</p>`;
-const kitAssurance = `${kitGuarantee}${kitSupport}`;
+const kitAssurance = `<div class="assure">${kitGuarantee}${kitSupport}</div>`;
 
 function freeClassPage() {
   const kitCta = `<button type="button" class="button button-large" data-kit-checkout data-track="KitCheckoutClick">Get the First App Kit — $27 ${icon('arrow')}</button>`;
@@ -820,7 +820,10 @@ function freeClassPage() {
             <li>${icon('check')}<span>Templates</span></li>
             <li>${icon('check')}<span>Checklists</span></li>
             <li>${icon('check')}<span>Free live class</span></li>
+            <li>${icon('check')}<span>7-day money-back</span></li>
+            <li>${icon('check')}<span>14-day email support</span></li>
           </ul>
+          ${kitAssurance}
           ${kitForm}
           <p class="order-note">The video lessons stay free. This payment is the prompts, starter code, templates, and checklists. A free live class seat is included with the kit.</p>
         </aside>
@@ -838,6 +841,7 @@ function freeClassPage() {
 ${story.map(([n, kicker, title, text]) => `          <li><img src="assets/free-class/story-${n}.webp" alt="${attr(`${kicker}: ${title} ${text}`)}" width="540" height="960" loading="lazy" decoding="async"></li>`).join('\n')}
         </ol>
         <div class="cta-group">${kitCta}</div>
+        ${kitAssurance}
       </div>
     </section>
 
