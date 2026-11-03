@@ -161,6 +161,20 @@ function trackSignupConversion(){
   }catch(err){console.error(err);}
   trackMetaCustom('CourseSignup'); // may only reach pixel 592
 }
+function trackKitPurchase(){
+  try{
+    const params=new URLSearchParams(location.search);
+    if(params.get('checkout')!=='success')return;
+    const sessionId=params.get('session_id')||'';
+    if(!/^cs_(live|test)_/.test(sessionId))return;
+    const key='cc-kit-purchase:'+sessionId;
+    if(sessionStorage.getItem(key)==='1')return;
+    if(typeof fbq!=='function')return;
+    fbq('trackSingle',META_ADS_PIXEL,'Purchase',{value:27,currency:'USD'},{eventID:sessionId});
+    sessionStorage.setItem(key,'1');
+  }catch(err){console.error(err);}
+}
+trackKitPurchase();
 async function ensureUnlocked(uid,data){
   if(data?.access?.unlockedAt)return data.access;
   const access=accessRecord(data?.access?.source||'signup');

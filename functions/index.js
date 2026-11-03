@@ -3,11 +3,13 @@ import { defineSecret, defineString } from 'firebase-functions/params';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import Stripe from 'stripe';
+import { META_CAPI_SECRET, sendKitPurchase } from './meta-purchase.js';
 
 initializeApp();
 
 const stripeSecret = defineSecret('STRIPE_SECRET_KEY');
 const webhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
+const metaCapiToken = defineSecret(META_CAPI_SECRET);
 const priceCents = defineString('CLASS_PRICE_CENTS');
 const siteOrigin = defineString('CLASS_SITE_ORIGIN', { default: 'https://torontoinnovationlab.com' });
 
@@ -55,7 +57,7 @@ export const createClassCheckout = onCall({ region, secrets: [stripeSecret] }, a
   return { url: session.url };
 });
 
-export const stripeWebhook = onRequest({ region, secrets: [stripeSecret, webhookSecret], invoker: 'public' }, async (req, res) => {
+export const stripeWebhook = onRequest({ region, secrets: [stripeSecret, webhookSecret, metaCapiToken], invoker: 'public' }, async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).send('Method not allowed');
     return;
@@ -84,6 +86,12 @@ export const stripeWebhook = onRequest({ region, secrets: [stripeSecret, webhook
           },
           updatedAt: FieldValue.serverTimestamp()
         }, { merge: true });
+      }
+      try {
+        const purchase = await sendKitPurchase(session, { token: metaCapiToken.value(), origin: siteOrigin.value() });
+        if (!purchase.sent) console.error('Meta Purchase CAPI not sent', purchase.reason || purchase.status || '');
+      } catch {
+        console.error('Meta Purchase CAPI error');
       }
     }
   }
