@@ -3,74 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free webinar — build your first app | Code Class</title>
-  <meta name="description" content="Free 20-minute webinar on Saturdays at 2:00 PM ET. Walk through the free course, then see the $299 Build-With-Me sprint: your app, built with Christopher, in 3–5 sessions.">
+  <title>Free 1-on-1 info call — build your first app | Code Class</title>
+  <meta name="description" content="Book a free 20-minute 1-on-1 info call. Scope your app idea, then build the full app with Christopher in 5 Build-With-Me sessions for $299.">
   <link rel="canonical" href="https://torontoinnovationlab.com/">
   <meta property="og:url" content="https://torontoinnovationlab.com/">
-  <meta property="og:title" content="Build your own working app in 3–5 sessions">
-  <meta property="og:description" content="Free 20-minute webinar. Then a $299 sprint that builds your app with you.">
+  <meta property="og:title" content="Build your own full app in 5 sessions with Build-With-Me">
+  <meta property="og:description" content="Free 20-minute 1-on-1 info call. The $299 build is 5 sessions, done with you.">
   <meta property="og:image" content="https://torontoinnovationlab.com/assets/free-class/christopher.webp">
   <link rel="icon" type="image/png" href="assets/favicon-portrait.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--ink:#0b1c2e;--slate:#3d5568;--lime:#ddfb70;--lime-deep:#c6eb4e;--paper:#f3f6f4;--line:#d5e0dc;--link:#0b6e80}
+    :root{
+      --bg:#020202;
+      --text:#ffffff;
+      --body:#b5b5b5;
+      --muted:#9ca3af;
+      --footer:#848484;
+      --banner:#f46262;
+      --heading:#ff4c4c;
+      --cta:#ff4444;
+      --card:#3d2828;
+    }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:18px;line-height:1.5}
+    body{margin:0;background:#000;color:var(--body);font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:18px;line-height:1.55}
     img{max-width:100%;display:block}
-    a{color:var(--link)}
+    a{color:var(--heading)}
     h1,h2,h3,p{margin:0}
-    h1,h2,h3{font-family:Manrope,system-ui,sans-serif;letter-spacing:-.03em;line-height:1.05;overflow-wrap:anywhere}
-    .topbar{background:var(--ink);color:#fff;text-align:center;padding:10px 16px;font-size:14px;font-weight:700;line-height:1.35}
-    .wrap{width:min(760px,calc(100% - 32px));margin:0 auto}
-    header.site{padding:14px 0}
-    .logo{color:var(--ink);font-weight:800;text-decoration:none;font-family:Manrope,sans-serif;font-size:20px}
-    .logo span{color:#1a9a3a}
-    .hero{padding:8px 0 28px}
-    .eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--link);margin-bottom:10px}
-    h1{font-size:clamp(36px,9vw,58px);margin:0 0 12px}
-    .sub{font-size:20px;color:var(--slate);margin:0 0 18px}
-    .vsl{position:relative;aspect-ratio:16/9;border-radius:18px;background:radial-gradient(circle at 30% 20%,#16324a,var(--ink) 62%);color:#fff;display:grid;place-items:center;text-align:center;padding:20px;box-shadow:0 18px 40px rgba(11,28,46,.18)}
-    .play{width:74px;height:74px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-size:28px;margin:0 auto 12px}
-    .vsl p{font-size:15px;max-width:36ch}
-    .vsl code{color:var(--lime);font-size:13px;overflow-wrap:anywhere}
-    .caption{font-size:14px;color:var(--slate);margin:10px 0 0}
-    .cta{display:flex;align-items:center;justify-content:center;min-height:64px;margin-top:16px;padding:16px 22px;border-radius:14px;background:var(--lime);color:var(--ink);text-decoration:none;font-family:Manrope,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;box-shadow:0 10px 24px rgba(180,210,60,.35)}
-    .cta:hover{background:var(--lime-deep)}
-    .after{font-size:15px;color:var(--slate);margin-top:10px}
-    .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding:0;list-style:none}
-    .facts li{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:14px;font-weight:700}
-    section{padding:28px 0}
-    section h2{font-size:clamp(28px,7vw,40px);margin-bottom:12px}
-    .card{background:#fff;border-radius:18px;padding:16px 16px 6px;border:1px solid var(--line)}
-    .card article,.stack li,.split div{padding:12px 0;border-top:1px solid var(--line)}
-    .card article:first-of-type,.stack li:first-child,.split div:first-child{border-top:0}
-    .host{display:flex;gap:12px;align-items:center;margin-top:14px}
-    .host img{width:64px;height:64px;border-radius:50%;object-fit:cover}
-    .stack{list-style:none;padding:0;margin:0}
-    .stack strong,.card strong{display:block}
-    .price{background:var(--ink);color:#fff;border-radius:22px;padding:22px 18px}
-    .price h2{color:#fff}
-    .price .was{color:#c5d4df;font-size:18px}
-    .price .now{font-family:Manrope,sans-serif;font-size:72px;line-height:.9;letter-spacing:-.04em;margin:8px 0}
-    .price .now span{font-size:22px;letter-spacing:0}
-    .split{display:grid;gap:12px}
-    .yes,.no{background:#fff;border-radius:18px;padding:16px;border:1px solid var(--line)}
-    .no{background:#fff6f4}
-    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:8px}
-    summary{font-weight:800;cursor:pointer}
-    details p{margin-top:8px;color:var(--slate)}
-    .placeholder{font-weight:700;color:#8a4b00}
-    .ps{background:#fff;border-left:6px solid var(--lime);padding:16px;border-radius:0 16px 16px 0}
-    footer{padding:28px 0 96px;color:var(--slate);font-size:14px}
-    .sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(11,28,46,.96)}
-    .sticky .cta{margin:0}
+    h1,h2,h3{color:var(--heading);font-weight:800;letter-spacing:-.03em;line-height:1.05;text-transform:uppercase;overflow-wrap:anywhere}
+    .banner{position:sticky;top:0;z-index:30;background:var(--banner);color:#fff;text-align:center;padding:12px 16px;font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.35}
+    .rule{height:12px;background:var(--banner)}
+    .wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+    section{padding:36px 0}
+    .hero{padding-top:18px}
+    .eyebrow{color:#fff;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+    h1{font-size:clamp(34px,6vw,56px);color:#fff;margin-bottom:14px}
+    h1 span{color:var(--heading)}
+    h2{font-size:clamp(30px,5vw,44px);margin-bottom:14px}
+    h3{font-size:clamp(22px,3vw,28px);color:#fff;margin-bottom:8px}
+    .sub{color:var(--muted);font-size:18px;font-style:italic;margin-bottom:14px}
+    .vsl{position:relative;aspect-ratio:16/9;border-radius:12px;background:radial-gradient(circle at 30% 20%,#2a1212,#101010 62%);color:#fff;display:grid;place-items:center;text-align:center;padding:20px;border:1px solid rgba(255,255,255,.12)}
+    .vsl video{width:100%;height:100%;object-fit:cover;border-radius:12px;background:#000}
+    .play{width:84px;height:84px;border-radius:50%;background:var(--cta);display:grid;place-items:center;margin:0 auto 14px;box-shadow:0 0 28px rgba(255,68,68,.55)}
+    .play i{display:block;width:0;height:0;margin-left:6px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff}
+    .vsl p{color:#fff;font-size:16px;max-width:36ch;margin:0 auto}
+    .vsl code{display:block;margin-top:8px;color:var(--heading);font-size:14px;overflow-wrap:anywhere}
+    .caption{color:var(--muted);font-size:15px;font-style:italic;margin-top:8px}
+    .cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:76px;margin-top:18px;padding:22px 20px;border-radius:12px;background:var(--cta);color:#fff;text-align:center;text-decoration:none;font-weight:800;font-size:clamp(18px,2.4vw,22px);letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 28px rgba(255,68,68,.4)}
+    .cta:hover{background:#ff5a5a}
+    .after{color:var(--muted);font-size:16px;font-style:italic;margin-top:12px}
+    .checks{list-style:none;padding:0;margin:18px 0 0}
+    .checks li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;color:#fff;font-weight:600}
+    .checks i{color:var(--cta);font-style:normal;font-weight:800;line-height:1.4}
+    .lead{font-size:20px;color:#e8e8e8;margin-bottom:12px}
+    .pain{list-style:none;padding:0;margin:0}
+    .pain li{padding:14px 0;border-top:1px solid rgba(255,255,255,.12);color:#ddd}
+    .pain li:first-child{border-top:0}
+    .pain strong{display:block;color:#fff}
+    .textlink{font-weight:700}
+    .host{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;margin:18px 0}
+    .host img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid var(--cta)}
+    .host p{margin:0;color:#fff;font-weight:700}
+    .offer{background:linear-gradient(180deg,#2a1212,#1a0a0a);border-radius:18px;padding:18px}
+    .offer-card{background:rgba(61,40,40,.92);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:8px 18px 18px}
+    .price{margin-top:8px}
+    .compare{color:#ddd;font-size:18px}
+    .compare b{color:var(--heading)}
+    .now{color:#fff;font-weight:800;font-size:clamp(72px,12vw,104px);line-height:.85;letter-spacing:-.05em;margin:12px 0}
+    .now span{display:block;color:var(--heading);font-size:18px;letter-spacing:.08em;margin-bottom:6px}
+    .split{display:grid;gap:14px}
+    .yes,.no{border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,.14)}
+    .yes{background:#141414}
+    .no{background:#1a0a0a}
+    .yes h3,.no h3{font-size:22px}
+    details{background:#121212;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;margin-top:10px}
+    summary{color:#fff;font-weight:800;cursor:pointer}
+    details p{margin-top:8px;color:var(--muted)}
+    .open{font-style:italic}
+    .ps{border-left:6px solid var(--cta);padding:4px 0 4px 16px}
+    footer{padding:28px 0 110px;color:var(--footer);font-size:14px;text-align:center}
+    footer a{color:var(--footer)}
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.94);border-top:1px solid rgba(255,68,68,.45);transform:translateY(110%)}
+    .sticky.show{transform:none}
+    .sticky .cta{margin:0;min-height:52px;padding:12px 14px}
     @media(min-width:800px){
       .sticky{display:none}
       footer{padding-bottom:36px}
       .split{grid-template-columns:1fr 1fr}
+      .cta{padding:28px 22px}
     }
   </style>
   <script>
@@ -88,156 +110,199 @@
   </script>
 </head>
 <body>
-  <div class="topbar">Free 20-minute webinar — how to actually build your first app.</div>
-  <header class="site"><div class="wrap"><a class="logo" href="https://torontoinnovationlab.com">codeclass<span>.</span></a></div></header>
+  <div class="banner">Free 1-on-1 info call — how to actually build your first app.</div>
 
   <main>
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow">For people with an app idea who are tired of tutorials that never ship</p>
-        <h1>Build your own working app in 3–5 sessions with [HERO_MECHANISM_NAME].</h1>
-        <p class="sub">A free webinar shows you the path through the course. The build itself is the part this page is leading you toward.</p>
-        <div class="vsl" role="img" aria-label="Video slot waiting for the owner recording">
+        <h1>Build your own full app in 5 sessions with <span>Build-With-Me.</span></h1>
+        <p class="sub">A free 20-minute 1-on-1 call scopes your idea. The build itself is 5 sessions with me, on your app.</p>
+        <div class="vsl" data-video="[VSL_VIDEO_URL]" role="img" aria-label="Video slot waiting for the owner recording">
           <div>
-            <div class="play" aria-hidden="true">▶</div>
-            <p>The recording is not on this page yet.<br><code>[VSL_VIDEO_URL]</code></p>
+            <div class="play" aria-hidden="true"><i></i></div>
+            <p>The recording is not on this page yet.<code>[VSL_VIDEO_URL]</code></p>
           </div>
         </div>
-        <p class="caption">The video will cover the free webinar, the free course, and the $299 sprint that builds your app with Christopher.</p>
-        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
-        <p class="after">Click, and you land on the booking page. Pick a Saturday at 2:00 PM ET. The webinar is free and lasts 20 minutes. Saturdays repeat, with no end date. The first one is Saturday, November 7, 2026, 2:00–2:20 PM ET. 30 seats per Saturday.</p>
-        <ul class="facts" aria-label="What is true about the webinar">
-          <li>Free webinar</li>
-          <li>20 minutes</li>
-          <li>No experience needed</li>
-          <li>A real app, with a real database</li>
-          <li>30 seats per Saturday</li>
+        <p class="caption">The video covers the free call, the free course, and the $299 build.</p>
+        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
+        <p class="after">You land on the booking page. Pick an open time. The call is free, 1-on-1, and 20 minutes. Nothing is charged on this page.</p>
+        <ul class="checks">
+          <li><i>✓</i><span>Free 1-on-1 call</span></li>
+          <li><i>✓</i><span>20 minutes</span></li>
+          <li><i>✓</i><span>No experience needed</span></li>
+          <li><i>✓</i><span>A real app with a real database</span></li>
         </ul>
       </div>
     </section>
 
-    <section>
-      <div class="wrap">
-        <h2>He started with no money and no job.</h2>
-        <p>Christopher Walsh taught himself to build apps. That skill changed his life. He now builds for platforms serving millions of users. He teaches the shortcut so you are not left alone with a pile of tutorials.</p>
-        <p class="host"><img src="assets/free-class/christopher.webp" alt="Christopher Walsh" width="64" height="64"><span><b>Christopher Walsh</b><br>He builds the app with you. His story is his. Your result on this page is a working app.</span></p>
-      </div>
-    </section>
+    <div class="rule"></div>
 
     <section>
       <div class="wrap">
-        <h2>Watching is not the same as shipping.</h2>
-        <div class="card">
-          <article><strong>The course sits unwatched.</strong> You save it. You mean to start. The tab stays closed.</article>
-          <article><strong>Tutorials have no plan.</strong> You watch another lesson and still do not know the next click.</article>
-          <article><strong>Setup is where people stall.</strong> The editor, the phone preview, the database. Alone, that is where most builds stop.</article>
-          <article><strong>There is no one in the room.</strong> A question sits for days. The app stays an idea.</article>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <h2>The webinar is the walkthrough. The sprint is the build.</h2>
-        <p>The <a href="https://torontoinnovationlab.com/future-founder-class.html">free video course</a> stays free. On the webinar, Christopher walks through how to use it, live, so it does not sit unwatched. You see what to build first and what to skip. You leave knowing your next step, even if you never buy the sprint.</p>
-        <p>The method has a name for you to approve: <strong>[HERO_MECHANISM_NAME]</strong>. It is not a secret technology. It is his build model: the free course for the path, a live walkthrough so you actually start, then a short done-with-you sprint so the app gets finished with him in the room. AI speeds the typing. He keeps the build on a real app, with a real database, on your idea.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <h2>Twenty minutes. Three things. Then you know your next step.</h2>
-        <div class="card">
-          <article><strong>1. The fastest path through the free course.</strong> Which lessons matter first, and which ones can wait.</article>
-          <article><strong>2. A live look at idea to working screens.</strong> How an app moves forward with AI, on the starter model, without you guessing the next prompt.</article>
-          <article><strong>3. The $299 sprint, including who it is for.</strong> Sessions, hours, scope, and the line where a bigger build becomes a separate engagement.</article>
-        </div>
-        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
-        <p class="after">After you click, you choose a Saturday seat. 30 seats per Saturday. 2:00 PM ET. Free. 20 minutes.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <h2>Here is what $299 actually buys.</h2>
-        <ul class="stack card">
-          <li><strong>Your full app, built with him.</strong> Not notes. A working app on your idea.</li>
-          <li><strong>3–5 done-with-you sessions.</strong> He is in the build with you. You are not handed a video and left alone.</li>
-          <li><strong>3–6 hours total.</strong> Short on purpose. This is a sprint, not an open-ended project.</li>
-          <li><strong>His AI-accelerated build model.</strong> AI does the fast drafting. He keeps the app on the rails.</li>
-          <li><strong>Starter code and templates from the free course.</strong> You start from the course path, not a blank folder.</li>
-          <li><strong>A hard scope.</strong> One core app idea, on the starter model, with the core screens and features you agree in session 1. Anything past that scope is a separate engagement.</li>
+        <h2>Tutorials alone never ship the app.</h2>
+        <p class="sub">The lesson gets saved. The setup stalls. Nobody is there when you get stuck.</p>
+        <ul class="pain">
+          <li><strong>The course sits unwatched.</strong> You meant to build. The tab is still open.</li>
+          <li><strong>There is no plan.</strong> Another tutorial does not tell you what to build first.</li>
+          <li><strong>Setup stops you.</strong> The first error arrives before the first screen.</li>
+          <li><strong>You are alone in the room.</strong> No one scopes the idea with you.</li>
         </ul>
       </div>
     </section>
 
+    <div class="rule"></div>
+
     <section>
       <div class="wrap">
+        <h2>A free call, a free course, and a plan for your idea.</h2>
+        <p class="sub">You stop guessing what to build first. You leave the call knowing the next step.</p>
+        <p class="lead">The free video course stays free. The First App Kit comes with the call. On the call I scope your idea, show what to build first, and what to skip.</p>
+        <p>You can walk away after the call and still know your next step. The $299 build is a decision you make with me, not a button on this page.</p>
+        <p>The lessons themselves stay on <a class="textlink" href="https://torontoinnovationlab.com/future-founder-class.html">the free video course</a>. That link is the course. It is not the booking.</p>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <div class="wrap">
+        <h2>Twenty minutes. Your idea, the build, and the $299 offer.</h2>
+        <p class="sub">The call has three parts. You talk about your app, not a generic demo.</p>
+        <ul class="checks">
+          <li><i>✓</i><span>Your app idea, scoped live.</span></li>
+          <li><i>✓</i><span>A live look at how an app goes from an idea to working screens with AI.</span></li>
+          <li><i>✓</i><span>The $299 build, explained, including the scope and who it is for.</span></li>
+        </ul>
+        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
+        <p class="after">Same booking page. You choose a time that is open. Free. 20 minutes. 1-on-1.</p>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <div class="wrap">
+        <h2>He started with nothing. He builds for platforms serving millions of users.</h2>
+        <p class="sub">The shortcut is a person and a method. It is not another video you finish alone.</p>
+        <div class="host">
+          <img src="assets/free-class/christopher.webp" alt="Christopher Walsh">
+          <p>Christopher Walsh</p>
+        </div>
+        <p>He started with no money and no job. He taught himself to build apps. That skill changed his life. He now builds apps for platforms serving millions of users.</p>
+        <p>That is why the call is with him, on your idea. His story is his. Your result here is a working app you build with him. This page does not promise a job, income, or clients.</p>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <div class="wrap">
+        <h2>Five sessions. Your app. Built with me.</h2>
+        <p class="sub">Build-With-Me is your idea, the free course starter model, and live sessions with me. It is not secret technology.</p>
+        <div class="offer">
+          <div class="offer-card">
+            <ul class="checks">
+              <li><i>✓</i><span>Exactly 5 done-with-you sessions. You build in the session. You are not left with a video.</span></li>
+              <li><i>✓</i><span>Your full app, built together, on your idea.</span></li>
+              <li><i>✓</i><span>AI-accelerated Build-With-Me. Your idea, the starter model, and live build sessions.</span></li>
+              <li><i>✓</i><span>Starter code and templates from the free course, so session 1 is not a blank folder.</span></li>
+              <li><i>✓</i><span>The First App Kit, free. It was $27, now free: prompts, starter code, templates, and checklists around the free video lessons. Free access is included when you book. You get it on the call or by email.</span></li>
+            </ul>
+            <p class="after">One core app idea. The starter model. The core screens and features you agree in session 1. Anything beyond that scope is a separate engagement.</p>
+            <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <div class="wrap">
+        <h2>The long build is $997. This one is $299.</h2>
+        <p class="sub">The gap is the length. The short build is faster because it is AI-accelerated. It is not a sale that ends tonight.</p>
         <div class="price">
-          <h2>The long build is $997. This one is shorter.</h2>
-          <p class="was">The full Build-With-Me is 8 sessions and $997. The sprint is $299 because it is shorter, faster, and AI-accelerated. That is the whole gap. There is no made-up higher price.</p>
-          <p class="now">$299 <span>sprint</span></p>
-          <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
-          <p class="after">The sprint is explained on the webinar. This button only books the free 20 minutes. It does not take payment.</p>
+          <p class="compare">The full Build-With-Me is 8 sessions and <b>$997</b>. This build is <b>$299</b> because it is shorter, faster, and AI-accelerated.</p>
+          <p class="now"><span>THE BUILD</span>$299</p>
+          <p>Five sessions. Your full app, done with me, inside the scope you agree in session 1. The button below books the free call. It does not take the $299.</p>
+          <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
+          <p class="after">After you click, you pick a time. The $299 is talked through on the call. It is not charged here.</p>
         </div>
       </div>
     </section>
 
+    <div class="rule"></div>
+
     <section>
       <div class="wrap">
-        <h2>Read this before you book.</h2>
+        <h2>For people who will build. Not for an unlimited app.</h2>
+        <p class="sub">The call is to scope a real build. It is not an open hour for browsing.</p>
         <div class="split">
-          <div class="yes"><strong>For you if</strong><p>You have an app idea and you want it built fast, with an expert in the sessions, not another month of videos alone.</p></div>
-          <div class="no"><strong>Not for you if</strong><p>You only want free content and you will not build. Or you want an unlimited, sprawling app for $299. That is a different engagement.</p></div>
+          <div class="yes">
+            <h3>For</h3>
+            <p>You have an app idea and you want it built fast, with expert help, in 5 sessions.</p>
+          </div>
+          <div class="no">
+            <h3>Not for</h3>
+            <p>You only want free content and you will never build. You want an unlimited, sprawling app for $299.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="rule"></div>
+
     <section>
       <div class="wrap">
-        <h2>Questions that almost stop the booking.</h2>
-        <details open>
+        <h2>The questions that almost stop the booking.</h2>
+        <p class="sub">Straight answers. Where an answer is not published, the page says so.</p>
+        <details>
           <summary>Do I need experience?</summary>
           <p>No.</p>
         </details>
         <details>
-          <summary>How long does the sprint take?</summary>
-          <p>3–5 sessions. 3–6 hours total.</p>
+          <summary>How long does the $299 build take?</summary>
+          <p>Exactly 5 sessions. A length for each session is not stated on this page.</p>
         </details>
         <details>
-          <summary>What do I need before the webinar?</summary>
+          <summary>What do I need before the call?</summary>
           <p>Nothing. An app idea helps.</p>
         </details>
         <details>
           <summary>What if I have no idea yet?</summary>
-          <p class="placeholder">[OWNER_ANSWER]</p>
+          <p class="open">That answer is not published on this page. Ask it on the call.</p>
         </details>
         <details>
-          <summary>What happens after the sprint?</summary>
-          <p class="placeholder">[OWNER_ANSWER]</p>
+          <summary>What happens after the build?</summary>
+          <p>The 5 sessions cover the one core app you agree in session 1. Polish and support after that are a separate engagement.</p>
         </details>
         <details>
-          <summary>What do we build with?</summary>
+          <summary>What tech do we build with?</summary>
           <p>The same stack as the free course: Cursor, Expo, and Firebase, including a real database.</p>
         </details>
       </div>
     </section>
 
+    <div class="rule"></div>
+
     <section>
       <div class="wrap">
-        <h2>Book the free webinar. Leave with your next step.</h2>
-        <p>Your own working app, built with Christopher, in 3–5 sessions — if you want the sprint after you see it. The booking itself is the free 20-minute walkthrough.</p>
-        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
-        <p class="after">Free. 20 minutes. Saturdays at 2:00 PM ET. 30 seats per Saturday.</p>
+        <h2>Book the free call. Build the app in 5 sessions.</h2>
+        <p class="sub">Your idea, scoped with me. Then the build, if you want it.</p>
+        <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
+        <p class="after">Free. 20 minutes. 1-on-1.</p>
       </div>
     </section>
+
+    <div class="rule"></div>
 
     <section>
       <div class="wrap">
         <div class="ps">
-          <h2>PS — the short version.</h2>
-          <p>The free course is already there. Most people never finish it alone. The webinar is Christopher walking you through it, live, on Saturday at 2:00 PM ET. On that call he also explains the $299 sprint: 3–5 sessions, 3–6 hours, your app built with him, one core idea, and a clear line where extra scope is a separate engagement. The longer 8-session build is $997. Staying in unwatched tutorials costs the weeks you do not get back.</p>
-          <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
+          <h3>PS. The whole offer, if you skipped down here.</h3>
+          <p>Book a free 20-minute 1-on-1 call. On it, your idea gets scoped, you see the path from idea to working screens, and you hear the $299 build: exactly 5 sessions, your full app, done with me, on the scope you agree in session 1. The longer build is 8 sessions and $997. The First App Kit is included free when you book. Staying with unwatched tutorials costs the time you keep spending while the app is still unbuilt.</p>
+          <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
         </div>
       </div>
     </section>
@@ -246,15 +311,35 @@
   <footer>
     <div class="wrap">
       <p>Code Class · <a href="mailto:play3dinc@gmail.com">play3dinc@gmail.com</a></p>
+      <p><a href="https://torontoinnovationlab.com">torontoinnovationlab.com</a></p>
     </div>
   </footer>
 
   <div class="sticky">
-    <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-webinar-build-your-first-app">Book My Free Webinar</a>
+    <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
   </div>
 
   <script>
   (function () {
+    var slot = document.querySelector('.vsl');
+    var url = slot && slot.getAttribute('data-video');
+    if (slot && url && /^https?:\/\//.test(url)) {
+      var video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = 'none';
+      video.src = url;
+      slot.textContent = '';
+      slot.appendChild(video);
+    }
+    var sticky = document.querySelector('.sticky');
+    var firstCta = document.querySelector('a.cta');
+    var placeSticky = function () {
+      if (!sticky || !firstCta) return;
+      sticky.classList.toggle('show', firstCta.getBoundingClientRect().bottom < 8);
+    };
+    placeSticky();
+    window.addEventListener('scroll', placeSticky, { passive: true });
     var pixel = '711127870519369';
     document.addEventListener('click', function (event) {
       if (event.defaultPrevented || event.button !== 0) return;

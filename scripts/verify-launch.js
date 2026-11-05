@@ -28,12 +28,13 @@ for (const page of pages) {
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'PageView')")) problems.push('missing PageView');
-    if (!html.includes("fbq('track', 'Schedule')")) problems.push('missing Schedule on the webinar CTA');
-    if (!html.includes('https://calendly.com/play3dinc/free-webinar-build-your-first-app')) problems.push('missing the webinar booking URL');
-    if (!html.includes('Book My Free Webinar')) problems.push('missing the webinar CTA');
+    if (!html.includes("fbq('track', 'Schedule')")) problems.push('missing Schedule on the info-call CTA');
+    if (!html.includes('https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app')) problems.push('missing the info-call booking URL');
+    if (html.includes('free-webinar-build-your-first-app') || html.includes('Book My Free Webinar')) problems.push('homepage still books the webinar');
+    if (!html.includes('Book My Free 1-on-1 Info Call')) problems.push('missing the info-call CTA');
     if (html.includes('KitCheckoutClick') || html.includes('Get the First App Kit')) problems.push('homepage still has the kit CTA');
-    if (html.includes('$27')) problems.push('homepage still shows the $27 price');
-    if (!html.includes('30 seats per Saturday')) problems.push('missing the 30-seat Saturday cap');
+    if ((html.match(/\$27/g) || []).length !== 1 || !html.includes('was $27, now free')) problems.push('the $27 mention must be the one free-kit fact');
+    if (/stripe|checkout/i.test(html)) problems.push('homepage has Stripe or checkout');
     if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
     if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');
     if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
