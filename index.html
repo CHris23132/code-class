@@ -88,6 +88,7 @@
     .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.94);border-top:1px solid rgba(255,68,68,.45);transform:translateY(110%)}
     .sticky.show{transform:none}
     .sticky .cta{margin:0;min-height:52px;padding:12px 14px}
+    #book{scroll-margin-top:72px}
     @media(min-width:800px){
       .sticky{display:none}
       footer{padding-bottom:36px}
@@ -134,6 +135,14 @@
         </ul>
       </div>
     </section>
+
+    <div class="rule"></div>
+    <section aria-label="Choose a time for the free info call">
+      <div class="wrap">
+        <div id="book" class="calendly-inline-widget" data-url="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app" style="min-width:320px;height:700px;"></div>
+      </div>
+    </section>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async onerror="window.__calendlyFailed=true"></script>
 
     <div class="rule"></div>
 
@@ -328,6 +337,20 @@
     };
     placeSticky();
     window.addEventListener('scroll', placeSticky, { passive: true });
+    window.setTimeout(function () {
+      var slot = document.getElementById('book');
+      if (!slot || !slot.querySelector('iframe')) window.__calendlyFailed = true;
+    }, 8000);
+    window.addEventListener('message', function (event) {
+      if (event.origin !== 'https://calendly.com') return;
+      var data = event.data;
+      if (typeof data === 'string') {
+        try { data = JSON.parse(data); } catch (err) { return; }
+      }
+      if (data && data.event === 'calendly.event_scheduled') {
+        window.location.assign('https://torontoinnovationlab.com/thanks-info-call.html');
+      }
+    });
     var pixel = '711127870519369';
     document.addEventListener('click', function (event) {
       if (event.defaultPrevented || event.button !== 0) return;
@@ -342,7 +365,15 @@
       } catch (err) {}
       event.preventDefault();
       var href = link.href;
-      window.setTimeout(function () { window.location.assign(href); }, 400);
+      window.setTimeout(function () {
+        var slot = document.getElementById('book');
+        if (slot && slot.querySelector('iframe')) window.__calendlyFailed = false;
+        if (window.__calendlyFailed || !slot) {
+          window.location.assign(href);
+          return;
+        }
+        slot.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
     });
   }());
   </script>
