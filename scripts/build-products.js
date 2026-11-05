@@ -1314,7 +1314,7 @@ function classPrepPage() {
 const only = process.argv.slice(2);
 const want = name => !only.length || only.includes(name);
 if (want('products')) for (const p of products) await writeFile(`${p.slug}.html`, productPage(p));
-if (want('index.html')) await writeFile('index.html', freeClassPage());
+if (want('index.html') && only.includes('index.html')) console.log('index.html is the webinar homepage and is not generated.');
 if (want('thanks-free-class.html')) await writeFile('thanks-free-class.html', thanksFreeClassPage());
 if (want('packages.html')) await writeFile('packages.html', packagesPage());
 if (want('class-prep.html')) await writeFile('class-prep.html', classPrepPage());
@@ -1340,4 +1340,4 @@ await writeFile('thanks-workshop.html', thanksPage());
 await writeFile('terms.html', termsPage());
 await writeFile('refund.html', refundPage());
 }
-console.log(only.length ? `Generated ${only.join(', ')}.` : `Generated ${products.length} product pages, index.html (the free class), packages.html, class-prep.html (+ /class-prep/), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. Run npm run verify:launch before sending traffic.`);
+console.log(only.length ? `Generated ${only.join(', ')}.` : `Generated ${products.length} product pages, packages.html, class-prep.html (+ /class-prep/), thanks-free-class.html, workshop.html (redirects home), courses.html, thanks-workshop.html (old paid event), terms.html, and refund.html. index.html is the webinar homepage and was left as-is.`);

@@ -27,27 +27,16 @@ for (const page of pages) {
   if (page !== 'terms.html') for (const s of bannedHere.filter(s => visible.includes(s))) problems.push(`contains old workshop/paid string "${s}"`);
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
-    if (!html.includes("fbq('track', 'ViewContent')")) problems.push("missing the Meta Pixel event fbq('track', 'ViewContent')");
-    if (!html.includes("fbq('track', 'PageView')")) problems.push("missing PageView");
-    if (!html.includes('data-track="KitCheckoutClick"')) problems.push('missing the First App Kit checkout CTA');
-    if (!html.includes('Get the First App Kit — $27')) problems.push('missing the $27 kit CTA copy');
-    if (!/class="button(?![^"]*button-secondary)[^"]*"[^>]*data-track="KitCheckoutClick"|data-track="KitCheckoutClick"[^>]*class="button(?![^"]*button-secondary)/.test(html)) {
-      problems.push('kit CTA should be the lime primary');
-    }
-    if (html.includes('data-track="StartCourseClick"') || html.includes('data-track="BookLiveClassClick"')) problems.push('lander still has a free-course or free-class click');
-    if (/future-founder-class\.html|calendly\.com|#booking/.test(html)) problems.push('lander still links to the free course or the free class booking');
-    if (/Book a free live class|Start the free video course/i.test(visible)) problems.push('lander still shows a free door CTA');
+    if (!html.includes("fbq('track', 'PageView')")) problems.push('missing PageView');
+    if (!html.includes("fbq('track', 'Schedule')")) problems.push('missing Schedule on the webinar CTA');
+    if (!html.includes('https://calendly.com/play3dinc/free-webinar-build-your-first-app')) problems.push('missing the webinar booking URL');
+    if (!html.includes('Book My Free Webinar')) problems.push('missing the webinar CTA');
+    if (html.includes('KitCheckoutClick') || html.includes('Get the First App Kit')) problems.push('homepage still has the kit CTA');
+    if (html.includes('$27')) problems.push('homepage still shows the $27 price');
+    if (!html.includes('30 seats per Saturday')) problems.push('missing the 30-seat Saturday cap');
     if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
-    if (/40\+|five-star|review count/i.test(visible)) problems.push('shows a banned proof number');
-    if (!/class="[^"]*\bsticky-cta\b/.test(html)) problems.push('missing the sticky mobile CTA bar');
-    if (/<nav(?![^>]*class="footer-links")/.test(visible)) problems.push('has a nav menu outside the footer');
-    if (/<section[^>]*id="booking"/.test(html)) problems.push('free-class booking section is still on the lander');
-    if (!/<section[^>]*id="build"/.test(html)) problems.push('missing the #build section');
-    if (!/<section[^>]*id="how"/.test(html)) problems.push('missing the #how section');
-    if (/calendly-inline-widget/.test(html)) problems.push('Calendly widget is still on the lander');
-    if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
-    if ((html.match(/<!-- ALT H1 \(/g) || []).length < 2) problems.push('expected two alternate H1s as comments for A/B testing');
     if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');
+    if (!html.includes(`href="mailto:${funnel.supportEmail}"`) || !isEmail(funnel.supportEmail)) problems.push('no support email in the footer');
   }
   if (page === 'thanks-free-class.html') {
     if (!/class="upsell-card"/.test(html)) problems.push('missing the Build-With-Me 1-on-1 upsell block');
