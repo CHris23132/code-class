@@ -44,8 +44,8 @@
     h2{font-size:clamp(30px,5vw,44px);margin-bottom:14px}
     h3{font-size:clamp(22px,3vw,28px);color:#fff;margin-bottom:8px}
     .sub{color:var(--muted);font-size:18px;font-style:italic;margin-bottom:14px}
-    .vsl{position:relative;aspect-ratio:16/9;border-radius:12px;background:radial-gradient(circle at 30% 20%,#2a1212,#101010 62%);color:#fff;display:grid;place-items:center;text-align:center;padding:20px;border:1px solid rgba(255,255,255,.12)}
-    .vsl video{width:100%;height:100%;object-fit:cover;border-radius:12px;background:#000}
+    .vsl{position:relative;aspect-ratio:16/9;border-radius:12px;background:#101010;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+    .vsl video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
     .play{width:84px;height:84px;border-radius:50%;background:var(--cta);display:grid;place-items:center;margin:0 auto 14px;box-shadow:0 0 28px rgba(255,68,68,.55)}
     .play i{display:block;width:0;height:0;margin-left:6px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff}
     .vsl p{color:#fff;font-size:16px;max-width:36ch;margin:0 auto}
@@ -118,11 +118,10 @@
         <p class="eyebrow">For people with an app idea who are tired of tutorials that never ship</p>
         <h1>Build your own full app in 5 sessions with <span>Build-With-Me.</span></h1>
         <p class="sub">A free 20-minute 1-on-1 call scopes your idea. The build itself is 5 sessions with me, on your app.</p>
-        <div class="vsl" data-video="[VSL_VIDEO_URL]" role="img" aria-label="Video slot waiting for the owner recording">
-          <div>
-            <div class="play" aria-hidden="true"><i></i></div>
-            <p>The recording is not on this page yet.<code>[VSL_VIDEO_URL]</code></p>
-          </div>
+        <div class="vsl">
+          <video controls playsinline preload="metadata" poster="assets/VSL/vsl-poster.png" aria-label="Video: how to build your first app">
+            <source src="assets/VSL/vsl-lander.mp4" type="video/mp4">
+          </video>
         </div>
         <p class="caption">The video covers the free call, the free course, and the $299 build.</p>
         <a class="cta" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
@@ -321,17 +320,6 @@
 
   <script>
   (function () {
-    var slot = document.querySelector('.vsl');
-    var url = slot && slot.getAttribute('data-video');
-    if (slot && url && /^https?:\/\//.test(url)) {
-      var video = document.createElement('video');
-      video.controls = true;
-      video.playsInline = true;
-      video.preload = 'none';
-      video.src = url;
-      slot.textContent = '';
-      slot.appendChild(video);
-    }
     var sticky = document.querySelector('.sticky');
     var firstCta = document.querySelector('a.cta');
     var placeSticky = function () {
