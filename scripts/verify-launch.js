@@ -33,7 +33,7 @@ for (const page of pages) {
     if (html.includes('free-webinar-build-your-first-app') || html.includes('Book My Free Webinar')) problems.push('homepage still books the webinar');
     if (!html.includes('Book My Free 1-on-1 Info Call')) problems.push('missing the info-call CTA');
     if (html.includes('KitCheckoutClick') || html.includes('Get the First App Kit')) problems.push('homepage still has the kit CTA');
-    if ((html.match(/\$27/g) || []).length !== 1 || !html.includes('was $27, now free')) problems.push('the $27 mention must be the one free-kit fact');
+    if ((html.match(/\$27/g) || []).length !== 1 || !/was \$27, now free/i.test(html)) problems.push('the $27 mention must be the one free-kit fact');
     if (/stripe|checkout/i.test(html)) problems.push('homepage has Stripe or checkout');
     if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
     if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');
