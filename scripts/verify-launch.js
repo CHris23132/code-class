@@ -28,12 +28,12 @@ for (const page of pages) {
   if (page !== 'thanks-free-class.html' && /name="robots" content="noindex"/.test(html)) problems.push('marked noindex');
   if (page === 'index.html') {
     if (!html.includes("fbq('track', 'PageView')")) problems.push('missing PageView');
-    if (!html.includes("fbq('track', 'Schedule')")) problems.push('missing Schedule on the info-call CTA');
-    if (!html.includes('https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app')) problems.push('missing the info-call booking URL');
+    if (!html.includes("fbq('track', 'Schedule')")) problems.push('missing Schedule on the diagnosis CTA');
+    if (!html.includes('https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app')) problems.push('missing the closing-call booking URL');
     if (html.includes('free-webinar-build-your-first-app') || html.includes('Book My Free Webinar')) problems.push('homepage still books the webinar');
-    if (!html.includes('Book My Free 1-on-1 Info Call')) problems.push('missing the info-call CTA');
-    if (html.includes('KitCheckoutClick') || html.includes('Get the First App Kit')) problems.push('homepage still has the kit CTA');
-    if ((html.match(/\$27/g) || []).length !== 1 || !/was \$27, now free/i.test(html)) problems.push('the $27 mention must be the one free-kit fact');
+    if (!html.includes('Book My Free Closing Diagnosis Call')) problems.push('missing the Closing Diagnosis Call CTA');
+    if (html.includes('KitCheckoutClick') || html.includes('Get the First App Kit') || html.includes('First App Kit')) problems.push('homepage still has the kit offer');
+    if (/\$299|\$997|5 sessions|Build-With-Me|\bExpo\b|\bFirebase\b|build your first app|First App Kit/i.test(visible) || /\bCursor\b/.test(visible.replace(/cursor\s*:/gi, ''))) problems.push('homepage still has app-build copy');
     if (/stripe|checkout/i.test(html)) problems.push('homepage has Stripe or checkout');
     if (/Low6|DraftKings|TravelSpoken/.test(visible)) problems.push('names an employer');
     if (/Instagram clone/i.test(visible)) problems.push('calls it an Instagram clone on the lander');
