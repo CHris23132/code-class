@@ -146,6 +146,11 @@
     .price-note{text-align:center;margin:14px auto 0;max-width:460px;font-size:.95rem}
     .story-grid{display:grid;gap:14px}
     .story-grid img{width:100%;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .world-place{margin-top:28px}
+    .world-place h3{font-size:clamp(1.15rem,2.6vw,1.45rem);margin-bottom:6px;text-align:center}
+    .world-place .place-sub{text-align:center;font-size:.95rem;margin-bottom:14px;color:#8a7d74;font-weight:600}
+    .world-grid{display:grid;gap:14px}
+    .world-grid img{width:100%;height:100%;max-height:520px;object-fit:cover;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff}
     .steps{display:grid;gap:14px;counter-reset:step}
     .step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);position:relative;padding-left:72px}
     .step::before{
@@ -174,6 +179,7 @@
       .about{grid-template-columns:1.05fr .95fr}
       .grid-3{grid-template-columns:repeat(3,1fr)}
       .story-grid{grid-template-columns:1fr 1fr}
+      .world-grid{grid-template-columns:1fr 1fr;align-items:stretch}
       .steps{grid-template-columns:repeat(3,1fr)}
       .step{padding:22px;padding-top:72px}
       .step::before{left:22px;top:22px}
@@ -280,10 +286,41 @@
         <h2 class="sec-title">The story, from the couch to a real build</h2>
         <p class="sec-sub">These are my real photos and frames from the path. Not stock people. Not borrowed testimonials.</p>
         <div class="story-grid">
-          <img src="assets/free-class/story-1.webp" alt="Where I started: no money, no job">
-          <img src="assets/free-class/story-2.webp" alt="Then it clicked: top-rated on Fiverr">
-          <img src="assets/free-class/story-4.webp" alt="Software paid for this: my dream car">
-          <img src="assets/free-class/story-5.webp" alt="And then: big tech job, she said yes">
+          <img src="assets/new-story-assets/1.png" alt="Where I started: no money, no deals">
+          <img src="assets/new-story-assets/2.png" alt="The turn: I learned the frameworks">
+          <img src="assets/new-story-assets/3.png" alt="What the frameworks did: bigger contracts">
+          <img src="assets/new-story-assets/4.png" alt="Clients became careers">
+          <img src="assets/new-story-assets/5.png" alt="What closing builds">
+          <img src="assets/new-story-assets/6.png" alt="And then: big tech job, she said yes">
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <h2 class="sec-title">Tech has taken me <span class="hl">all around the world</span></h2>
+        <p class="sec-sub">Real rooms. Real stages. The same skill I teach on the free call.</p>
+
+        <div class="world-place">
+          <h3>Tech Conference in San Francisco</h3>
+          <p class="place-sub">On the ground with founders and builders</p>
+          <div class="world-grid">
+            <img src="assets/free-class/exec-41669417-8499-4ab4-9717-e6cc8b4c3b11.png" alt="Christopher Walsh at a tech conference in San Francisco">
+            <img src="assets/free-class/exec-adeac32b-7570-472a-92dd-c9fd1fa7648a.png" alt="Speaking at a tech conference in San Francisco">
+          </div>
+        </div>
+
+        <div class="world-place">
+          <h3>Tech Founder Conference in Oslo, Norway</h3>
+          <p class="place-sub">Across the ocean for the work</p>
+          <div class="world-grid">
+            <img src="assets/free-class/on-stage.png" alt="On stage at a tech founder conference in Oslo, Norway">
+            <img src="assets/free-class/IMG_1115.jpg" alt="Tech founder conference in Oslo, Norway">
+          </div>
+        </div>
+
+        <div class="cta-wrap" style="margin-top:28px">
+          <a class="btn btn--lg" data-schedule href="https://calendly.com/play3dinc/free-1-on-1-info-call-build-your-first-app">Book My Free 1-on-1 Info Call</a>
         </div>
       </div>
     </section>
