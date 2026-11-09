@@ -81,11 +81,11 @@
     .hero h1 .hl{color:var(--oxblood)}
     .lead{font-size:clamp(1.05rem,2.2vw,1.28rem);max-width:680px;margin:0 auto 18px;color:var(--body)}
     .vsl{
-      position:relative;width:min(760px,100%);margin:8px auto 10px;aspect-ratio:16/9;
+      position:relative;width:min(360px,100%);margin:8px auto 10px;aspect-ratio:9/16;
       border-radius:22px;overflow:hidden;background:#1a1410;
       box-shadow:0 28px 70px -28px rgba(26,20,16,.35);border:1px solid var(--line);
     }
-    .vsl video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
+    .vsl video{width:100%;height:100%;object-fit:cover;background:#000;display:block}
     .unmute{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;border:0;cursor:pointer;
       background:linear-gradient(90deg,#b37d00,#ffb300 40%,#eddd53);color:#000;font:800 16px/1.2 Inter,system-ui,sans-serif;
@@ -222,8 +222,8 @@
         <h1>You're Losing Contracts To People Less Skilled Than You — Because They Know How To <span class="hl">Close</span></h1>
         <p class="lead">Another sales book will not fix it. On a free 20-minute 1-on-1 Closing Diagnosis Call, bring your last 3 lost deals. I break them down live — where you lost them, how to structure the next call and the deal, and what to change so the next one closes.</p>
         <div class="vsl">
-          <video autoplay muted playsinline preload="auto" poster="assets/VSL/vsl-poster.png" aria-label="Video: closing diagnosis call">
-            <source src="assets/VSL/vsl-lander.mp4" type="video/mp4">
+          <video autoplay muted playsinline preload="auto" poster="assets/VSL/sales-vsl-poster.png" aria-label="Video: closing diagnosis call">
+            <source src="assets/VSL/sales-vsl.mp4" type="video/mp4">
           </video>
           <button type="button" class="unmute" id="unmute">Tap to turn sound on</button>
         </div>
